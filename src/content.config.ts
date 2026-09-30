@@ -7,7 +7,26 @@ const meta = {
   subject: z.string(),
   tags: z.array(z.string()).default([]),
   date: z.coerce.date().optional(),
+  unit: z.string().optional(), // slug de l'unité (ex. week-01)
 };
+const bi = z.object({ fr: z.string(), en: z.string() });
+
+// Unité = Week / Chapitre : src/content/units/{fr,en}/<matiere>/<unit>.md
+const units = defineCollection({
+  loader: glob({ pattern: '{fr,en}/**/*.{md,mdx}', base: './src/content/units' }),
+  schema: z.object({
+    title: z.string(),
+    order: z.number(),
+    summary: z.string().optional(),
+    notions: z.array(z.object({
+      category: z.string(),
+      name: z.string(),
+      explanation: z.string(),
+      examples: z.array(z.object({ text: z.string(), reading: z.string().optional(), tr: z.string() })).default([]),
+      mnemonic: z.string().optional(),
+    })).default([]),
+  }),
+});
 
 const lessons = defineCollection({
   loader: glob({ pattern: '{fr,en}/**/*.{md,mdx}', base: './src/content/lessons' }),
@@ -43,20 +62,24 @@ const quiz = defineCollection({
   }),
 });
 
+// Vocab (un fichier par unité, bilingue) : src/content/vocab/<matiere>/<unit>.yaml
 const vocab = defineCollection({
   loader: glob({ pattern: '**/*.{yaml,yml}', base: './src/content/vocab' }),
   schema: z.object({
-    deck: z.object({ fr: z.string(), en: z.string() }),
     lang: z.string(),
-    tags: z.array(z.string()).default([]),
-    cards: z.array(z.object({
-      term: z.string(),
-      reading: z.string().optional(),
-      fr: z.string(),
-      en: z.string(),
-      example: z.string().optional(),
+    groups: z.array(z.object({
+      name: bi,
+      mnemonic: bi.optional(),
+      cards: z.array(z.object({
+        term: z.string(),
+        reading: z.string().optional(),
+        fr: z.string(),
+        en: z.string(),
+        example: z.string().optional(),
+        mnemonic: bi.optional(),
+      })).min(1),
     })).min(1),
   }),
 });
 
-export const collections = { lessons, formulas, quiz, vocab };
+export const collections = { units, lessons, formulas, quiz, vocab };

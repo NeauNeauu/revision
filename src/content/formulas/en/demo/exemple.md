@@ -1,6 +1,7 @@
 ---
 title: Sample formulas (to delete)
 subject: demo
+unit: week-01
 tags: [exemple]
 chapters:
   - chapter: Geometry

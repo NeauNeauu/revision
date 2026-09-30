@@ -1,7 +1,0 @@
-deck: { fr: "Salutations (exemple)", en: "Greetings (sample)" }
-lang: ko
-tags: [exemple]
-cards:
-  - { term: "안녕하세요", reading: "annyeonghaseyo", fr: "Bonjour", en: "Hello" }
-  - { term: "감사합니다", reading: "gamsahamnida", fr: "Merci", en: "Thank you" }
-  - { term: "네", reading: "ne", fr: "Oui", en: "Yes", example: "네, 맞아요." }

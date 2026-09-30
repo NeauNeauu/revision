@@ -1,79 +1,50 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { t, subjectName, langPaths, type Lang } from '../../i18n';
-import { inLang, parts, allCards } from '../../lib/content';
+import { subjectsList, unitsOf, allCards } from '../../lib/content';
+import { subjectConf, unitLabel } from '../../lib/subjects';
 export const getStaticPaths = langPaths;
 const lang = Astro.params.lang as Lang;
-
-type Item = { type: string; href: string; title: string; subject: string; tags: string[] };
-const items: Item[] = [];
-for (const type of ['lessons', 'formulas', 'quiz'] as const)
-  for (const e of await inLang(type, lang)) {
-    const { subject, slug } = parts(e.id);
-    items.push({ type, href: `/${lang}/${type}/${subject}/${slug}/`, title: e.data.title, subject, tags: e.data.tags });
-  }
-for (const v of await getCollection('vocab')) {
-  const { subject } = parts(v.id, false);
-  items.push({ type: 'vocab', href: `/${lang}/vocab/${v.id}/`, title: v.data.deck[lang], subject, tags: v.data.tags });
-}
-const subjects = [...new Set(items.map((i) => i.subject))].sort();
-const tags = [...new Set(items.flatMap((i) => i.tags))].sort();
-const cardIds = (await allCards(lang)).map((c) => c.id);
+const subjects = await subjectsList(lang);
+const nUnits = Object.fromEntries(await Promise.all(subjects.map(async (s) => [s, (await unitsOf(lang, s)).length] as const)));
+const cards = (await allCards(lang)).map(({ id, subject }) => ({ id, subject }));
 ---
 <Base lang={lang}>
   <h1>{t(lang, 'home.title')}</h1>
-  <p class="box"><a href={`/${lang}/review/`}><strong id="due">…</strong> {t(lang, 'home.due')}</a></p>
-
-  <div class="row chips" id="subjects">
-    <button type="button" data-s="" aria-pressed="true">{t(lang, 'filter.all')}</button>
-    {subjects.map((s) => <button type="button" data-s={s} aria-pressed="false">{subjectName(lang, s)}</button>)}
-    {tags.length > 0 && (
-      <select id="tag" aria-label={t(lang, 'filter.tag')}>
-        <option value="">{t(lang, 'filter.tag')}: {t(lang, 'filter.all')}</option>
-        {tags.map((g) => <option value={g}>{g}</option>)}
-      </select>
-    )}
+  <p class="muted" style="margin-top:-.5rem">{t(lang, 'home.pick')}</p>
+  {subjects.length === 0 && <p class="glass empty muted">{t(lang, 'home.empty')}</p>}
+  <div class="subjects">
+    {subjects.map((s) => (
+      <a class="subject-tile glass" href={`/${lang}/${s}/`} data-s={s}>
+        <span class="subject-icon">{subjectConf(s).icon}</span>
+        <span class="subject-body">
+          <strong>{subjectName(lang, s)}</strong>
+          <span class="muted small">{nUnits[s]} {unitLabel(lang, s).toLowerCase()}{nUnits[s] > 1 ? 's' : ''} · <span data-total>0</span> {t(lang, 'subject.cards')}</span>
+          <span class="progress" style="margin-top:.5rem"><i class="m" data-bar></i></span>
+        </span>
+        <span class="due-pill" data-due hidden></span>
+        <span class="arrow">›</span>
+      </a>
+    ))}
   </div>
-
-  {items.length === 0 && <p>{t(lang, 'home.empty')}</p>}
-  {(['lessons', 'vocab', 'formulas', 'quiz'] as const).map((type) => {
-    const list = items.filter((i) => i.type === type);
-    return list.length > 0 && (
-      <section data-section>
-        <h2>{t(lang, 'types.' + type)}</h2>
-        <ul class="list">
-          {list.map((i) => (
-            <li data-subject={i.subject} data-tags={i.tags.join(' ')}>
-              <a href={i.href}>{i.title}</a> <span class="muted">· {subjectName(lang, i.subject)}{i.tags.length > 0 && ` · ${i.tags.join(', ')}`}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-    );
-  })}
-  <script type="application/json" id="ids" set:html={JSON.stringify(cardIds)} />
+  <script type="application/json" id="cards" set:html={JSON.stringify(cards)} />
 </Base>
 
 <script>
   import { load, isDue } from '../../scripts/progress';
-  const ids: string[] = JSON.parse(document.getElementById('ids')!.textContent!);
-  const showDue = () => { const p = load(); document.getElementById('due')!.textContent = String(ids.filter((id) => isDue(p, id)).length); };
-  showDue();
-  document.addEventListener('progress:ready', showDue);
-
-  let subject = '', tag = '';
-  const apply = () => {
-    document.querySelectorAll<HTMLElement>('li[data-subject]').forEach((li) => {
-      li.hidden = (!!subject && li.dataset.subject !== subject) || (!!tag && !li.dataset.tags!.split(' ').includes(tag));
+  const cards: { id: string; subject: string }[] = JSON.parse(document.getElementById('cards')!.textContent!);
+  function stats() {
+    const p = load();
+    document.querySelectorAll<HTMLElement>('.subject-tile').forEach((tile) => {
+      const list = cards.filter((c) => c.subject === tile.dataset.s);
+      const m = list.filter((c) => p.cards[c.id]?.box === 5).length;
+      const d = list.filter((c) => isDue(p, c.id)).length;
+      tile.querySelector('[data-total]')!.textContent = String(list.length);
+      requestAnimationFrame(() => requestAnimationFrame(() => (tile.querySelector<HTMLElement>('[data-bar]')!.style.width = list.length ? `${(m / list.length) * 100}%` : '0')));
+      const due = tile.querySelector<HTMLElement>('[data-due]')!;
+      due.hidden = !d; due.textContent = String(d);
     });
-    document.querySelectorAll<HTMLElement>('[data-section]').forEach((s) => { s.hidden = !s.querySelector('li:not([hidden])'); });
-  };
-  document.querySelectorAll<HTMLButtonElement>('#subjects button').forEach((b) =>
-    b.addEventListener('click', () => {
-      subject = b.dataset.s!;
-      document.querySelectorAll('#subjects button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-      apply();
-    }));
-  document.getElementById('tag')?.addEventListener('change', (e) => { tag = (e.target as HTMLSelectElement).value; apply(); });
+  }
+  stats();
+  document.addEventListener('progress:ready', stats);
 </script>

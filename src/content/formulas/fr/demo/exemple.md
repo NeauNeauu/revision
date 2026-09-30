@@ -1,6 +1,7 @@
 ---
 title: Formules exemple (à supprimer)
 subject: demo
+unit: week-01
 tags: [exemple]
 chapters:
   - chapter: Géométrie

@@ -12,30 +12,39 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const lang = Astro.params.lang as Lang;
 const d = entry.data;
+const n = d.questions.length;
 ---
 <Base lang={lang} title={d.title}>
   <article data-pagefind-body id="quiz" data-id={`quiz/${Astro.params.slug}`}>
     <p class="muted" data-pagefind-filter="subject">{subjectName(lang, d.subject)}</p>
     <h1>{d.title}</h1>
-    <p class="muted"><span id="pos">1</span> / {d.questions.length} · {t(lang, 'quiz.best')} : <span id="best">–</span></p>
+    <div class="row between">
+      <span class="muted small">{t(lang, 'quiz.question')} <strong id="pos">1</strong> / {n}</span>
+      <span class="pill">{t(lang, 'quiz.best')} <span id="best">–</span></span>
+    </div>
+    <div class="progress" style="margin:.6rem 0 1.2rem"><i id="bar"></i></div>
     {d.questions.map((q, i) => (
-      <section class="box q" data-answer={q.answer} hidden={i > 0}>
-        <p><strong set:html={mathText(q.question)} /></p>
+      <section class="q fade-in" data-answer={q.answer} hidden={i > 0}>
+        <div class="box"><p class="term" style="font-size:1.3rem;margin:0" set:html={mathText(q.question)} /></div>
         {q.choices ? (
-          <div class="row">{q.choices.map((c) => <button type="button" class="choice" data-v={c} set:html={mathText(c)} />)}</div>
+          <div class="choices">{q.choices.map((c, j) => <button type="button" class="choice" data-v={c}><b>{String.fromCharCode(65 + j)}</b><span set:html={mathText(c)} /></button>)}</div>
         ) : (
-          <form class="row"><input name="a" autocomplete="off" placeholder={t(lang, 'quiz.placeholder')} /><button class="primary">{t(lang, 'quiz.check')}</button></form>
+          <form class="answer-form"><input name="a" autocomplete="off" autocapitalize="off" placeholder={t(lang, 'quiz.placeholder')} /><button class="primary">{t(lang, 'quiz.check')}</button></form>
         )}
-        <div class="fb" hidden>
-          <p class="res"></p>
+        <div class="fb box feedback fade-in" hidden>
+          <p class="res" style="margin-top:0;font-weight:700"></p>
           <p class="muted" set:html={mathText(q.explanation)} />
-          <button type="button" class="next primary">{t(lang, 'quiz.next')}</button>
+          <button type="button" class="next primary">{t(lang, 'quiz.next')} →</button>
         </div>
       </section>
     ))}
-    <section class="box" id="end" hidden>
-      <p class="term">{t(lang, 'quiz.score')} : <span id="score"></span>%</p>
-      <button type="button" class="primary" onclick="location.reload()">{t(lang, 'quiz.restart')}</button>
+    <section class="glass done" id="end" hidden>
+      <span class="ring-wrap" style="margin:0 auto 1rem;width:120px">
+        <svg class="ring" viewBox="0 0 40 40" style="width:120px;height:120px"><circle class="track" cx="20" cy="20" r="16" /><circle class="bar" id="ring" cx="20" cy="20" r="16" pathLength="100" /></svg>
+        <span class="term" style="font-size:1.6rem"><span id="score"></span>%</span>
+      </span>
+      <p class="muted">{t(lang, 'quiz.score')}</p>
+      <button type="button" class="primary" onclick="location.reload()">↻ {t(lang, 'quiz.restart')}</button>
     </section>
   </article>
   <template id="i18n" data-ok={t(lang, 'quiz.correct')} data-wrong={t(lang, 'quiz.wrong')}></template>
@@ -46,9 +55,10 @@ const d = entry.data;
   const root = document.getElementById('quiz')!;
   const id = root.dataset.id!;
   const i18n = document.getElementById('i18n')!.dataset;
+  const $ = (x: string) => document.getElementById(x)!;
   const qs = [...root.querySelectorAll<HTMLElement>('.q')];
   const norm = (s: string) => s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/\s+/g, ' ').trim();
-  const showBest = () => { const b = load().quiz[id]?.best; document.getElementById('best')!.textContent = b == null ? '–' : b + '%'; };
+  const showBest = () => { const b = load().quiz[id]?.best; $('best').textContent = b == null ? '–' : b + '%'; };
   showBest();
   document.addEventListener('progress:ready', showBest);
   let good = 0;
@@ -56,26 +66,34 @@ const d = entry.data;
   qs.forEach((q, i) => {
     const answer = q.dataset.answer!;
     const fb = q.querySelector<HTMLElement>('.fb')!;
-    const done = (v: string) => {
+    const done = (v: string, btn?: HTMLButtonElement) => {
       if (!fb.hidden) return;
       const ok = norm(v) === norm(answer);
       if (ok) good++;
-      const res = fb.querySelector('.res')!;
+      q.querySelectorAll<HTMLButtonElement>('.choice').forEach((b) => {
+        b.disabled = true;
+        if (b.dataset.v === answer) b.classList.add('is-ok');
+      });
+      if (!ok) btn?.classList.add('is-bad');
+      q.querySelector<HTMLInputElement>('input')?.setAttribute('disabled', '');
+      const res = fb.querySelector<HTMLElement>('.res')!;
       res.className = 'res ' + (ok ? 'ok' : 'bad');
-      res.textContent = ok ? i18n.ok! : `${i18n.wrong} ${answer}`;
-      q.querySelectorAll<HTMLButtonElement>('button.choice').forEach((b) => (b.disabled = true));
+      res.textContent = ok ? '✓ ' + i18n.ok : `✕ ${i18n.wrong} ${answer}`;
+      fb.style.setProperty('--c', ok ? 'var(--ok)' : 'var(--bad)');
       fb.hidden = false;
-      fb.querySelector<HTMLButtonElement>('.next')!.focus();
+      ($('bar') as HTMLElement).style.width = `${((i + 1) / qs.length) * 100}%`;
+      fb.querySelector<HTMLButtonElement>('.next')!.focus({ preventScroll: true });
     };
-    q.querySelectorAll<HTMLButtonElement>('button.choice').forEach((b) => b.addEventListener('click', () => done(b.dataset.v!)));
+    q.querySelectorAll<HTMLButtonElement>('.choice').forEach((b) => b.addEventListener('click', () => done(b.dataset.v!, b)));
     q.querySelector('form')?.addEventListener('submit', (e) => { e.preventDefault(); done((e.target as HTMLFormElement).a.value); });
     fb.querySelector('.next')!.addEventListener('click', () => {
       q.hidden = true;
-      if (qs[i + 1]) { qs[i + 1].hidden = false; document.getElementById('pos')!.textContent = String(i + 2); return; }
+      if (qs[i + 1]) { qs[i + 1].hidden = false; $('pos').textContent = String(i + 2); qs[i + 1].querySelector('input')?.focus(); return; }
       const score = Math.round((good / qs.length) * 100);
       saveQuiz(id, score);
-      document.getElementById('score')!.textContent = String(score);
-      document.getElementById('end')!.hidden = false;
+      $('score').textContent = String(score);
+      $('end').hidden = false;
+      requestAnimationFrame(() => requestAnimationFrame(() => ($('ring') as unknown as SVGElement).style.strokeDashoffset = String(100 - score)));
       showBest();
     });
   });

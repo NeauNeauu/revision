@@ -18,7 +18,7 @@ const deck = `formulas/${Astro.params.slug}`;
   <article data-pagefind-body>
     <p class="muted" data-pagefind-filter="subject">{subjectName(lang, d.subject)}</p>
     <h1>{d.title}</h1>
-    <p><a href={`/${lang}/review/?deck=${encodeURIComponent(deck)}`}>▶ {t(lang, 'review.deck')}</a></p>
+    <p><a class="btn primary" href={`/${lang}/review/?deck=${encodeURIComponent(deck)}`}>▶ {t(lang, 'review.deck')}</a></p>
     {d.chapters.map((ch) => (
       <section>
         <h2>{ch.chapter}</h2>

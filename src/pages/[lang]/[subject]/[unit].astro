@@ -1,0 +1,128 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { t, subjectName, type Lang } from '../../../i18n';
+import { inLang, parts, unitsOf, mathText } from '../../../lib/content';
+import { subjectConf, unitLabel } from '../../../lib/subjects';
+export async function getStaticPaths() {
+  return (await getCollection('units')).map((entry) => {
+    const { lang, subject, slug } = parts(entry.id);
+    return { params: { lang, subject, unit: slug }, props: { entry } };
+  });
+}
+const { entry } = Astro.props;
+const lang = Astro.params.lang as Lang;
+const { subject, unit } = Astro.params as { subject: string; unit: string };
+const d = entry.data;
+const { Content } = await render(entry);
+const label = unitLabel(lang, subject);
+const speech = subjectConf(subject).speech;
+const vocab = await getEntry('vocab', `${subject}/${unit}`);
+const vlang = vocab?.data.lang ?? speech ?? '';
+
+const byCat = new Map<string, typeof d.notions>();
+for (const n of d.notions) byCat.set(n.category, [...(byCat.get(n.category) ?? []), n]);
+
+const related = [] as { type: string; href: string; title: string }[];
+for (const type of ['lessons', 'formulas', 'quiz'] as const)
+  for (const e of await inLang(type, lang)) {
+    const p = parts(e.id);
+    if (p.subject === subject && e.data.unit === unit) related.push({ type, href: `/${lang}/${type}/${subject}/${p.slug}/`, title: e.data.title });
+  }
+const all = await unitsOf(lang, subject);
+const idx = all.findIndex((u) => u.id === entry.id);
+const prev = all[idx - 1], next = all[idx + 1];
+const href = (u: (typeof all)[number]) => `/${lang}/${subject}/${parts(u.id).slug}/`;
+const rev = `/${lang}/review/?subject=${subject}&unit=${unit}`;
+---
+<Base lang={lang} title={`${label} ${d.order} · ${d.title}`}>
+  <p class="eyebrow"><a href={`/${lang}/${subject}/`}>← {subjectName(lang, subject)}</a></p>
+  <article data-pagefind-body>
+    <p class="muted" data-pagefind-filter="subject" hidden>{subjectName(lang, subject)}</p>
+    <p class="eyebrow" style="margin-top:1rem">{label} {d.order}</p>
+    <h1 style="margin-top:.2rem">{d.title}</h1>
+    {d.summary && <p class="box">{d.summary}</p>}
+    <a class="btn primary" href={rev}>{t(lang, 'subject.review_unit')} · {label} {d.order} →</a>
+
+    {byCat.size > 0 && (
+      <section>
+        <h2>{t(lang, 'unit.notions')}</h2>
+        {[...byCat].map(([cat, notions]) => (
+          <div class="cat">
+            <h3 class="cat-title">{cat}</h3>
+            {notions.map((n) => (
+              <div class="notion glass">
+                <strong class="notion-name" set:html={mathText(n.name)} />
+                <p set:html={mathText(n.explanation)} />
+                {n.examples.length > 0 && (
+                  <ul class="examples">
+                    {n.examples.map((x) => (
+                      <li>
+                        {speech && <button type="button" class="speak" data-speak={x.text} data-lang={speech} aria-label={t(lang, 'review.listen')}>🔊</button>}
+                        <span><span lang={vlang}>{x.text}</span>{x.reading && <span class="muted small"> · {x.reading}</span>}<br /><span class="muted">{x.tr}</span></span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {n.mnemonic && <div class="mnemo">💡 <Fragment set:html={mathText(n.mnemonic)} /></div>}
+              </div>
+            ))}
+          </div>
+        ))}
+      </section>
+    )}
+
+    {vocab && (
+      <section>
+        <h2>{t(lang, 'unit.vocab')}</h2>
+        {vocab.data.groups.map((g) => (
+          <div class="cat">
+            <h3 class="cat-title">{g.name[lang]}</h3>
+            {g.mnemonic && <div class="mnemo">💡 {g.mnemonic[lang]}</div>}
+            <div class="table-wrap glass" style="margin-top:.6rem">
+              <table class="vocab">
+                <tbody>
+                  {g.cards.map((c) => (
+                    <tr>
+                      <td><strong lang={vocab.data.lang}>{c.term}</strong>{c.reading && <div class="muted small">{c.reading}</div>}</td>
+                      <td lang="fr">{c.fr}</td>
+                      <td lang="en">{c.en}</td>
+                      <td class="speak-cell">{speech && <button type="button" class="speak" data-speak={c.term} data-lang={speech} aria-label={t(lang, 'review.listen')}>🔊</button>}</td>
+                      {(c.mnemonic || c.example) && (
+                        <td class="note">
+                          {c.example && <div class="muted small" lang={vocab.data.lang}>{c.example}</div>}
+                          {c.mnemonic && <div class="mnemo sm">💡 {c.mnemonic[lang]}</div>}
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ))}
+      </section>
+    )}
+
+    <Content />
+
+    {related.length > 0 && (
+      <section>
+        <h2>{t(lang, 'unit.related')}</h2>
+        <ul class="items">
+          {related.map((i) => <li><a class="item glass" href={i.href}><span class={`type t-${i.type}`}>{t(lang, 'type_one.' + i.type)}</span><span class="title">{i.title}</span><span class="arrow">›</span></a></li>)}
+        </ul>
+      </section>
+    )}
+  </article>
+
+  <nav class="pager">
+    {prev ? <a class="btn" href={href(prev)}>← {label} {prev.data.order}</a> : <span></span>}
+    {next && <a class="btn" href={href(next)}>{label} {next.data.order} →</a>}
+  </nav>
+</Base>
+
+<script>
+  import { bindSpeak } from '../../../scripts/speak';
+  bindSpeak();
+</script>

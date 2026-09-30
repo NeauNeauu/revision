@@ -9,27 +9,40 @@ const names = Object.fromEntries(cards.map((c) => [c.subject, subjectName(lang, 
 ---
 <Base lang={lang} title={t(lang, 'dash.title')}>
   <h1>{t(lang, 'dash.title')}</h1>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>{t(lang, 'dash.subject')}</th><th>{t(lang, 'dash.total')}</th><th>{t(lang, 'dash.due')}</th><th>{t(lang, 'dash.mastered')}</th></tr></thead>
-      <tbody id="stats"></tbody>
-    </table>
+  <div class="stats">
+    <div class="glass stat"><b id="s-due" class="gradient-text">0</b><span class="muted small">{t(lang, 'dash.due')}</span></div>
+    <div class="glass stat"><b id="s-m">0</b><span class="muted small">{t(lang, 'dash.mastered')}</span></div>
+    <div class="glass stat"><b id="s-t">0</b><span class="muted small">{t(lang, 'dash.total')}</span></div>
+    <div class="glass stat"><b id="s-q">0</b><span class="muted small">{t(lang, 'dash.quizzes_done')}</span></div>
   </div>
-  <h2>{t(lang, 'dash.quiz')}</h2>
-  <ul class="list" id="quizzes"></ul>
 
-  <section class="box">
-    <h2>{t(lang, 'dash.code')}</h2>
-    <p class="muted">{t(lang, 'dash.code_help')}</p>
-    <p><code id="current"></code> <span id="status" class="muted"></span></p>
+  <h2>{t(lang, 'dash.subject')}</h2>
+  <div class="legend">
+    <span><i style="background:var(--ok)"></i>{t(lang, 'dash.mastered')}</span>
+    <span><i style="background:var(--accent);opacity:.6"></i>{t(lang, 'dash.learning')}</span>
+    <span><i style="background:var(--stroke)"></i>{t(lang, 'dash.new')}</span>
+  </div>
+  <div id="subjects" style="display:grid;gap:.6rem;margin-top:.8rem"></div>
+
+  <h2>{t(lang, 'dash.quiz')}</h2>
+  <div id="quizzes" style="display:grid;gap:.5rem"></div>
+
+  <section class="box" style="margin-top:2.5rem">
+    <h2 style="margin-top:0">{t(lang, 'dash.code')}</h2>
+    <p class="muted small">{t(lang, 'dash.code_help')}</p>
+    <div class="row" style="margin-bottom:1rem">
+      <code class="code" id="current"></code>
+      <button type="button" id="copy" class="icon" hidden aria-label={t(lang, 'dash.copy')}>⧉</button>
+      <span id="status" class="muted small"></span>
+    </div>
     <form class="row" id="codeform">
-      <input name="c" pattern="[a-z0-9\-]{8,64}" required autocomplete="off" placeholder="xxxx-xxxx-xxxx" />
+      <input name="c" pattern="[a-z0-9\-]{8,64}" required autocomplete="off" autocapitalize="off" placeholder="xxxx-xxxx-xxxx" style="flex:1" />
       <button>{t(lang, 'dash.use')}</button>
       <button type="button" id="gen" class="primary">{t(lang, 'dash.generate')}</button>
     </form>
   </section>
   <script type="application/json" id="cards" set:html={JSON.stringify({ cards, names })} />
-  <template id="i18n" data-none={t(lang, 'dash.none')} data-ok={t(lang, 'dash.sync_ok')} data-error={t(lang, 'dash.sync_error')}></template>
+  <template id="i18n" data-none={t(lang, 'dash.none')} data-ok={t(lang, 'dash.sync_ok')} data-error={t(lang, 'dash.sync_error')} data-copied={t(lang, 'dash.copied')} data-best={t(lang, 'quiz.best')}></template>
 </Base>
 
 <script>
@@ -37,24 +50,49 @@ const names = Object.fromEntries(cards.map((c) => [c.subject, subjectName(lang, 
   const { cards, names } = JSON.parse(document.getElementById('cards')!.textContent!) as { cards: { id: string; subject: string }[]; names: Record<string, string> };
   const i18n = document.getElementById('i18n')!.dataset;
   const $ = (id: string) => document.getElementById(id)!;
-  const cell = (s: string | number) => { const td = document.createElement('td'); td.textContent = String(s); return td; };
+  const el = (tag: string, cls = '', text = '') => { const e = document.createElement(tag); e.className = cls; e.textContent = text; return e; };
 
   function render() {
     const p = load();
-    const rows: Record<string, number[]> = {};
+    const rows: Record<string, { t: number; due: number; m: number; l: number }> = {};
     for (const c of cards) {
-      const r = (rows[c.subject] ??= [0, 0, 0]);
-      r[0]++; if (isDue(p, c.id)) r[1]++; if (p.cards[c.id]?.box === 5) r[2]++;
+      const r = (rows[c.subject] ??= { t: 0, due: 0, m: 0, l: 0 });
+      const box = p.cards[c.id]?.box;
+      r.t++; if (isDue(p, c.id)) r.due++;
+      if (box === 5) r.m++; else if (box) r.l++;
     }
-    $('stats').replaceChildren(...Object.entries(rows).map(([s, r]) => { const tr = document.createElement('tr'); tr.append(cell(names[s]), ...r.map(cell)); return tr; }));
-    $('quizzes').replaceChildren(...Object.entries(p.quiz).map(([id, q]) => { const li = document.createElement('li'); li.textContent = `${id.replace(/^quiz\//, '')} — ${q.last}% (best ${q.best}%)`; return li; }));
-    $('current').textContent = getCode() ?? '';
-    if (!getCode()) $('status').textContent = i18n.none!;
+    const sum = (k: 't' | 'due' | 'm') => Object.values(rows).reduce((a, r) => a + r[k], 0);
+    $('s-due').textContent = String(sum('due')); $('s-m').textContent = String(sum('m')); $('s-t').textContent = String(sum('t'));
+    $('s-q').textContent = String(Object.keys(p.quiz).length);
+
+    $('subjects').replaceChildren(...Object.entries(rows).map(([s, r]) => {
+      const box = el('div', 'glass subject-row');
+      const head = el('div', 'row between');
+      head.append(el('strong', '', names[s]), el('span', 'muted small', `${r.m} / ${r.t}`));
+      const bar = el('div', 'progress');
+      const m = el('i', 'm'), l = el('i', 'l');
+      bar.append(m, l);
+      box.append(head, bar);
+      requestAnimationFrame(() => requestAnimationFrame(() => { m.style.width = `${(r.m / r.t) * 100}%`; l.style.width = `${(r.l / r.t) * 100}%`; }));
+      return box;
+    }));
+
+    $('quizzes').replaceChildren(...Object.entries(p.quiz).map(([id, q]) => {
+      const row = el('div', 'glass item');
+      row.append(el('span', 'type t-quiz', 'Quiz'), el('span', 'title', id.replace(/^quiz\//, '')), el('span', 'pill', `${q.last}%`), el('span', 'muted small', `${i18n.best} ${q.best}%`));
+      return row;
+    }));
+
+    const code = getCode();
+    $('current').textContent = code ?? '—';
+    $('copy').hidden = !code;
+    if (!code) $('status').textContent = i18n.none!;
   }
-  const status = (s: string) => { if (s !== 'off') $('status').textContent = s === 'ok' ? i18n.ok! : i18n.error!; render(); };
+  const status = (s: string) => { if (s !== 'off') $('status').textContent = s === 'ok' ? '● ' + i18n.ok : '○ ' + i18n.error; render(); };
   render();
   document.addEventListener('progress:ready', (e) => status((e as CustomEvent).detail));
   const use = async (c: string) => { setCode(c); render(); status(await sync()); };
   $('codeform').addEventListener('submit', (e) => { e.preventDefault(); use((e.target as HTMLFormElement).c.value); });
   $('gen').addEventListener('click', () => use(genCode()));
+  $('copy').addEventListener('click', async () => { await navigator.clipboard.writeText(getCode() ?? ''); $('status').textContent = '✓ ' + i18n.copied; });
 </script>

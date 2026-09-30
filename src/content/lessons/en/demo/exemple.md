@@ -1,6 +1,7 @@
 ---
 title: Sample lesson (to delete)
 subject: demo
+unit: week-01
 tags: [exemple]
 date: 2026-09-30
 summary: "Demo file for the lesson format. Shows the expected structure. Delete once real courses are added."

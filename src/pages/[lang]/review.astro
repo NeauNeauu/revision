@@ -1,82 +1,160 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { t, subjectName, langPaths, type Lang } from '../../i18n';
-import { allCards } from '../../lib/content';
+import { allCards, subjectsList, unitsOf, parts } from '../../lib/content';
+import { subjectConf, unitLabel } from '../../lib/subjects';
 export const getStaticPaths = langPaths;
 const lang = Astro.params.lang as Lang;
 const cards = await allCards(lang);
-const subjects = [...new Set(cards.map((c) => c.subject))].sort();
+const subjects = await subjectsList(lang);
+const units = Object.fromEntries(await Promise.all(subjects.map(async (s) =>
+  [s, (await unitsOf(lang, s)).map((u) => ({ slug: parts(u.id).slug, label: `${unitLabel(lang, s)} ${u.data.order} · ${u.data.title}` }))] as const)));
+const meta = Object.fromEntries(subjects.map((s) => [s, { name: subjectName(lang, s), speech: subjectConf(s).speech ?? '', units: units[s] }]));
 ---
 <Base lang={lang} title={t(lang, 'review.title')}>
-  <h1>{t(lang, 'review.title')}</h1>
-  <div class="row">
-    <select id="subject" aria-label={t(lang, 'filter.subject')}>
-      <option value="">{t(lang, 'filter.subject')} : {t(lang, 'filter.all')}</option>
-      {subjects.map((s) => <option value={s}>{subjectName(lang, s)}</option>)}
-    </select>
-    <label class="muted"><input type="checkbox" id="all" /> {t(lang, 'review.all_cards')}</label>
+  <h1 id="title">{t(lang, 'review.title')}</h1>
+  <div id="picker" hidden>
+    <p class="muted">{t(lang, 'review.pick')}</p>
+    <div class="subjects">
+      {subjects.map((s) => (
+        <a class="subject-tile glass" href={`?subject=${s}`}>
+          <span class="subject-icon">{subjectConf(s).icon}</span>
+          <span class="subject-body"><strong>{subjectName(lang, s)}</strong></span>
+          <span class="arrow">›</span>
+        </a>
+      ))}
+    </div>
   </div>
-  <p class="muted"><span id="left">0</span> {t(lang, 'review.left')}</p>
-  <div class="box" id="flash">
-    <div id="front"></div>
-    <div id="back" hidden><hr /><div id="backc"></div></div>
-    <p id="msg" hidden></p>
+
+  <div id="main" hidden>
+  <div class="row between">
+    <select id="unit" aria-label="unit"><option value="">{t(lang, 'review.unit_all')}</option></select>
+    <div class="row" style="gap:1rem">
+      <label class="switch" id="rev-wrap"><input type="checkbox" id="reverse" /> {t(lang, 'review.reverse')}</label>
+      <label class="switch"><input type="checkbox" id="all" /> {t(lang, 'review.all_cards')}</label>
+    </div>
   </div>
-  <div class="row" id="controls">
-    <button type="button" id="show" class="primary">{t(lang, 'review.show')}</button>
-    <button type="button" id="again" hidden>✗ {t(lang, 'review.again')}</button>
-    <button type="button" id="know" class="primary" hidden>✓ {t(lang, 'review.know')}</button>
+
+  <div id="session">
+    <div class="row between" style="margin-top:1.2rem">
+      <span class="muted small"><strong id="left">0</strong> {t(lang, 'review.left')}</span>
+      <span class="muted small" id="count"></span>
+    </div>
+    <div class="progress" style="margin-top:.5rem"><i id="bar"></i></div>
+    <div class="stage">
+      <div class="flip" id="flip" role="button" tabindex="0" aria-label={t(lang, 'review.show')}>
+        <div class="face front glass"><div id="front"></div><button type="button" class="speak corner" id="speak-f" aria-label={t(lang, 'review.listen')} hidden>🔊</button><span class="hint">{t(lang, 'review.tap')}</span></div>
+        <div class="face back glass"><div id="backc"></div><button type="button" class="speak corner" id="speak-b" aria-label={t(lang, 'review.listen')} hidden>🔊</button></div>
+      </div>
+    </div>
+    <div class="answers" id="answers">
+      <button type="button" id="again" class="btn-bad" disabled>✕ {t(lang, 'review.again')}</button>
+      <button type="button" id="know" class="btn-ok" disabled>✓ {t(lang, 'review.know')}</button>
+    </div>
+    <p class="muted small" style="text-align:center;margin-top:1rem"><kbd>Espace</kbd> <kbd>1</kbd> <kbd>2</kbd> <kbd>S</kbd> 🔊</p>
   </div>
-  <p class="muted">Espace / 1 / 2</p>
-  <script type="application/json" id="cards" set:html={JSON.stringify(cards)} />
-  <template id="i18n" data-empty={t(lang, 'review.empty')} data-done={t(lang, 'review.done')}></template>
+
+  <div class="glass done" id="end" hidden>
+    <div class="check">✓</div>
+    <p class="term" id="end-msg" style="margin:.2rem 0"></p>
+    <p class="muted" id="end-sub"></p>
+    <a class="btn primary" id="back-subject" href={`/${lang}/`}>← {t(lang, 'nav.home')}</a>
+  </div>
+  </div>
+
+  <script type="application/json" id="cards" set:html={JSON.stringify({ cards, meta })} />
+  <template id="i18n" data-empty={t(lang, 'review.empty')} data-done={t(lang, 'review.done')} data-reviewed={t(lang, 'review.reviewed')}></template>
 </Base>
 
 <script>
   import { load, grade, isDue } from '../../scripts/progress';
-  type Card = { id: string; subject: string; deck: string; front: string; back: string };
-  const all: Card[] = JSON.parse(document.getElementById('cards')!.textContent!);
+  import { speak } from '../../scripts/speak';
+  type Card = { id: string; subject: string; unit: string; deck: string; front: string; back: string; speak?: string; rfront?: string; rback?: string };
+  type Meta = Record<string, { name: string; speech: string; units: { slug: string; label: string }[] }>;
+  const { cards: all, meta } = JSON.parse(document.getElementById('cards')!.textContent!) as { cards: Card[]; meta: Meta };
   const i18n = document.getElementById('i18n')!.dataset;
   const $ = (id: string) => document.getElementById(id)!;
+  const flip = $('flip'), again = $('again') as HTMLButtonElement, know = $('know') as HTMLButtonElement;
   const params = new URLSearchParams(location.search);
-  const subjectSel = $('subject') as HTMLSelectElement, allBox = $('all') as HTMLInputElement;
-  subjectSel.value = params.get('subject') ?? '';
+  const subject = params.get('subject') ?? '';
   const deck = params.get('deck');
-  let queue: Card[] = [], seen = 0;
+  const unitSel = $('unit') as HTMLSelectElement, allBox = $('all') as HTMLInputElement, revBox = $('reverse') as HTMLInputElement;
+  type Q = Card & { key: string; f: string; b: string };
+  let queue: Q[] = [], total = 0, seen = 0, busy = false;
+  const m = meta[subject];
+
+  if (!m && !deck) $('picker').hidden = false;
+  else {
+    $('main').hidden = false;
+    if (m) {
+      $('title').textContent = m.name;
+      ($('back-subject') as HTMLAnchorElement).href = `../${subject}/`;
+      $('back-subject').textContent = '← ' + m.name;
+      for (const u of m.units) unitSel.add(new Option(u.label, u.slug));
+      unitSel.value = params.get('unit') ?? '';
+    }
+    unitSel.hidden = !m || m.units.length < 2;
+    $('rev-wrap').hidden = !all.some((c) => c.subject === subject && c.rfront);
+    unitSel.onchange = allBox.onchange = revBox.onchange = start;
+    start();
+    document.addEventListener('progress:ready', () => { if (!seen) start(); });
+  }
 
   function start() {
     const p = load();
-    queue = all.filter((c) => (!deck || c.deck === deck) && (!subjectSel.value || c.subject === subjectSel.value) && (allBox.checked || isDue(p, c.id)));
-    for (let i = queue.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [queue[i], queue[j]] = [queue[j], queue[i]]; } // interleaving
-    seen = 0;
-    next();
+    const rev = revBox.checked;
+    queue = all
+      .filter((c) => (deck ? c.deck === deck : c.subject === subject) && (!unitSel.value || c.unit === unitSel.value))
+      .map((c) => (rev && c.rfront ? { ...c, key: c.id + '~r', f: c.rfront, b: c.rback! } : { ...c, key: c.id, f: c.front, b: c.back }))
+      .filter((c) => allBox.checked || isDue(p, c.key));
+    for (let i = queue.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [queue[i], queue[j]] = [queue[j], queue[i]]; }
+    total = queue.length; seen = 0;
+    show();
   }
-  function next() {
-    $('left').textContent = String(queue.length);
+  function show() {
     const c = queue[0];
-    $('back').hidden = true; $('again').hidden = true; $('know').hidden = true;
-    $('show').hidden = !c; $('front').hidden = !c; $('msg').hidden = !!c;
-    if (!c) { $('msg').textContent = seen ? i18n.done! : i18n.empty!; return; }
-    $('front').innerHTML = c.front; $('backc').innerHTML = c.back;
+    $('left').textContent = String(queue.length);
+    $('count').textContent = total ? `${total - queue.length} / ${total}` : '';
+    ($('bar') as HTMLElement).style.width = total ? `${((total - queue.length) / total) * 100}%` : '0';
+    $('session').hidden = !c; $('end').hidden = !!c;
+    if (!c) {
+      $('end-msg').textContent = seen ? i18n.done! : i18n.empty!;
+      $('end-sub').textContent = seen ? `${seen} ${i18n.reviewed}` : '';
+      $('end').querySelector('.check')!.toggleAttribute('hidden', !seen);
+      return;
+    }
+    flip.className = 'flip';
+    $('front').innerHTML = c.f; $('backc').innerHTML = c.b;
+    const rev = c.key.endsWith('~r');
+    $('speak-f').hidden = !c.speak || rev; $('speak-b').hidden = !c.speak;
+    void flip.offsetWidth; flip.classList.add('in');
+    again.disabled = know.disabled = true;
   }
-  function reveal() { if (!queue[0]) return; $('back').hidden = false; $('show').hidden = true; $('again').hidden = false; $('know').hidden = false; }
+  const say = () => { const c = queue[0]; if (c?.speak) speak(c.speak, meta[c.subject]?.speech || 'ko-KR'); };
+  function reveal() {
+    if (!queue[0] || busy) return;
+    flip.classList.remove('in');
+    flip.classList.toggle('flipped');
+    again.disabled = know.disabled = false;
+  }
   function answer(ok: boolean) {
-    if (!queue[0] || $('back').hidden) return;
+    if (!queue[0] || busy || !flip.classList.contains('flipped')) return;
+    busy = true;
     const c = queue.shift()!;
-    grade(c.id, ok); seen++;
-    if (!ok) queue.push(c); // revoir dans la même session
-    next();
+    grade(c.key, ok); seen++;
+    if (!ok) queue.push(c); // revue dans la même session
+    flip.classList.add(ok ? 'out-ok' : 'out-bad');
+    setTimeout(() => { busy = false; show(); }, 320);
   }
-  $('show').onclick = reveal;
-  $('again').onclick = () => answer(false);
-  $('know').onclick = () => answer(true);
-  subjectSel.onchange = allBox.onchange = start;
+  flip.onclick = reveal;
+  $('speak-f').onclick = $('speak-b').onclick = (e) => { e.stopPropagation(); say(); };
+  again.onclick = () => answer(false);
+  know.onclick = () => answer(true);
   document.addEventListener('keydown', (e) => {
-    if ((e.target as HTMLElement).tagName === 'SELECT') return;
-    if (e.key === ' ') { e.preventDefault(); reveal(); }
+    if (['SELECT', 'INPUT'].includes((e.target as HTMLElement).tagName)) return;
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); reveal(); }
     else if (e.key === '1') answer(false);
     else if (e.key === '2') answer(true);
+    else if (e.key.toLowerCase() === 's') say();
   });
-  start();
-  document.addEventListener('progress:ready', () => { if (!seen) start(); });
 </script>

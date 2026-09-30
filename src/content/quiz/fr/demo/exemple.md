@@ -1,6 +1,7 @@
 ---
 title: Quiz exemple (à supprimer)
 subject: demo
+unit: week-01
 tags: [exemple]
 questions:
   - question: "Dans $a^2 + b^2 = c^2$, que représente $c$ ?"

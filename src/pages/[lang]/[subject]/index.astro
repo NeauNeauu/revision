@@ -1,0 +1,98 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { t, subjectName, langs, type Lang } from '../../../i18n';
+import { subjectsList, unitsOf, inLang, parts, allCards } from '../../../lib/content';
+import { subjectConf, unitLabel } from '../../../lib/subjects';
+export async function getStaticPaths() {
+  return (await Promise.all(langs.map(async (lang) => (await subjectsList(lang)).map((subject) => ({ params: { lang, subject } }))))).flat();
+}
+const lang = Astro.params.lang as Lang;
+const subject = Astro.params.subject!;
+const units = await unitsOf(lang, subject);
+const unitSlugs = new Set(units.map((u) => parts(u.id).slug));
+const label = unitLabel(lang, subject);
+const other = [] as { type: string; href: string; title: string }[];
+for (const type of ['lessons', 'formulas', 'quiz'] as const)
+  for (const e of await inLang(type, lang)) {
+    const p = parts(e.id);
+    if (p.subject === subject && !(e.data.unit && unitSlugs.has(e.data.unit)))
+      other.push({ type, href: `/${lang}/${type}/${subject}/${p.slug}/`, title: e.data.title });
+  }
+const cards = (await allCards(lang)).filter((c) => c.subject === subject).map(({ id, unit }) => ({ id, unit }));
+const rev = `/${lang}/review/?subject=${subject}`;
+---
+<Base lang={lang} title={subjectName(lang, subject)}>
+  <p class="eyebrow"><a href={`/${lang}/`}>← {t(lang, 'nav.home')}</a></p>
+  <div class="row" style="gap:1rem;margin:.6rem 0 1.2rem">
+    <span class="subject-icon lg">{subjectConf(subject).icon}</span>
+    <h1 style="margin:0">{subjectName(lang, subject)}</h1>
+  </div>
+
+  <div class="stats">
+    <div class="glass stat"><b id="s-due" class="gradient-text">0</b><span class="muted small">{t(lang, 'dash.due')}</span></div>
+    <div class="glass stat"><b id="s-m">0</b><span class="muted small">{t(lang, 'dash.mastered')}</span></div>
+    <div class="glass stat"><b id="s-t">0</b><span class="muted small">{t(lang, 'dash.total')}</span></div>
+  </div>
+  <a class="btn primary lg" style="margin-top:1rem;width:100%" href={rev}>{t(lang, 'subject.review')} →</a>
+
+  <h2>{t(lang, 'subject.units')}</h2>
+  {units.length === 0 && other.length === 0 && <p class="glass empty muted">{t(lang, 'subject.empty')}</p>}
+  <div class="units">
+    {units.map((u) => {
+      const slug = parts(u.id).slug;
+      return (
+        <a class="unit-row glass" href={`/${lang}/${subject}/${slug}/`} data-unit={slug}>
+          <span class="unit-num">{u.data.order}</span>
+          <span class="subject-body">
+            <span class="eyebrow">{label} {u.data.order}</span>
+            <strong>{u.data.title}</strong>
+            {u.data.summary && <span class="muted small">{u.data.summary}</span>}
+            <span class="progress" style="margin-top:.5rem"><i class="m" data-m></i><i class="l" data-l></i></span>
+          </span>
+          <span class="due-pill" data-due hidden></span>
+          <span class="arrow">›</span>
+        </a>
+      );
+    })}
+  </div>
+
+  {other.length > 0 && (
+    <>
+      <h2>{t(lang, 'subject.other')}</h2>
+      <ul class="items">
+        {other.map((i) => (
+          <li><a class="item glass" href={i.href}><span class={`type t-${i.type}`}>{t(lang, 'type_one.' + i.type)}</span><span class="title">{i.title}</span><span class="arrow">›</span></a></li>
+        ))}
+      </ul>
+    </>
+  )}
+  <script type="application/json" id="cards" set:html={JSON.stringify(cards)} />
+</Base>
+
+<script>
+  import { load, isDue } from '../../../scripts/progress';
+  const cards: { id: string; unit: string }[] = JSON.parse(document.getElementById('cards')!.textContent!);
+  const $ = (id: string) => document.getElementById(id)!;
+  function stats() {
+    const p = load();
+    const box = (id: string) => p.cards[id]?.box ?? 0;
+    $('s-due').textContent = String(cards.filter((c) => isDue(p, c.id)).length);
+    $('s-m').textContent = String(cards.filter((c) => box(c.id) === 5).length);
+    $('s-t').textContent = String(cards.length);
+    document.querySelectorAll<HTMLElement>('.unit-row').forEach((row) => {
+      const list = cards.filter((c) => c.unit === row.dataset.unit);
+      const n = list.length || 1;
+      const m = list.filter((c) => box(c.id) === 5).length, l = list.filter((c) => box(c.id) > 0 && box(c.id) < 5).length;
+      const d = list.filter((c) => isDue(p, c.id)).length;
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        row.querySelector<HTMLElement>('[data-m]')!.style.width = `${(m / n) * 100}%`;
+        row.querySelector<HTMLElement>('[data-l]')!.style.width = `${(l / n) * 100}%`;
+      }));
+      const due = row.querySelector<HTMLElement>('[data-due]')!;
+      due.hidden = !d; due.textContent = String(d);
+    });
+  }
+  stats();
+  document.addEventListener('progress:ready', stats);
+</script>

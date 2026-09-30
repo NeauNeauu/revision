@@ -1,6 +1,7 @@
 ---
 title: Leçon exemple (à supprimer)
 subject: demo
+unit: week-01
 tags: [exemple]
 date: 2026-09-30
 summary: "Fichier de démonstration du format leçon. Montre la structure attendue. À supprimer quand les vrais cours arrivent."

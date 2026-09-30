@@ -1,29 +1,124 @@
 {
   "site": "Révisions",
-  "nav": { "home": "Accueil", "review": "Réviser", "dashboard": "Progression", "search": "Recherche" },
-  "types": { "lessons": "Leçons", "vocab": "Vocabulaire", "formulas": "Formules", "quiz": "Quiz" },
-  "subjects": { "bi": "Business Intelligence", "android": "Android", "coreen": "Coréen", "demo": "Démo" },
-  "home": { "title": "Mes révisions", "due": "cartes à réviser aujourd'hui", "empty": "Aucun contenu." },
-  "filter": { "subject": "Matière", "tag": "Tag", "all": "Toutes" },
+  "nav": {
+    "home": "Accueil",
+    "review": "Réviser",
+    "dashboard": "Progression",
+    "search": "Recherche"
+  },
+  "types": {
+    "lessons": "Leçons",
+    "vocab": "Vocabulaire",
+    "formulas": "Formules",
+    "quiz": "Quiz"
+  },
+  "subjects": {
+    "bi": "Business Intelligence",
+    "android": "Android",
+    "coreen": "Coréen",
+    "demo": "Démo"
+  },
+  "home": {
+    "title": "Mes révisions",
+    "due": "cartes à réviser aujourd'hui",
+    "empty": "Aucun contenu.",
+    "today": "Aujourd'hui",
+    "start": "Commencer",
+    "subjects": "Matières",
+    "content": "Contenus",
+    "mastered": "cartes maîtrisées",
+    "up_to_date": "Tout est à jour",
+    "pick": "Choisis une matière pour commencer."
+  },
+  "filter": {
+    "subject": "Matière",
+    "tag": "Tag",
+    "all": "Toutes"
+  },
   "review": {
-    "title": "Réviser", "show": "Afficher la réponse", "know": "Je savais", "again": "À revoir",
-    "done": "Session terminée ✓", "empty": "Rien à réviser aujourd'hui.", "left": "restantes",
-    "all_cards": "Toutes les cartes (pas seulement les dues)", "deck": "Réviser ce deck"
+    "title": "Réviser",
+    "show": "Afficher la réponse",
+    "know": "Je savais",
+    "again": "À revoir",
+    "done": "Session terminée ✓",
+    "empty": "Rien à réviser aujourd'hui.",
+    "left": "restantes",
+    "all_cards": "Toutes les cartes (pas seulement les dues)",
+    "deck": "Réviser ce deck",
+    "tap": "Touche la carte pour la retourner",
+    "reviewed": "cartes révisées",
+    "pick": "Choisis une matière à réviser.",
+    "reverse": "Sens inverse (traduction → terme)",
+    "unit_all": "Toutes",
+    "listen": "Écouter"
   },
   "quiz": {
-    "check": "Valider", "next": "Suivante", "score": "Score", "correct": "Correct", "wrong": "Faux — réponse :",
-    "restart": "Recommencer", "placeholder": "Ta réponse", "best": "Meilleur"
+    "check": "Valider",
+    "next": "Suivante",
+    "score": "Score",
+    "correct": "Correct",
+    "wrong": "Faux — réponse :",
+    "restart": "Recommencer",
+    "placeholder": "Ta réponse",
+    "best": "Meilleur",
+    "question": "Question"
   },
   "dash": {
-    "title": "Progression", "subject": "Matière", "total": "Cartes", "due": "Dues", "mastered": "Maîtrisées",
-    "quiz": "Quiz", "code": "Code perso",
+    "title": "Progression",
+    "subject": "Matière",
+    "total": "Cartes",
+    "due": "Dues",
+    "mastered": "Maîtrisées",
+    "quiz": "Quiz",
+    "code": "Code perso",
     "code_help": "Ton code synchronise ta progression entre appareils. Garde-le pour toi, pas de compte nécessaire.",
-    "use": "Utiliser", "generate": "Générer un code", "none": "Aucun code : progression seulement sur cet appareil.",
-    "sync_ok": "Synchronisé", "sync_error": "Hors ligne — sauvegardé localement"
+    "use": "Utiliser",
+    "generate": "Générer un code",
+    "none": "Aucun code : progression seulement sur cet appareil.",
+    "sync_ok": "Synchronisé",
+    "sync_error": "Hors ligne — sauvegardé localement",
+    "learning": "En cours",
+    "new": "Nouvelles",
+    "quizzes_done": "Quiz faits",
+    "copy": "Copier",
+    "copied": "Copié"
   },
-  "vocab": { "term": "Terme", "reading": "Lecture", "translation": "Traduction", "example": "Exemple" },
-  "formulas": { "when": "Quand l'utiliser", "example": "Exemple" },
-  "search": { "title": "Recherche", "dev": "La recherche n'est disponible qu'après `npm run build`." },
+  "vocab": {
+    "term": "Terme",
+    "reading": "Lecture",
+    "translation": "Traduction",
+    "example": "Exemple"
+  },
+  "formulas": {
+    "when": "Quand l'utiliser",
+    "example": "Exemple"
+  },
+  "search": {
+    "title": "Recherche",
+    "dev": "La recherche n'est disponible qu'après `npm run build`."
+  },
   "theme": "Thème",
-  "lang_switch": "English"
+  "lang_switch": "English",
+  "type_one": {
+    "lessons": "Leçon",
+    "vocab": "Vocab",
+    "formulas": "Formules",
+    "quiz": "Quiz"
+  },
+  "subject": {
+    "units": "Programme",
+    "other": "Autres contenus",
+    "review": "Réviser la matière",
+    "review_unit": "Réviser",
+    "cards": "cartes",
+    "empty": "Pas encore de contenu."
+  },
+  "unit": {
+    "notions": "Notions",
+    "vocab": "Vocabulaire",
+    "examples": "Exemples",
+    "related": "Leçons, formules et quiz",
+    "prev": "Précédent",
+    "next": "Suivant"
+  }
 }
