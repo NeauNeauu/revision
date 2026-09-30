@@ -1,0 +1,25 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { subjectName, type Lang } from '../../../i18n';
+import { parts } from '../../../lib/content';
+export async function getStaticPaths() {
+  return (await getCollection('lessons')).map((entry) => {
+    const { lang, subject, slug } = parts(entry.id);
+    return { params: { lang, slug: `${subject}/${slug}` }, props: { entry } };
+  });
+}
+const { entry } = Astro.props;
+const lang = Astro.params.lang as Lang;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+<Base lang={lang} title={d.title}>
+  <article data-pagefind-body>
+    <p class="muted" data-pagefind-filter="subject">{subjectName(lang, d.subject)}</p>
+    <h1>{d.title}</h1>
+    <p class="muted">{d.date.toLocaleDateString(lang)}{d.tags.length > 0 && ` · ${d.tags.join(', ')}`}</p>
+    <p class="box">{d.summary}</p>
+    <Content />
+  </article>
+</Base>

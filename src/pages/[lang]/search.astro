@@ -1,0 +1,15 @@
+---
+import Base from '../../layouts/Base.astro';
+import { t, langPaths, type Lang } from '../../i18n';
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+---
+<Base lang={lang} title={t(lang, 'search.title')}>
+  <h1>{t(lang, 'search.title')}</h1>
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+  <div id="search"><p class="muted">{t(lang, 'search.dev')}</p></div>
+  <script is:inline src="/pagefind/pagefind-ui.js"></script>
+  <script is:inline>
+    if (window.PagefindUI) { document.getElementById('search').innerHTML = ''; new PagefindUI({ element: '#search', showSubResults: true }); }
+  </script>
+</Base>

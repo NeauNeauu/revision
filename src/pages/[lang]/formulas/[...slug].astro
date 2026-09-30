@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { t, subjectName, type Lang } from '../../../i18n';
+import { parts, tex, mathText } from '../../../lib/content';
+export async function getStaticPaths() {
+  return (await getCollection('formulas')).map((entry) => {
+    const { lang, subject, slug } = parts(entry.id);
+    return { params: { lang, slug: `${subject}/${slug}` }, props: { entry } };
+  });
+}
+const { entry } = Astro.props;
+const lang = Astro.params.lang as Lang;
+const d = entry.data;
+const deck = `formulas/${Astro.params.slug}`;
+---
+<Base lang={lang} title={d.title}>
+  <article data-pagefind-body>
+    <p class="muted" data-pagefind-filter="subject">{subjectName(lang, d.subject)}</p>
+    <h1>{d.title}</h1>
+    <p><a href={`/${lang}/review/?deck=${encodeURIComponent(deck)}`}>▶ {t(lang, 'review.deck')}</a></p>
+    {d.chapters.map((ch) => (
+      <section>
+        <h2>{ch.chapter}</h2>
+        {ch.formulas.map((f) => (
+          <div class="box">
+            <strong>{f.name}</strong>
+            <Fragment set:html={tex(f.latex, true)} />
+            <p><span class="muted">{t(lang, 'formulas.when')} :</span> <Fragment set:html={mathText(f.when_to_use)} /></p>
+            <p><span class="muted">{t(lang, 'formulas.example')} :</span> <Fragment set:html={mathText(f.example)} /></p>
+          </div>
+        ))}
+      </section>
+    ))}
+  </article>
+</Base>

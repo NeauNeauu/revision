@@ -1,0 +1,82 @@
+---
+import Base from '../../layouts/Base.astro';
+import { t, subjectName, langPaths, type Lang } from '../../i18n';
+import { allCards } from '../../lib/content';
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+const cards = await allCards(lang);
+const subjects = [...new Set(cards.map((c) => c.subject))].sort();
+---
+<Base lang={lang} title={t(lang, 'review.title')}>
+  <h1>{t(lang, 'review.title')}</h1>
+  <div class="row">
+    <select id="subject" aria-label={t(lang, 'filter.subject')}>
+      <option value="">{t(lang, 'filter.subject')} : {t(lang, 'filter.all')}</option>
+      {subjects.map((s) => <option value={s}>{subjectName(lang, s)}</option>)}
+    </select>
+    <label class="muted"><input type="checkbox" id="all" /> {t(lang, 'review.all_cards')}</label>
+  </div>
+  <p class="muted"><span id="left">0</span> {t(lang, 'review.left')}</p>
+  <div class="box" id="flash">
+    <div id="front"></div>
+    <div id="back" hidden><hr /><div id="backc"></div></div>
+    <p id="msg" hidden></p>
+  </div>
+  <div class="row" id="controls">
+    <button type="button" id="show" class="primary">{t(lang, 'review.show')}</button>
+    <button type="button" id="again" hidden>✗ {t(lang, 'review.again')}</button>
+    <button type="button" id="know" class="primary" hidden>✓ {t(lang, 'review.know')}</button>
+  </div>
+  <p class="muted">Espace / 1 / 2</p>
+  <script type="application/json" id="cards" set:html={JSON.stringify(cards)} />
+  <template id="i18n" data-empty={t(lang, 'review.empty')} data-done={t(lang, 'review.done')}></template>
+</Base>
+
+<script>
+  import { load, grade, isDue } from '../../scripts/progress';
+  type Card = { id: string; subject: string; deck: string; front: string; back: string };
+  const all: Card[] = JSON.parse(document.getElementById('cards')!.textContent!);
+  const i18n = document.getElementById('i18n')!.dataset;
+  const $ = (id: string) => document.getElementById(id)!;
+  const params = new URLSearchParams(location.search);
+  const subjectSel = $('subject') as HTMLSelectElement, allBox = $('all') as HTMLInputElement;
+  subjectSel.value = params.get('subject') ?? '';
+  const deck = params.get('deck');
+  let queue: Card[] = [], seen = 0;
+
+  function start() {
+    const p = load();
+    queue = all.filter((c) => (!deck || c.deck === deck) && (!subjectSel.value || c.subject === subjectSel.value) && (allBox.checked || isDue(p, c.id)));
+    for (let i = queue.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [queue[i], queue[j]] = [queue[j], queue[i]]; } // interleaving
+    seen = 0;
+    next();
+  }
+  function next() {
+    $('left').textContent = String(queue.length);
+    const c = queue[0];
+    $('back').hidden = true; $('again').hidden = true; $('know').hidden = true;
+    $('show').hidden = !c; $('front').hidden = !c; $('msg').hidden = !!c;
+    if (!c) { $('msg').textContent = seen ? i18n.done! : i18n.empty!; return; }
+    $('front').innerHTML = c.front; $('backc').innerHTML = c.back;
+  }
+  function reveal() { if (!queue[0]) return; $('back').hidden = false; $('show').hidden = true; $('again').hidden = false; $('know').hidden = false; }
+  function answer(ok: boolean) {
+    if (!queue[0] || $('back').hidden) return;
+    const c = queue.shift()!;
+    grade(c.id, ok); seen++;
+    if (!ok) queue.push(c); // revoir dans la même session
+    next();
+  }
+  $('show').onclick = reveal;
+  $('again').onclick = () => answer(false);
+  $('know').onclick = () => answer(true);
+  subjectSel.onchange = allBox.onchange = start;
+  document.addEventListener('keydown', (e) => {
+    if ((e.target as HTMLElement).tagName === 'SELECT') return;
+    if (e.key === ' ') { e.preventDefault(); reveal(); }
+    else if (e.key === '1') answer(false);
+    else if (e.key === '2') answer(true);
+  });
+  start();
+  document.addEventListener('progress:ready', () => { if (!seen) start(); });
+</script>

@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { t, subjectName, langPaths, type Lang } from '../../i18n';
+import { inLang, parts, allCards } from '../../lib/content';
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+
+type Item = { type: string; href: string; title: string; subject: string; tags: string[] };
+const items: Item[] = [];
+for (const type of ['lessons', 'formulas', 'quiz'] as const)
+  for (const e of await inLang(type, lang)) {
+    const { subject, slug } = parts(e.id);
+    items.push({ type, href: `/${lang}/${type}/${subject}/${slug}/`, title: e.data.title, subject, tags: e.data.tags });
+  }
+for (const v of await getCollection('vocab')) {
+  const { subject } = parts(v.id, false);
+  items.push({ type: 'vocab', href: `/${lang}/vocab/${v.id}/`, title: v.data.deck[lang], subject, tags: v.data.tags });
+}
+const subjects = [...new Set(items.map((i) => i.subject))].sort();
+const tags = [...new Set(items.flatMap((i) => i.tags))].sort();
+const cardIds = (await allCards(lang)).map((c) => c.id);
+---
+<Base lang={lang}>
+  <h1>{t(lang, 'home.title')}</h1>
+  <p class="box"><a href={`/${lang}/review/`}><strong id="due">…</strong> {t(lang, 'home.due')}</a></p>
+
+  <div class="row chips" id="subjects">
+    <button type="button" data-s="" aria-pressed="true">{t(lang, 'filter.all')}</button>
+    {subjects.map((s) => <button type="button" data-s={s} aria-pressed="false">{subjectName(lang, s)}</button>)}
+    {tags.length > 0 && (
+      <select id="tag" aria-label={t(lang, 'filter.tag')}>
+        <option value="">{t(lang, 'filter.tag')}: {t(lang, 'filter.all')}</option>
+        {tags.map((g) => <option value={g}>{g}</option>)}
+      </select>
+    )}
+  </div>
+
+  {items.length === 0 && <p>{t(lang, 'home.empty')}</p>}
+  {(['lessons', 'vocab', 'formulas', 'quiz'] as const).map((type) => {
+    const list = items.filter((i) => i.type === type);
+    return list.length > 0 && (
+      <section data-section>
+        <h2>{t(lang, 'types.' + type)}</h2>
+        <ul class="list">
+          {list.map((i) => (
+            <li data-subject={i.subject} data-tags={i.tags.join(' ')}>
+              <a href={i.href}>{i.title}</a> <span class="muted">· {subjectName(lang, i.subject)}{i.tags.length > 0 && ` · ${i.tags.join(', ')}`}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    );
+  })}
+  <script type="application/json" id="ids" set:html={JSON.stringify(cardIds)} />
+</Base>
+
+<script>
+  import { load, isDue } from '../../scripts/progress';
+  const ids: string[] = JSON.parse(document.getElementById('ids')!.textContent!);
+  const showDue = () => { const p = load(); document.getElementById('due')!.textContent = String(ids.filter((id) => isDue(p, id)).length); };
+  showDue();
+  document.addEventListener('progress:ready', showDue);
+
+  let subject = '', tag = '';
+  const apply = () => {
+    document.querySelectorAll<HTMLElement>('li[data-subject]').forEach((li) => {
+      li.hidden = (!!subject && li.dataset.subject !== subject) || (!!tag && !li.dataset.tags!.split(' ').includes(tag));
+    });
+    document.querySelectorAll<HTMLElement>('[data-section]').forEach((s) => { s.hidden = !s.querySelector('li:not([hidden])'); });
+  };
+  document.querySelectorAll<HTMLButtonElement>('#subjects button').forEach((b) =>
+    b.addEventListener('click', () => {
+      subject = b.dataset.s!;
+      document.querySelectorAll('#subjects button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      apply();
+    }));
+  document.getElementById('tag')?.addEventListener('change', (e) => { tag = (e.target as HTMLSelectElement).value; apply(); });
+</script>

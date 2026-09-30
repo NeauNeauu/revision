@@ -1,0 +1,7 @@
+---
+// Netlify redirige "/" côté serveur (netlify.toml). Fallback pour le dev local :
+---
+<script is:inline>
+  location.replace(navigator.language?.toLowerCase().startsWith('fr') ? '/fr/' : '/en/');
+</script>
+<noscript><a href="/fr/">Français</a> · <a href="/en/">English</a></noscript>

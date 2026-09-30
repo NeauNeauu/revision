@@ -1,0 +1,29 @@
+{
+  "site": "Révisions",
+  "nav": { "home": "Accueil", "review": "Réviser", "dashboard": "Progression", "search": "Recherche" },
+  "types": { "lessons": "Leçons", "vocab": "Vocabulaire", "formulas": "Formules", "quiz": "Quiz" },
+  "subjects": { "bi": "Business Intelligence", "android": "Android", "coreen": "Coréen", "demo": "Démo" },
+  "home": { "title": "Mes révisions", "due": "cartes à réviser aujourd'hui", "empty": "Aucun contenu." },
+  "filter": { "subject": "Matière", "tag": "Tag", "all": "Toutes" },
+  "review": {
+    "title": "Réviser", "show": "Afficher la réponse", "know": "Je savais", "again": "À revoir",
+    "done": "Session terminée ✓", "empty": "Rien à réviser aujourd'hui.", "left": "restantes",
+    "all_cards": "Toutes les cartes (pas seulement les dues)", "deck": "Réviser ce deck"
+  },
+  "quiz": {
+    "check": "Valider", "next": "Suivante", "score": "Score", "correct": "Correct", "wrong": "Faux — réponse :",
+    "restart": "Recommencer", "placeholder": "Ta réponse", "best": "Meilleur"
+  },
+  "dash": {
+    "title": "Progression", "subject": "Matière", "total": "Cartes", "due": "Dues", "mastered": "Maîtrisées",
+    "quiz": "Quiz", "code": "Code perso",
+    "code_help": "Ton code synchronise ta progression entre appareils. Garde-le pour toi, pas de compte nécessaire.",
+    "use": "Utiliser", "generate": "Générer un code", "none": "Aucun code : progression seulement sur cet appareil.",
+    "sync_ok": "Synchronisé", "sync_error": "Hors ligne — sauvegardé localement"
+  },
+  "vocab": { "term": "Terme", "reading": "Lecture", "translation": "Traduction", "example": "Exemple" },
+  "formulas": { "when": "Quand l'utiliser", "example": "Exemple" },
+  "search": { "title": "Recherche", "dev": "La recherche n'est disponible qu'après `npm run build`." },
+  "theme": "Thème",
+  "lang_switch": "English"
+}

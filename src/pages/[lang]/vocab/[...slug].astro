@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { t, subjectName, langs, type Lang } from '../../../i18n';
+import { parts } from '../../../lib/content';
+export async function getStaticPaths() {
+  const decks = await getCollection('vocab');
+  return langs.flatMap((lang) => decks.map((entry) => ({ params: { lang, slug: entry.id }, props: { entry } })));
+}
+const { entry } = Astro.props;
+const lang = Astro.params.lang as Lang;
+const d = entry.data;
+const { subject } = parts(entry.id, false);
+const hasReading = d.cards.some((c) => c.reading);
+const hasExample = d.cards.some((c) => c.example);
+---
+<Base lang={lang} title={d.deck[lang]}>
+  <article data-pagefind-body>
+    <p class="muted" data-pagefind-filter="subject">{subjectName(lang, subject)}</p>
+    <h1>{d.deck[lang]}</h1>
+    <p><a href={`/${lang}/review/?deck=${encodeURIComponent('vocab/' + entry.id)}`}>▶ {t(lang, 'review.deck')}</a></p>
+    <div class="table-wrap">
+      <table lang={d.lang}>
+        <thead><tr>
+          <th>{t(lang, 'vocab.term')}</th>{hasReading && <th>{t(lang, 'vocab.reading')}</th>}
+          <th>{t(lang, 'vocab.translation')}</th>{hasExample && <th>{t(lang, 'vocab.example')}</th>}
+        </tr></thead>
+        <tbody>
+          {d.cards.map((c) => (
+            <tr><td><strong>{c.term}</strong></td>{hasReading && <td class="muted">{c.reading}</td>}
+              <td lang={lang}>{c[lang]}</td>{hasExample && <td>{c.example}</td>}</tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </article>
+</Base>

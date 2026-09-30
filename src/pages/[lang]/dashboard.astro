@@ -1,0 +1,60 @@
+---
+import Base from '../../layouts/Base.astro';
+import { t, subjectName, langPaths, type Lang } from '../../i18n';
+import { allCards } from '../../lib/content';
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+const cards = (await allCards(lang)).map(({ id, subject }) => ({ id, subject }));
+const names = Object.fromEntries(cards.map((c) => [c.subject, subjectName(lang, c.subject)]));
+---
+<Base lang={lang} title={t(lang, 'dash.title')}>
+  <h1>{t(lang, 'dash.title')}</h1>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>{t(lang, 'dash.subject')}</th><th>{t(lang, 'dash.total')}</th><th>{t(lang, 'dash.due')}</th><th>{t(lang, 'dash.mastered')}</th></tr></thead>
+      <tbody id="stats"></tbody>
+    </table>
+  </div>
+  <h2>{t(lang, 'dash.quiz')}</h2>
+  <ul class="list" id="quizzes"></ul>
+
+  <section class="box">
+    <h2>{t(lang, 'dash.code')}</h2>
+    <p class="muted">{t(lang, 'dash.code_help')}</p>
+    <p><code id="current"></code> <span id="status" class="muted"></span></p>
+    <form class="row" id="codeform">
+      <input name="c" pattern="[a-z0-9\-]{8,64}" required autocomplete="off" placeholder="xxxx-xxxx-xxxx" />
+      <button>{t(lang, 'dash.use')}</button>
+      <button type="button" id="gen" class="primary">{t(lang, 'dash.generate')}</button>
+    </form>
+  </section>
+  <script type="application/json" id="cards" set:html={JSON.stringify({ cards, names })} />
+  <template id="i18n" data-none={t(lang, 'dash.none')} data-ok={t(lang, 'dash.sync_ok')} data-error={t(lang, 'dash.sync_error')}></template>
+</Base>
+
+<script>
+  import { load, isDue, getCode, setCode, genCode, sync } from '../../scripts/progress';
+  const { cards, names } = JSON.parse(document.getElementById('cards')!.textContent!) as { cards: { id: string; subject: string }[]; names: Record<string, string> };
+  const i18n = document.getElementById('i18n')!.dataset;
+  const $ = (id: string) => document.getElementById(id)!;
+  const cell = (s: string | number) => { const td = document.createElement('td'); td.textContent = String(s); return td; };
+
+  function render() {
+    const p = load();
+    const rows: Record<string, number[]> = {};
+    for (const c of cards) {
+      const r = (rows[c.subject] ??= [0, 0, 0]);
+      r[0]++; if (isDue(p, c.id)) r[1]++; if (p.cards[c.id]?.box === 5) r[2]++;
+    }
+    $('stats').replaceChildren(...Object.entries(rows).map(([s, r]) => { const tr = document.createElement('tr'); tr.append(cell(names[s]), ...r.map(cell)); return tr; }));
+    $('quizzes').replaceChildren(...Object.entries(p.quiz).map(([id, q]) => { const li = document.createElement('li'); li.textContent = `${id.replace(/^quiz\//, '')} — ${q.last}% (best ${q.best}%)`; return li; }));
+    $('current').textContent = getCode() ?? '';
+    if (!getCode()) $('status').textContent = i18n.none!;
+  }
+  const status = (s: string) => { if (s !== 'off') $('status').textContent = s === 'ok' ? i18n.ok! : i18n.error!; render(); };
+  render();
+  document.addEventListener('progress:ready', (e) => status((e as CustomEvent).detail));
+  const use = async (c: string) => { setCode(c); render(); status(await sync()); };
+  $('codeform').addEventListener('submit', (e) => { e.preventDefault(); use((e.target as HTMLFormElement).c.value); });
+  $('gen').addEventListener('click', () => use(genCode()));
+</script>

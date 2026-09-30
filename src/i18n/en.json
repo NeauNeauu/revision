@@ -1,0 +1,29 @@
+{
+  "site": "Revision",
+  "nav": { "home": "Home", "review": "Review", "dashboard": "Progress", "search": "Search" },
+  "types": { "lessons": "Lessons", "vocab": "Vocabulary", "formulas": "Formulas", "quiz": "Quizzes" },
+  "subjects": { "bi": "Business Intelligence", "android": "Android", "coreen": "Korean", "demo": "Demo" },
+  "home": { "title": "My revision", "due": "cards due today", "empty": "No content." },
+  "filter": { "subject": "Subject", "tag": "Tag", "all": "All" },
+  "review": {
+    "title": "Review", "show": "Show answer", "know": "I knew it", "again": "Again",
+    "done": "Session complete ✓", "empty": "Nothing to review today.", "left": "left",
+    "all_cards": "All cards (not only due ones)", "deck": "Review this deck"
+  },
+  "quiz": {
+    "check": "Check", "next": "Next", "score": "Score", "correct": "Correct", "wrong": "Wrong — answer:",
+    "restart": "Restart", "placeholder": "Your answer", "best": "Best"
+  },
+  "dash": {
+    "title": "Progress", "subject": "Subject", "total": "Cards", "due": "Due", "mastered": "Mastered",
+    "quiz": "Quizzes", "code": "Personal code",
+    "code_help": "Your code syncs your progress across devices. Keep it private, no account needed.",
+    "use": "Use", "generate": "Generate a code", "none": "No code: progress stays on this device only.",
+    "sync_ok": "Synced", "sync_error": "Offline — saved locally"
+  },
+  "vocab": { "term": "Term", "reading": "Reading", "translation": "Translation", "example": "Example" },
+  "formulas": { "when": "When to use", "example": "Example" },
+  "search": { "title": "Search", "dev": "Search is only available after `npm run build`." },
+  "theme": "Theme",
+  "lang_switch": "Français"
+}

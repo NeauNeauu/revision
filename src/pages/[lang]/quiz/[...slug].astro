@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { t, subjectName, type Lang } from '../../../i18n';
+import { parts, mathText } from '../../../lib/content';
+export async function getStaticPaths() {
+  return (await getCollection('quiz')).map((entry) => {
+    const { lang, subject, slug } = parts(entry.id);
+    return { params: { lang, slug: `${subject}/${slug}` }, props: { entry } };
+  });
+}
+const { entry } = Astro.props;
+const lang = Astro.params.lang as Lang;
+const d = entry.data;
+---
+<Base lang={lang} title={d.title}>
+  <article data-pagefind-body id="quiz" data-id={`quiz/${Astro.params.slug}`}>
+    <p class="muted" data-pagefind-filter="subject">{subjectName(lang, d.subject)}</p>
+    <h1>{d.title}</h1>
+    <p class="muted"><span id="pos">1</span> / {d.questions.length} · {t(lang, 'quiz.best')} : <span id="best">–</span></p>
+    {d.questions.map((q, i) => (
+      <section class="box q" data-answer={q.answer} hidden={i > 0}>
+        <p><strong set:html={mathText(q.question)} /></p>
+        {q.choices ? (
+          <div class="row">{q.choices.map((c) => <button type="button" class="choice" data-v={c} set:html={mathText(c)} />)}</div>
+        ) : (
+          <form class="row"><input name="a" autocomplete="off" placeholder={t(lang, 'quiz.placeholder')} /><button class="primary">{t(lang, 'quiz.check')}</button></form>
+        )}
+        <div class="fb" hidden>
+          <p class="res"></p>
+          <p class="muted" set:html={mathText(q.explanation)} />
+          <button type="button" class="next primary">{t(lang, 'quiz.next')}</button>
+        </div>
+      </section>
+    ))}
+    <section class="box" id="end" hidden>
+      <p class="term">{t(lang, 'quiz.score')} : <span id="score"></span>%</p>
+      <button type="button" class="primary" onclick="location.reload()">{t(lang, 'quiz.restart')}</button>
+    </section>
+  </article>
+  <template id="i18n" data-ok={t(lang, 'quiz.correct')} data-wrong={t(lang, 'quiz.wrong')}></template>
+</Base>
+
+<script>
+  import { load, saveQuiz } from '../../../scripts/progress';
+  const root = document.getElementById('quiz')!;
+  const id = root.dataset.id!;
+  const i18n = document.getElementById('i18n')!.dataset;
+  const qs = [...root.querySelectorAll<HTMLElement>('.q')];
+  const norm = (s: string) => s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/\s+/g, ' ').trim();
+  const showBest = () => { const b = load().quiz[id]?.best; document.getElementById('best')!.textContent = b == null ? '–' : b + '%'; };
+  showBest();
+  document.addEventListener('progress:ready', showBest);
+  let good = 0;
+
+  qs.forEach((q, i) => {
+    const answer = q.dataset.answer!;
+    const fb = q.querySelector<HTMLElement>('.fb')!;
+    const done = (v: string) => {
+      if (!fb.hidden) return;
+      const ok = norm(v) === norm(answer);
+      if (ok) good++;
+      const res = fb.querySelector('.res')!;
+      res.className = 'res ' + (ok ? 'ok' : 'bad');
+      res.textContent = ok ? i18n.ok! : `${i18n.wrong} ${answer}`;
+      q.querySelectorAll<HTMLButtonElement>('button.choice').forEach((b) => (b.disabled = true));
+      fb.hidden = false;
+      fb.querySelector<HTMLButtonElement>('.next')!.focus();
+    };
+    q.querySelectorAll<HTMLButtonElement>('button.choice').forEach((b) => b.addEventListener('click', () => done(b.dataset.v!)));
+    q.querySelector('form')?.addEventListener('submit', (e) => { e.preventDefault(); done((e.target as HTMLFormElement).a.value); });
+    fb.querySelector('.next')!.addEventListener('click', () => {
+      q.hidden = true;
+      if (qs[i + 1]) { qs[i + 1].hidden = false; document.getElementById('pos')!.textContent = String(i + 2); return; }
+      const score = Math.round((good / qs.length) * 100);
+      saveQuiz(id, score);
+      document.getElementById('score')!.textContent = String(score);
+      document.getElementById('end')!.hidden = false;
+      showBest();
+    });
+  });
+</script>

@@ -1,0 +1,44 @@
+---
+import 'katex/dist/katex.min.css';
+import '../styles/global.css';
+import { t, type Lang } from '../i18n';
+interface Props { lang: Lang; title?: string }
+const { lang, title } = Astro.props;
+const other: Lang = lang === 'fr' ? 'en' : 'fr';
+const altPath = Astro.url.pathname.replace(/^\/(fr|en)(?=\/|$)/, '/' + other);
+const nav = ['home', 'review', 'dashboard', 'search'] as const;
+const href = (k: string) => `/${lang}/${k === 'home' ? '' : k + '/'}`;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title ? `${title} · ${t(lang, 'site')}` : t(lang, 'site')}</title>
+    <link rel="alternate" hreflang={other} href={altPath} />
+    <script is:inline>
+      try { const th = localStorage.getItem('theme'); if (th) document.documentElement.dataset.theme = th; } catch {}
+    </script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        {nav.map((k) => <a href={href(k)}>{t(lang, 'nav.' + k)}</a>)}
+        <span class="spacer"></span>
+        <button id="theme" type="button" aria-label={t(lang, 'theme')}>◐</button>
+        <a href={altPath} hreflang={other}>{t(lang, 'lang_switch')}</a>
+      </nav>
+    </header>
+    <main><slot /></main>
+    <script>
+      import { sync } from '../scripts/progress';
+      sync().then((s) => document.dispatchEvent(new CustomEvent('progress:ready', { detail: s })));
+      document.getElementById('theme')!.addEventListener('click', () => {
+        const root = document.documentElement;
+        const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+        root.dataset.theme = dark ? 'light' : 'dark';
+        try { localStorage.setItem('theme', root.dataset.theme); } catch {}
+      });
+    </script>
+  </body>
+</html>
