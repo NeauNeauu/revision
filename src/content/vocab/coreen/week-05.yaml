@@ -1,0 +1,504 @@
+{
+ "lang": "ko",
+ "groups": [
+  {
+   "name": {
+    "fr": "Boutiques & lieux",
+    "en": "Shops & places"
+   },
+   "cards": [
+    {
+     "term": "면세점",
+     "fr": "boutique duty free",
+     "en": "duty-free shop",
+     "reading": "myeonsejeom",
+     "mnemonic": {
+      "fr": "免稅店 : « magasin sans taxe » + 점 (magasin).",
+      "en": "免稅店: “tax-free shop” + 점 (shop)."
+     },
+     "ex": {
+      "ko": "면세점에서 화장품을 사요.",
+      "fr": "J'achète des cosmétiques au duty-free.",
+      "en": "I buy cosmetics at the duty-free shop."
+     }
+    },
+    {
+     "term": "할인 매장",
+     "fr": "magasin discount",
+     "en": "discount store",
+     "reading": "halin maejang",
+     "ex": {
+      "ko": "할인 매장은 싸요.",
+      "fr": "Le magasin discount est bon marché.",
+      "en": "The discount store is cheap."
+     }
+    },
+    {
+     "term": "액세서리",
+     "fr": "accessoires",
+     "en": "accessories",
+     "reading": "aeksaeseori",
+     "ex": {
+      "ko": "액세서리를 사고 싶어요.",
+      "fr": "Je veux acheter des accessoires.",
+      "en": "I want to buy accessories."
+     }
+    },
+    {
+     "term": "아이돌 굿즈",
+     "fr": "produits dérivés d'idoles",
+     "en": "idol goods",
+     "reading": "aidol gutjeu",
+     "ex": {
+      "ko": "아이돌 굿즈를 사고 싶어요.",
+      "fr": "Je veux acheter des produits dérivés d'idoles.",
+      "en": "I want to buy idol goods."
+     }
+    },
+    {
+     "term": "전자제품",
+     "fr": "produits électroniques",
+     "en": "electronics",
+     "reading": "jeonjajepum",
+     "ex": {
+      "ko": "전자제품이 비싸요.",
+      "fr": "Les produits électroniques sont chers.",
+      "en": "Electronics are expensive."
+     }
+    },
+    {
+     "term": "커피숍",
+     "fr": "café (coffee shop)",
+     "en": "coffee shop",
+     "reading": "keopisyop",
+     "ex": {
+      "ko": "커피숍에서 친구를 만나요.",
+      "fr": "Je retrouve un ami au café.",
+      "en": "I meet a friend at the coffee shop."
+     }
+    },
+    {
+     "term": "영화관",
+     "fr": "cinéma (salle)",
+     "en": "movie theater",
+     "reading": "yeonghwagwan",
+     "ex": {
+      "ko": "영화관에서 영화를 봐요.",
+      "fr": "Je regarde un film au cinéma.",
+      "en": "I watch a movie at the movie theater."
+     }
+    },
+    {
+     "term": "홍대",
+     "fr": "Hongdae (quartier)",
+     "en": "Hongdae (area)",
+     "reading": "hongdae",
+     "ex": {
+      "ko": "홍대에 쇼핑하러 가요.",
+      "fr": "Je vais faire du shopping à Hongdae.",
+      "en": "I go shopping in Hongdae."
+     }
+    },
+    {
+     "term": "도서관",
+     "fr": "bibliothèque",
+     "en": "library",
+     "reading": "doseogwan",
+     "ex": {
+      "ko": "도서관에서 책을 읽어요.",
+      "fr": "Je lis à la bibliothèque.",
+      "en": "I read at the library."
+     }
+    },
+    {
+     "term": "백화점",
+     "fr": "grand magasin",
+     "en": "department store",
+     "reading": "baekhwajeom",
+     "ex": {
+      "ko": "백화점에서 옷을 사요.",
+      "fr": "J'achète des vêtements au grand magasin.",
+      "en": "I buy clothes at the department store."
+     }
+    }
+   ],
+   "mnemonic": {
+    "fr": "À compléter : les mots coréens des produits « idol goods » et électronique n'étaient pas donnés en coréen dans les diapos.",
+    "en": "To complete: the Korean words for the idol-goods and electronics items were not given in Korean on the slides."
+   },
+   "theme": {
+    "fr": "Shopping",
+    "en": "Shopping"
+   }
+  },
+  {
+   "name": {
+    "fr": "Vêtements & objets",
+    "en": "Clothes & items"
+   },
+   "cards": [
+    {
+     "term": "치마",
+     "fr": "jupe",
+     "en": "skirt",
+     "reading": "chima",
+     "ex": {
+      "ko": "치마가 짧아요.",
+      "fr": "La jupe est courte.",
+      "en": "The skirt is short."
+     }
+    },
+    {
+     "term": "스카프",
+     "fr": "foulard",
+     "en": "scarf",
+     "reading": "seukapeu",
+     "ex": {
+      "ko": "긴 스카프를 사요.",
+      "fr": "J'achète une longue écharpe.",
+      "en": "I buy a long scarf."
+     }
+    },
+    {
+     "term": "코트",
+     "fr": "manteau",
+     "en": "coat",
+     "reading": "koteu",
+     "ex": {
+      "ko": "따뜻한 코트를 사요.",
+      "fr": "J'achète un manteau chaud.",
+      "en": "I buy a warm coat."
+     }
+    },
+    {
+     "term": "티셔츠",
+     "fr": "T-shirt",
+     "en": "T-shirt",
+     "reading": "tisyeocheu",
+     "ex": {
+      "ko": "티셔츠를 입어요.",
+      "fr": "Je porte un T-shirt.",
+      "en": "I wear a T-shirt."
+     }
+    },
+    {
+     "term": "모자",
+     "fr": "chapeau",
+     "en": "hat",
+     "reading": "moja",
+     "ex": {
+      "ko": "모자를 써요.",
+      "fr": "Je mets un chapeau.",
+      "en": "I wear a hat."
+     }
+    },
+    {
+     "term": "구두",
+     "fr": "chaussures (de ville)",
+     "en": "dress shoes",
+     "reading": "gudu",
+     "ex": {
+      "ko": "구두를 신어요.",
+      "fr": "Je mets des chaussures de ville.",
+      "en": "I put on dress shoes."
+     }
+    },
+    {
+     "term": "신발",
+     "fr": "chaussures",
+     "en": "shoes",
+     "reading": "sinbal",
+     "ex": {
+      "ko": "신발을 신어요.",
+      "fr": "Je mets des chaussures.",
+      "en": "I put on shoes."
+     }
+    },
+    {
+     "term": "옷",
+     "fr": "vêtement",
+     "en": "clothes",
+     "reading": "ot",
+     "ex": {
+      "ko": "이 옷이 예뻐요.",
+      "fr": "Ce vêtement est joli.",
+      "en": "These clothes are pretty."
+     }
+    },
+    {
+     "term": "김치",
+     "fr": "kimchi",
+     "en": "kimchi",
+     "reading": "gimchi",
+     "ex": {
+      "ko": "김치를 먹어요.",
+      "fr": "Je mange du kimchi.",
+      "en": "I eat kimchi."
+     }
+    },
+    {
+     "term": "색깔",
+     "fr": "couleur",
+     "en": "color",
+     "reading": "saekkkal",
+     "ex": {
+      "ko": "다른 색깔이 있어요?",
+      "fr": "Avez-vous d'autres couleurs ?",
+      "en": "Do you have other colors?"
+     }
+    },
+    {
+     "term": "하나",
+     "fr": "un (chiffre)",
+     "en": "one",
+     "reading": "hana",
+     "ex": {
+      "ko": "하나 있어요.",
+      "fr": "J'en ai un.",
+      "en": "I have one."
+     }
+    },
+    {
+     "term": "아이스크림",
+     "fr": "glace",
+     "en": "ice cream",
+     "reading": "aiseukeurim",
+     "ex": {
+      "ko": "아이스크림을 먹어요.",
+      "fr": "Je mange une glace.",
+      "en": "I eat ice cream."
+     }
+    }
+   ],
+   "mnemonic": {
+    "fr": "Beaucoup de mots sont des emprunts à l'anglais écrits en hangul : 스카프 (scarf), 코트 (coat), 티셔츠 (T-shirt). Lis-les à voix haute !",
+    "en": "Many words are English loans written in hangul: 스카프 (scarf), 코트 (coat), 티셔츠 (T-shirt). Read them aloud!"
+   },
+   "theme": {
+    "fr": "Shopping",
+    "en": "Shopping"
+   }
+  },
+  {
+   "name": {
+    "fr": "Adjectifs (paires)",
+    "en": "Adjectives (pairs)"
+   },
+   "cards": [
+    {
+     "term": "빠르다",
+     "fr": "rapide",
+     "en": "fast",
+     "reading": "ppareuda",
+     "ex": {
+      "ko": "지하철이 빨라요.",
+      "fr": "Le métro est rapide.",
+      "en": "The subway is fast."
+     }
+    },
+    {
+     "term": "느리다",
+     "fr": "lent",
+     "en": "slow",
+     "reading": "neurida",
+     "ex": {
+      "ko": "버스가 느려요.",
+      "fr": "Le bus est lent.",
+      "en": "The bus is slow."
+     }
+    },
+    {
+     "term": "같다",
+     "fr": "pareil",
+     "en": "same",
+     "reading": "gatda",
+     "ex": {
+      "ko": "옷이 같아요.",
+      "fr": "Les vêtements sont pareils.",
+      "en": "The clothes are the same."
+     }
+    },
+    {
+     "term": "다르다",
+     "fr": "différent",
+     "en": "different",
+     "reading": "dareuda",
+     "ex": {
+      "ko": "색깔이 달라요.",
+      "fr": "Les couleurs sont différentes.",
+      "en": "The colors are different."
+     }
+    },
+    {
+     "term": "쉽다",
+     "fr": "facile",
+     "en": "easy",
+     "reading": "swipda",
+     "ex": {
+      "ko": "한국어가 쉬워요.",
+      "fr": "Le coréen est facile.",
+      "en": "Korean is easy."
+     }
+    },
+    {
+     "term": "어렵다",
+     "fr": "difficile",
+     "en": "difficult",
+     "reading": "eoryeopda",
+     "ex": {
+      "ko": "한국어가 어려워요.",
+      "fr": "Le coréen est difficile.",
+      "en": "Korean is difficult."
+     }
+    },
+    {
+     "term": "가볍다",
+     "fr": "léger",
+     "en": "light",
+     "reading": "gabyeopda",
+     "ex": {
+      "ko": "가방이 가벼워요.",
+      "fr": "Le sac est léger.",
+      "en": "The bag is light."
+     }
+    },
+    {
+     "term": "무겁다",
+     "fr": "lourd",
+     "en": "heavy",
+     "reading": "mugeopda",
+     "ex": {
+      "ko": "가방이 무거워요.",
+      "fr": "Le sac est lourd.",
+      "en": "The bag is heavy."
+     }
+    },
+    {
+     "term": "조용하다",
+     "fr": "calme",
+     "en": "quiet",
+     "reading": "joyonghada",
+     "ex": {
+      "ko": "도서관은 조용해요.",
+      "fr": "La bibliothèque est calme.",
+      "en": "The library is quiet."
+     }
+    },
+    {
+     "term": "시끄럽다",
+     "fr": "bruyant",
+     "en": "noisy",
+     "reading": "sikkeureopda",
+     "ex": {
+      "ko": "식당이 시끄러워요.",
+      "fr": "Le restaurant est bruyant.",
+      "en": "The restaurant is noisy."
+     }
+    },
+    {
+     "term": "따뜻하다",
+     "fr": "chaud (agréable), doux",
+     "en": "warm",
+     "reading": "ttatteuthada",
+     "ex": {
+      "ko": "날씨가 따뜻해요.",
+      "fr": "Il fait doux.",
+      "en": "The weather is warm."
+     }
+    },
+    {
+     "term": "힘들다",
+     "fr": "difficile, pénible",
+     "en": "hard, tiring",
+     "reading": "himdeulda",
+     "ex": {
+      "ko": "숙제가 힘들어요.",
+      "fr": "Les devoirs sont durs.",
+      "en": "The homework is tough."
+     }
+    }
+   ],
+   "theme": {
+    "fr": "Adjectifs",
+    "en": "Adjectives"
+   }
+  },
+  {
+   "name": {
+    "fr": "Phrases de boutique",
+    "en": "Shop phrases"
+   },
+   "cards": [
+    {
+     "term": "어서 오세요",
+     "fr": "bienvenue",
+     "en": "welcome",
+     "reading": "eoseo oseyo"
+    },
+    {
+     "term": "하나 주세요",
+     "fr": "un, s'il vous plaît",
+     "en": "one, please",
+     "reading": "hana juseyo"
+    },
+    {
+     "term": "여기 있어요",
+     "fr": "voilà, tenez",
+     "en": "here you are",
+     "reading": "yeogi isseoyo"
+    },
+    {
+     "term": "맛있게 드세요",
+     "fr": "bon appétit",
+     "en": "enjoy your meal",
+     "reading": "masitge deuseyo"
+    },
+    {
+     "term": "감사합니다",
+     "fr": "merci (formel)",
+     "en": "thank you (formal)",
+     "reading": "gamsahamnida"
+    },
+    {
+     "term": "다른 색깔도 있어요?",
+     "fr": "avez-vous d'autres couleurs ?",
+     "en": "do you have other colors?",
+     "reading": "dareun saekkkaldo isseoyo"
+    },
+    {
+     "term": "입어 볼 수 있어요?",
+     "fr": "puis-je essayer ?",
+     "en": "can I try it on?",
+     "reading": "ibeo bol su isseoyo"
+    },
+    {
+     "term": "한번 먹어 보세요",
+     "fr": "goûtez-en un peu",
+     "en": "give it a try",
+     "reading": "hanbeon meogeo boseyo"
+    },
+    {
+     "term": "잘 맞아요",
+     "fr": "ça me va bien",
+     "en": "it fits well",
+     "reading": "jal majayo"
+    },
+    {
+     "term": "한번",
+     "fr": "une fois, un jour",
+     "en": "once, sometime",
+     "reading": "hanbeon",
+     "ex": {
+      "ko": "한번 가 보세요.",
+      "fr": "Allez-y une fois.",
+      "en": "Try going once."
+     }
+    }
+   ],
+   "theme": {
+    "fr": "Shopping",
+    "en": "Shopping"
+   }
+  }
+ ]
+}

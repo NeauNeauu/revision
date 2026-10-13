@@ -1,0 +1,836 @@
+{
+ "lang": "ko",
+ "groups": [
+  {
+   "name": {
+    "fr": "Pays & capitales",
+    "en": "Countries & capitals"
+   },
+   "cards": [
+    {
+     "term": "한국",
+     "fr": "Corée",
+     "en": "Korea",
+     "reading": "hanguk",
+     "ex": {
+      "ko": "저는 한국에 살아요.",
+      "fr": "J'habite en Corée.",
+      "en": "I live in Korea."
+     }
+    },
+    {
+     "term": "서울",
+     "fr": "Séoul",
+     "en": "Seoul",
+     "reading": "seoul",
+     "ex": {
+      "ko": "서울에 가요.",
+      "fr": "Je vais à Séoul.",
+      "en": "I go to Seoul."
+     }
+    },
+    {
+     "term": "미국",
+     "fr": "États-Unis",
+     "en": "USA",
+     "reading": "miguk",
+     "ex": {
+      "ko": "친구는 미국에서 왔어요.",
+      "fr": "Mon ami vient des États-Unis.",
+      "en": "My friend is from the USA."
+     }
+    },
+    {
+     "term": "워싱턴 D.C.",
+     "fr": "Washington D.C.",
+     "en": "Washington D.C.",
+     "reading": "wasingteon",
+     "ex": {
+      "ko": "워싱턴 D.C.는 미국에 있어요.",
+      "fr": "Washington D.C. est aux États-Unis.",
+      "en": "Washington D.C. is in the USA."
+     }
+    },
+    {
+     "term": "중국",
+     "fr": "Chine",
+     "en": "China",
+     "reading": "jungguk",
+     "ex": {
+      "ko": "중국에 가고 싶어요.",
+      "fr": "Je veux aller en Chine.",
+      "en": "I want to go to China."
+     }
+    },
+    {
+     "term": "베이징",
+     "fr": "Pékin",
+     "en": "Beijing",
+     "reading": "beijing",
+     "ex": {
+      "ko": "베이징은 중국에 있어요.",
+      "fr": "Pékin est en Chine.",
+      "en": "Beijing is in China."
+     }
+    },
+    {
+     "term": "일본",
+     "fr": "Japon",
+     "en": "Japan",
+     "reading": "ilbon",
+     "ex": {
+      "ko": "일본 음식이 맛있어요.",
+      "fr": "La cuisine japonaise est bonne.",
+      "en": "Japanese food is tasty."
+     }
+    },
+    {
+     "term": "도쿄",
+     "fr": "Tokyo",
+     "en": "Tokyo",
+     "reading": "dokyo",
+     "ex": {
+      "ko": "도쿄에서 왔어요.",
+      "fr": "Je viens de Tokyo.",
+      "en": "I am from Tokyo."
+     }
+    },
+    {
+     "term": "태국",
+     "fr": "Thaïlande",
+     "en": "Thailand",
+     "reading": "taeguk",
+     "ex": {
+      "ko": "태국에서 여행했어요.",
+      "fr": "J'ai voyagé en Thaïlande.",
+      "en": "I traveled in Thailand."
+     }
+    },
+    {
+     "term": "방콕",
+     "fr": "Bangkok",
+     "en": "Bangkok",
+     "reading": "bangkok",
+     "ex": {
+      "ko": "방콕은 태국에 있어요.",
+      "fr": "Bangkok est en Thaïlande.",
+      "en": "Bangkok is in Thailand."
+     }
+    },
+    {
+     "term": "영국",
+     "fr": "Royaume-Uni",
+     "en": "United Kingdom",
+     "reading": "yeongguk",
+     "ex": {
+      "ko": "영국에서 왔어요.",
+      "fr": "Je viens du Royaume-Uni.",
+      "en": "I am from the UK."
+     }
+    },
+    {
+     "term": "런던",
+     "fr": "Londres",
+     "en": "London",
+     "reading": "reondeon",
+     "ex": {
+      "ko": "런던에 가고 싶어요.",
+      "fr": "Je veux aller à Londres.",
+      "en": "I want to go to London."
+     }
+    },
+    {
+     "term": "독일",
+     "fr": "Allemagne",
+     "en": "Germany",
+     "reading": "dogil",
+     "ex": {
+      "ko": "독일 베를린에서 왔어요.",
+      "fr": "Je viens de Berlin, en Allemagne.",
+      "en": "I am from Berlin, Germany."
+     }
+    },
+    {
+     "term": "베를린",
+     "fr": "Berlin",
+     "en": "Berlin",
+     "reading": "bereullin",
+     "ex": {
+      "ko": "베를린은 독일에 있어요.",
+      "fr": "Berlin est en Allemagne.",
+      "en": "Berlin is in Germany."
+     }
+    },
+    {
+     "term": "프랑스",
+     "fr": "France",
+     "en": "France",
+     "reading": "peurangseu",
+     "ex": {
+      "ko": "저는 프랑스에서 왔어요.",
+      "fr": "Je viens de France.",
+      "en": "I am from France."
+     }
+    },
+    {
+     "term": "파리",
+     "fr": "Paris",
+     "en": "Paris",
+     "reading": "pari",
+     "ex": {
+      "ko": "파리는 프랑스에 있어요.",
+      "fr": "Paris est en France.",
+      "en": "Paris is in France."
+     }
+    }
+   ],
+   "mnemonic": {
+    "fr": "국 (國) = pays : 한국, 미국, 중국, 태국, 영국 finissent en 국. Les capitales s'écrivent en hangul comme elles se prononcent.",
+    "en": "국 (國) = country: 한국, 미국, 중국, 태국, 영국 end in 국. Capitals are written in hangul as they sound."
+   },
+   "theme": {
+    "fr": "Pays & voyage",
+    "en": "Countries & travel"
+   }
+  },
+  {
+   "name": {
+    "fr": "Se présenter",
+    "en": "Introductions"
+   },
+   "cards": [
+    {
+     "term": "저",
+     "fr": "je (poli)",
+     "en": "I (polite)",
+     "reading": "jeo",
+     "ex": {
+      "ko": "저는 프랑스에서 왔어요.",
+      "fr": "Je viens de France.",
+      "en": "I am from France."
+     }
+    },
+    {
+     "term": "학생",
+     "fr": "étudiant(e)",
+     "en": "student",
+     "reading": "haksaeng",
+     "ex": {
+      "ko": "저는 학생이에요.",
+      "fr": "Je suis étudiant(e).",
+      "en": "I am a student."
+     }
+    },
+    {
+     "term": "친구",
+     "fr": "ami(e)",
+     "en": "friend",
+     "reading": "chingu",
+     "ex": {
+      "ko": "친구를 기다려요.",
+      "fr": "J'attends un ami.",
+      "en": "I wait for a friend."
+     }
+    },
+    {
+     "term": "씨",
+     "fr": "M. / Mme (après le nom)",
+     "en": "Mr./Ms. (after name)",
+     "reading": "ssi",
+     "ex": {
+      "ko": "루카스 씨는 학생이에요.",
+      "fr": "Lucas est étudiant.",
+      "en": "Lucas is a student."
+     }
+    },
+    {
+     "term": "어디",
+     "fr": "où",
+     "en": "where",
+     "reading": "eodi",
+     "ex": {
+      "ko": "어디에 가요?",
+      "fr": "Où allez-vous ?",
+      "en": "Where are you going?"
+     }
+    },
+    {
+     "term": "어디에서 왔어요?",
+     "fr": "D'où venez-vous ?",
+     "en": "Where are you from?",
+     "reading": "eodieseo wasseoyo"
+    },
+    {
+     "term": "저는 ...에서 왔어요",
+     "fr": "Je viens de...",
+     "en": "I am from...",
+     "reading": "jeoneun ...eseo wasseoyo"
+    },
+    {
+     "term": "저도",
+     "fr": "moi aussi",
+     "en": "me too",
+     "reading": "jeodo",
+     "ex": {
+      "ko": "저도 학생이에요.",
+      "fr": "Moi aussi, je suis étudiant(e).",
+      "en": "I am a student too."
+     }
+    },
+    {
+     "term": "교실",
+     "fr": "salle de classe",
+     "en": "classroom",
+     "reading": "gyosil",
+     "ex": {
+      "ko": "교실에서 공부해요.",
+      "fr": "J'étudie en classe.",
+      "en": "I study in the classroom."
+     }
+    },
+    {
+     "term": "학교",
+     "fr": "école",
+     "en": "school",
+     "reading": "hakgyo",
+     "ex": {
+      "ko": "학교에 가요.",
+      "fr": "Je vais à l'école.",
+      "en": "I go to school."
+     }
+    },
+    {
+     "term": "카페",
+     "fr": "café",
+     "en": "café",
+     "reading": "kape",
+     "ex": {
+      "ko": "카페에서 친구를 만나요.",
+      "fr": "Je retrouve un ami au café.",
+      "en": "I meet a friend at the café."
+     }
+    },
+    {
+     "term": "식당",
+     "fr": "restaurant",
+     "en": "restaurant",
+     "reading": "sikdang",
+     "ex": {
+      "ko": "식당에서 밥을 먹어요.",
+      "fr": "Je mange au restaurant.",
+      "en": "I eat at the restaurant."
+     }
+    },
+    {
+     "term": "집",
+     "fr": "maison",
+     "en": "home",
+     "reading": "jip",
+     "ex": {
+      "ko": "집에서 쉬어요.",
+      "fr": "Je me repose à la maison.",
+      "en": "I rest at home."
+     }
+    },
+    {
+     "term": "극장",
+     "fr": "cinéma",
+     "en": "cinema",
+     "reading": "geukjang",
+     "ex": {
+      "ko": "극장에서 영화를 봐요.",
+      "fr": "Je regarde un film au cinéma.",
+      "en": "I watch a movie at the cinema."
+     }
+    }
+   ],
+   "theme": {
+    "fr": "Se présenter",
+    "en": "Introductions"
+   }
+  },
+  {
+   "name": {
+    "fr": "Verbes courants",
+    "en": "Common verbs"
+   },
+   "cards": [
+    {
+     "term": "가다",
+     "fr": "aller",
+     "en": "to go",
+     "reading": "gada",
+     "ex": {
+      "ko": "집에 가요.",
+      "fr": "Je rentre à la maison.",
+      "en": "I go home."
+     }
+    },
+    {
+     "term": "오다",
+     "fr": "venir",
+     "en": "to come",
+     "reading": "oda",
+     "ex": {
+      "ko": "친구가 와요.",
+      "fr": "Mon ami vient.",
+      "en": "My friend is coming."
+     }
+    },
+    {
+     "term": "보다",
+     "fr": "voir, regarder",
+     "en": "to see, watch",
+     "reading": "boda",
+     "ex": {
+      "ko": "영화를 봐요.",
+      "fr": "Je regarde un film.",
+      "en": "I watch a movie."
+     }
+    },
+    {
+     "term": "먹다",
+     "fr": "manger",
+     "en": "to eat",
+     "reading": "meokda",
+     "ex": {
+      "ko": "밥을 먹어요.",
+      "fr": "Je mange un repas.",
+      "en": "I eat a meal."
+     }
+    },
+    {
+     "term": "마시다",
+     "fr": "boire",
+     "en": "to drink",
+     "reading": "masida",
+     "ex": {
+      "ko": "물을 마셔요.",
+      "fr": "Je bois de l'eau.",
+      "en": "I drink water."
+     }
+    },
+    {
+     "term": "읽다",
+     "fr": "lire",
+     "en": "to read",
+     "reading": "ikda",
+     "ex": {
+      "ko": "책을 읽어요.",
+      "fr": "Je lis un livre.",
+      "en": "I read a book."
+     }
+    },
+    {
+     "term": "자다",
+     "fr": "dormir",
+     "en": "to sleep",
+     "reading": "jada",
+     "ex": {
+      "ko": "집에서 자요.",
+      "fr": "Je dors à la maison.",
+      "en": "I sleep at home."
+     }
+    },
+    {
+     "term": "사다",
+     "fr": "acheter",
+     "en": "to buy",
+     "reading": "sada",
+     "ex": {
+      "ko": "가방을 사요.",
+      "fr": "J'achète un sac.",
+      "en": "I buy a bag."
+     }
+    },
+    {
+     "term": "만나다",
+     "fr": "rencontrer",
+     "en": "to meet",
+     "reading": "mannada",
+     "ex": {
+      "ko": "친구를 만나요.",
+      "fr": "Je vois un ami.",
+      "en": "I meet a friend."
+     }
+    },
+    {
+     "term": "살다",
+     "fr": "habiter",
+     "en": "to live",
+     "reading": "salda",
+     "ex": {
+      "ko": "서울에 살아요.",
+      "fr": "J'habite à Séoul.",
+      "en": "I live in Seoul."
+     }
+    },
+    {
+     "term": "받다",
+     "fr": "recevoir",
+     "en": "to receive",
+     "reading": "batda",
+     "ex": {
+      "ko": "전화를 받아요.",
+      "fr": "Je réponds au téléphone.",
+      "en": "I answer the phone."
+     }
+    },
+    {
+     "term": "뛰다",
+     "fr": "courir",
+     "en": "to run",
+     "reading": "ttwida",
+     "ex": {
+      "ko": "공원에서 뛰어요.",
+      "fr": "Je cours au parc.",
+      "en": "I run in the park."
+     }
+    },
+    {
+     "term": "추다",
+     "fr": "danser (춤을 추다)",
+     "en": "to dance (춤을 추다)",
+     "reading": "chuda",
+     "ex": {
+      "ko": "춤을 춰요.",
+      "fr": "Je danse.",
+      "en": "I dance."
+     }
+    },
+    {
+     "term": "배우다",
+     "fr": "apprendre",
+     "en": "to learn",
+     "reading": "baeuda",
+     "ex": {
+      "ko": "한국어를 배워요.",
+      "fr": "J'apprends le coréen.",
+      "en": "I learn Korean."
+     }
+    },
+    {
+     "term": "기다리다",
+     "fr": "attendre",
+     "en": "to wait",
+     "reading": "gidarida",
+     "ex": {
+      "ko": "버스를 기다려요.",
+      "fr": "J'attends le bus.",
+      "en": "I wait for the bus."
+     }
+    },
+    {
+     "term": "가르치다",
+     "fr": "enseigner",
+     "en": "to teach",
+     "reading": "gareuchida",
+     "ex": {
+      "ko": "한국어를 가르쳐요.",
+      "fr": "J'enseigne le coréen.",
+      "en": "I teach Korean."
+     }
+    },
+    {
+     "term": "빌리다",
+     "fr": "emprunter",
+     "en": "to borrow",
+     "reading": "billida",
+     "ex": {
+      "ko": "책을 빌려요.",
+      "fr": "J'emprunte un livre.",
+      "en": "I borrow a book."
+     }
+    },
+    {
+     "term": "쉬다",
+     "fr": "se reposer",
+     "en": "to rest",
+     "reading": "swida",
+     "ex": {
+      "ko": "주말에 쉬어요.",
+      "fr": "Je me repose le week-end.",
+      "en": "I rest on weekends."
+     }
+    },
+    {
+     "term": "일하다",
+     "fr": "travailler",
+     "en": "to work",
+     "reading": "ilhada",
+     "ex": {
+      "ko": "식당에서 일해요.",
+      "fr": "Je travaille dans un restaurant.",
+      "en": "I work at a restaurant."
+     }
+    },
+    {
+     "term": "공부하다",
+     "fr": "étudier",
+     "en": "to study",
+     "reading": "gongbuhada",
+     "ex": {
+      "ko": "도서관에서 공부해요.",
+      "fr": "J'étudie à la bibliothèque.",
+      "en": "I study at the library."
+     }
+    },
+    {
+     "term": "준비하다",
+     "fr": "préparer",
+     "en": "to prepare",
+     "reading": "junbihada",
+     "ex": {
+      "ko": "시험을 준비해요.",
+      "fr": "Je prépare l'examen.",
+      "en": "I prepare for the exam."
+     }
+    },
+    {
+     "term": "노래하다",
+     "fr": "chanter",
+     "en": "to sing",
+     "reading": "noraehada",
+     "ex": {
+      "ko": "친구는 노래해요.",
+      "fr": "Mon ami chante.",
+      "en": "My friend sings."
+     }
+    },
+    {
+     "term": "운동하다",
+     "fr": "faire du sport",
+     "en": "to exercise",
+     "reading": "undonghada",
+     "ex": {
+      "ko": "매일 운동해요.",
+      "fr": "Je fais du sport tous les jours.",
+      "en": "I exercise every day."
+     }
+    },
+    {
+     "term": "요리하다",
+     "fr": "cuisiner",
+     "en": "to cook",
+     "reading": "yorihada",
+     "ex": {
+      "ko": "집에서 요리해요.",
+      "fr": "Je cuisine à la maison.",
+      "en": "I cook at home."
+     }
+    },
+    {
+     "term": "숙제하다",
+     "fr": "faire ses devoirs",
+     "en": "to do homework",
+     "reading": "sukjehada",
+     "ex": {
+      "ko": "오늘 숙제해요.",
+      "fr": "Je fais mes devoirs aujourd'hui.",
+      "en": "I do my homework today."
+     }
+    },
+    {
+     "term": "수영하다",
+     "fr": "nager",
+     "en": "to swim",
+     "reading": "suyeonghada",
+     "ex": {
+      "ko": "바다에서 수영해요.",
+      "fr": "Je nage dans la mer.",
+      "en": "I swim in the sea."
+     }
+    },
+    {
+     "term": "여행하다",
+     "fr": "voyager",
+     "en": "to travel",
+     "reading": "yeohaenghada",
+     "ex": {
+      "ko": "한국을 여행해요.",
+      "fr": "Je voyage en Corée.",
+      "en": "I travel in Korea."
+     }
+    },
+    {
+     "term": "전화하다",
+     "fr": "téléphoner",
+     "en": "to call",
+     "reading": "jeonhwahada",
+     "ex": {
+      "ko": "내일 전화해요.",
+      "fr": "J'appelle demain.",
+      "en": "I will call tomorrow."
+     }
+    },
+    {
+     "term": "좋아하다",
+     "fr": "aimer",
+     "en": "to like",
+     "reading": "joahada",
+     "ex": {
+      "ko": "김치를 좋아해요.",
+      "fr": "J'aime le kimchi.",
+      "en": "I like kimchi."
+     }
+    },
+    {
+     "term": "청소하다",
+     "fr": "nettoyer",
+     "en": "to clean",
+     "reading": "cheongsohada",
+     "ex": {
+      "ko": "방을 청소해요.",
+      "fr": "Je nettoie la chambre.",
+      "en": "I clean the room."
+     }
+    }
+   ],
+   "mnemonic": {
+    "fr": "Nom + 하다 = faire cette action (공부 → 공부하다). Tous font 해요 / 했어요.",
+    "en": "Noun + 하다 = do that action (공부 → 공부하다). All become 해요 / 했어요."
+   },
+   "theme": {
+    "fr": "Verbes",
+    "en": "Verbs"
+   }
+  },
+  {
+   "name": {
+    "fr": "Adjectifs",
+    "en": "Adjectives"
+   },
+   "cards": [
+    {
+     "term": "싸다",
+     "fr": "pas cher",
+     "en": "cheap",
+     "reading": "ssada",
+     "ex": {
+      "ko": "옷이 싸요.",
+      "fr": "Les vêtements sont bon marché.",
+      "en": "The clothes are cheap."
+     }
+    },
+    {
+     "term": "비싸다",
+     "fr": "cher",
+     "en": "expensive",
+     "reading": "bissada",
+     "ex": {
+      "ko": "가방이 비싸요.",
+      "fr": "Le sac est cher.",
+      "en": "The bag is expensive."
+     }
+    },
+    {
+     "term": "좋다",
+     "fr": "bon, bien",
+     "en": "good",
+     "reading": "jota",
+     "ex": {
+      "ko": "날씨가 좋아요.",
+      "fr": "Il fait beau.",
+      "en": "The weather is nice."
+     }
+    },
+    {
+     "term": "맛있다",
+     "fr": "délicieux",
+     "en": "tasty",
+     "reading": "masitda",
+     "ex": {
+      "ko": "김치가 맛있어요.",
+      "fr": "Le kimchi est bon.",
+      "en": "The kimchi is tasty."
+     }
+    },
+    {
+     "term": "맛없다",
+     "fr": "pas bon",
+     "en": "not tasty",
+     "reading": "maseopda",
+     "ex": {
+      "ko": "음식이 맛없어요.",
+      "fr": "La nourriture n'est pas bonne.",
+      "en": "The food is not tasty."
+     }
+    },
+    {
+     "term": "재미있다",
+     "fr": "amusant, intéressant",
+     "en": "fun, interesting",
+     "reading": "jaemiitda",
+     "ex": {
+      "ko": "영화가 재미있어요.",
+      "fr": "Le film est intéressant.",
+      "en": "The movie is fun."
+     }
+    },
+    {
+     "term": "재미없다",
+     "fr": "ennuyeux",
+     "en": "boring",
+     "reading": "jaemieopda",
+     "ex": {
+      "ko": "수업이 재미없어요.",
+      "fr": "Le cours est ennuyeux.",
+      "en": "The class is boring."
+     }
+    },
+    {
+     "term": "친절하다",
+     "fr": "gentil",
+     "en": "kind",
+     "reading": "chinjeolhada",
+     "ex": {
+      "ko": "직원이 친절해요.",
+      "fr": "L'employé(e) est gentil(le).",
+      "en": "The staff member is kind."
+     }
+    },
+    {
+     "term": "깨끗하다",
+     "fr": "propre",
+     "en": "clean",
+     "reading": "kkaekkeuthada",
+     "ex": {
+      "ko": "방이 깨끗해요.",
+      "fr": "La chambre est propre.",
+      "en": "The room is clean."
+     }
+    },
+    {
+     "term": "멋있다",
+     "fr": "classe, stylé",
+     "en": "cool, stylish",
+     "reading": "meositda",
+     "ex": {
+      "ko": "배우가 멋있어요.",
+      "fr": "L'acteur est classe.",
+      "en": "The actor is cool."
+     }
+    },
+    {
+     "term": "피곤하다",
+     "fr": "fatigué",
+     "en": "tired",
+     "reading": "pigonhada",
+     "ex": {
+      "ko": "오늘 피곤해요.",
+      "fr": "Je suis fatigué(e) aujourd'hui.",
+      "en": "I am tired today."
+     }
+    }
+   ],
+   "mnemonic": {
+    "fr": "있다/없다 forment des paires : 맛있다 ↔ 맛없다, 재미있다 ↔ 재미없다 (avec goût / sans goût).",
+    "en": "있다/없다 make pairs: 맛있다 ↔ 맛없다, 재미있다 ↔ 재미없다 (has taste / none)."
+   },
+   "theme": {
+    "fr": "Adjectifs",
+    "en": "Adjectives"
+   }
+  }
+ ]
+}

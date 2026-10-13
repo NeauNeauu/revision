@@ -1,0 +1,838 @@
+{
+ "lang": "ko",
+ "groups": [
+  {
+   "name": {
+    "fr": "Lieux de shopping",
+    "en": "Shopping places"
+   },
+   "cards": [
+    {
+     "term": "백화점",
+     "fr": "grand magasin",
+     "en": "department store",
+     "reading": "baekhwajeom",
+     "mnemonic": {
+      "fr": "百貨店 : « cent marchandises ». 점 (店) = magasin.",
+      "en": "百貨店: “hundred goods”. 점 (店) = shop."
+     },
+     "ex": {
+      "ko": "백화점에서 옷을 사요.",
+      "fr": "J'achète des vêtements au grand magasin.",
+      "en": "I buy clothes at the department store."
+     }
+    },
+    {
+     "term": "시장",
+     "fr": "marché",
+     "en": "market",
+     "reading": "sijang",
+     "ex": {
+      "ko": "시장에 가요.",
+      "fr": "Je vais au marché.",
+      "en": "I go to the market."
+     }
+    },
+    {
+     "term": "마트",
+     "fr": "supermarché",
+     "en": "supermarket",
+     "reading": "mateu",
+     "ex": {
+      "ko": "마트에서 과일을 사요.",
+      "fr": "J'achète des fruits au supermarché.",
+      "en": "I buy fruit at the supermarket."
+     }
+    },
+    {
+     "term": "편의점",
+     "fr": "supérette (24h/24)",
+     "en": "convenience store",
+     "reading": "pyeonuijeom",
+     "mnemonic": {
+      "fr": "편의 = commodité + 점 = magasin → le magasin « pratique ».",
+      "en": "편의 = convenience + 점 = shop."
+     },
+     "ex": {
+      "ko": "편의점에서 과자를 사요.",
+      "fr": "J'achète des snacks à la supérette.",
+      "en": "I buy snacks at the convenience store."
+     }
+    },
+    {
+     "term": "빵집",
+     "fr": "boulangerie",
+     "en": "bakery",
+     "reading": "ppangjip",
+     "mnemonic": {
+      "fr": "빵 (pain) + 집 (maison) : la « maison du pain ».",
+      "en": "빵 (bread) + 집 (house): the “bread house”."
+     },
+     "ex": {
+      "ko": "빵집에서 빵을 사요.",
+      "fr": "J'achète du pain à la boulangerie.",
+      "en": "I buy bread at the bakery."
+     }
+    },
+    {
+     "term": "가게",
+     "fr": "boutique, petit magasin",
+     "en": "shop, small store",
+     "reading": "gage",
+     "ex": {
+      "ko": "가게에서 가방을 사요.",
+      "fr": "J'achète un sac à la boutique.",
+      "en": "I buy a bag at the shop."
+     }
+    }
+   ],
+   "mnemonic": {
+    "fr": "Beaucoup finissent en 점 (店 = magasin) ou 집 (maison) : 백화점, 편의점, 빵집.",
+    "en": "Many end in 점 (店 = shop) or 집 (house): 백화점, 편의점, 빵집."
+   },
+   "theme": {
+    "fr": "Shopping",
+    "en": "Shopping"
+   }
+  },
+  {
+   "name": {
+    "fr": "Articles & aliments",
+    "en": "Items & food"
+   },
+   "cards": [
+    {
+     "term": "옷",
+     "fr": "vêtement",
+     "en": "clothes",
+     "reading": "ot",
+     "ex": {
+      "ko": "이 옷이 예뻐요.",
+      "fr": "Ce vêtement est joli.",
+      "en": "These clothes are pretty."
+     }
+    },
+    {
+     "term": "모자",
+     "fr": "chapeau, casquette",
+     "en": "hat",
+     "reading": "moja",
+     "ex": {
+      "ko": "모자를 써요.",
+      "fr": "Je mets un chapeau.",
+      "en": "I wear a hat."
+     }
+    },
+    {
+     "term": "가방",
+     "fr": "sac",
+     "en": "bag",
+     "reading": "gabang",
+     "ex": {
+      "ko": "가방이 작아요.",
+      "fr": "Le sac est petit.",
+      "en": "The bag is small."
+     }
+    },
+    {
+     "term": "신발",
+     "fr": "chaussures",
+     "en": "shoes",
+     "reading": "sinbal",
+     "ex": {
+      "ko": "신발을 신어요.",
+      "fr": "Je mets des chaussures.",
+      "en": "I put on shoes."
+     }
+    },
+    {
+     "term": "화장품",
+     "fr": "cosmétiques",
+     "en": "cosmetics",
+     "reading": "hwajangpum",
+     "ex": {
+      "ko": "화장품이 비싸요.",
+      "fr": "Les cosmétiques sont chers.",
+      "en": "Cosmetics are expensive."
+     }
+    },
+    {
+     "term": "채소",
+     "fr": "légumes",
+     "en": "vegetables",
+     "reading": "chaeso",
+     "ex": {
+      "ko": "채소를 먹어요.",
+      "fr": "Je mange des légumes.",
+      "en": "I eat vegetables."
+     }
+    },
+    {
+     "term": "과일",
+     "fr": "fruits",
+     "en": "fruit",
+     "reading": "gwail",
+     "ex": {
+      "ko": "과일이 맛있어요.",
+      "fr": "Les fruits sont bons.",
+      "en": "The fruit is tasty."
+     }
+    },
+    {
+     "term": "고기",
+     "fr": "viande",
+     "en": "meat",
+     "reading": "gogi",
+     "ex": {
+      "ko": "고기를 좋아해요.",
+      "fr": "J'aime la viande.",
+      "en": "I like meat."
+     }
+    },
+    {
+     "term": "생선",
+     "fr": "poisson",
+     "en": "fish",
+     "reading": "saengseon",
+     "ex": {
+      "ko": "생선이 싸요.",
+      "fr": "Le poisson est bon marché.",
+      "en": "The fish is cheap."
+     }
+    },
+    {
+     "term": "과자",
+     "fr": "biscuits, snacks",
+     "en": "snacks, cookies",
+     "reading": "gwaja",
+     "ex": {
+      "ko": "과자를 먹어요.",
+      "fr": "Je mange des biscuits.",
+      "en": "I eat snacks."
+     }
+    },
+    {
+     "term": "음료수",
+     "fr": "boisson",
+     "en": "beverage",
+     "reading": "eumnyosu",
+     "mnemonic": {
+      "fr": "À vérifier : le mot était partiellement masqué sur la diapositive.",
+      "en": "To verify: the word was partly obscured on the slide."
+     },
+     "ex": {
+      "ko": "음료수를 마셔요.",
+      "fr": "Je bois une boisson.",
+      "en": "I drink a beverage."
+     }
+    },
+    {
+     "term": "시계",
+     "fr": "montre, horloge",
+     "en": "watch, clock",
+     "reading": "sigye",
+     "ex": {
+      "ko": "시계가 예뻐요.",
+      "fr": "La montre est jolie.",
+      "en": "The watch is pretty."
+     }
+    },
+    {
+     "term": "치마",
+     "fr": "jupe",
+     "en": "skirt",
+     "reading": "chima",
+     "ex": {
+      "ko": "치마가 짧아요.",
+      "fr": "La jupe est courte.",
+      "en": "The skirt is short."
+     }
+    }
+   ],
+   "theme": {
+    "fr": "Shopping",
+    "en": "Shopping"
+   }
+  },
+  {
+   "name": {
+    "fr": "Adjectifs (contraires)",
+    "en": "Adjectives (opposites)"
+   },
+   "cards": [
+    {
+     "term": "높다",
+     "fr": "haut",
+     "en": "high",
+     "reading": "nopda",
+     "ex": {
+      "ko": "산이 높아요.",
+      "fr": "La montagne est haute.",
+      "en": "The mountain is high."
+     }
+    },
+    {
+     "term": "낮다",
+     "fr": "bas",
+     "en": "low",
+     "reading": "natda",
+     "ex": {
+      "ko": "산이 낮아요.",
+      "fr": "La montagne est basse.",
+      "en": "The mountain is low."
+     }
+    },
+    {
+     "term": "많다",
+     "fr": "nombreux, beaucoup",
+     "en": "many, much",
+     "reading": "manta",
+     "ex": {
+      "ko": "사람이 많아요.",
+      "fr": "Il y a beaucoup de monde.",
+      "en": "There are many people."
+     }
+    },
+    {
+     "term": "적다",
+     "fr": "peu nombreux",
+     "en": "few, little",
+     "reading": "jeokda",
+     "ex": {
+      "ko": "학생이 적어요.",
+      "fr": "Il y a peu d'étudiants.",
+      "en": "There are few students."
+     }
+    },
+    {
+     "term": "크다",
+     "fr": "grand",
+     "en": "big",
+     "reading": "keuda",
+     "ex": {
+      "ko": "방이 커요.",
+      "fr": "La chambre est grande.",
+      "en": "The room is big."
+     }
+    },
+    {
+     "term": "작다",
+     "fr": "petit",
+     "en": "small",
+     "reading": "jakda",
+     "ex": {
+      "ko": "신발이 작아요.",
+      "fr": "Les chaussures sont petites.",
+      "en": "The shoes are small."
+     }
+    },
+    {
+     "term": "싸다",
+     "fr": "pas cher",
+     "en": "cheap",
+     "reading": "ssada",
+     "ex": {
+      "ko": "옷이 싸요.",
+      "fr": "Les vêtements sont bon marché.",
+      "en": "The clothes are cheap."
+     }
+    },
+    {
+     "term": "비싸다",
+     "fr": "cher",
+     "en": "expensive",
+     "reading": "bissada",
+     "ex": {
+      "ko": "가방이 비싸요.",
+      "fr": "Le sac est cher.",
+      "en": "The bag is expensive."
+     }
+    },
+    {
+     "term": "덥다",
+     "fr": "chaud (météo)",
+     "en": "hot (weather)",
+     "reading": "deopda",
+     "ex": {
+      "ko": "날씨가 더워요.",
+      "fr": "Il fait chaud.",
+      "en": "The weather is hot."
+     }
+    },
+    {
+     "term": "춥다",
+     "fr": "froid",
+     "en": "cold",
+     "reading": "chupda",
+     "ex": {
+      "ko": "교실이 추워요.",
+      "fr": "La classe est froide.",
+      "en": "The classroom is cold."
+     }
+    },
+    {
+     "term": "맛있다",
+     "fr": "délicieux",
+     "en": "tasty",
+     "reading": "masitda",
+     "ex": {
+      "ko": "김치가 맛있어요.",
+      "fr": "Le kimchi est bon.",
+      "en": "The kimchi is tasty."
+     }
+    },
+    {
+     "term": "맛없다",
+     "fr": "pas bon",
+     "en": "not tasty",
+     "reading": "maseopda",
+     "ex": {
+      "ko": "음식이 맛없어요.",
+      "fr": "La nourriture n'est pas bonne.",
+      "en": "The food is not tasty."
+     }
+    },
+    {
+     "term": "길다",
+     "fr": "long",
+     "en": "long",
+     "reading": "gilda",
+     "ex": {
+      "ko": "머리가 길어요.",
+      "fr": "Les cheveux sont longs.",
+      "en": "The hair is long."
+     }
+    },
+    {
+     "term": "짧다",
+     "fr": "court",
+     "en": "short",
+     "reading": "jjalpda",
+     "ex": {
+      "ko": "머리가 짧아요.",
+      "fr": "Les cheveux sont courts.",
+      "en": "The hair is short."
+     }
+    },
+    {
+     "term": "멀다",
+     "fr": "loin",
+     "en": "far",
+     "reading": "meolda",
+     "ex": {
+      "ko": "지하철역이 멀어요.",
+      "fr": "La station est loin.",
+      "en": "The subway station is far."
+     }
+    },
+    {
+     "term": "가깝다",
+     "fr": "proche",
+     "en": "close",
+     "reading": "gakkapda",
+     "ex": {
+      "ko": "학교가 가까워요.",
+      "fr": "L'école est proche.",
+      "en": "The school is close."
+     }
+    },
+    {
+     "term": "무겁다",
+     "fr": "lourd",
+     "en": "heavy",
+     "reading": "mugeopda",
+     "ex": {
+      "ko": "가방이 무거워요.",
+      "fr": "Le sac est lourd.",
+      "en": "The bag is heavy."
+     }
+    },
+    {
+     "term": "쉽다",
+     "fr": "facile",
+     "en": "easy",
+     "reading": "swipda",
+     "ex": {
+      "ko": "한국어가 쉬워요.",
+      "fr": "Le coréen est facile.",
+      "en": "Korean is easy."
+     }
+    },
+    {
+     "term": "맵다",
+     "fr": "épicé",
+     "en": "spicy",
+     "reading": "maepda",
+     "ex": {
+      "ko": "떡볶이가 매워요.",
+      "fr": "Le tteokbokki est épicé.",
+      "en": "Tteokbokki is spicy."
+     }
+    },
+    {
+     "term": "넓다",
+     "fr": "large, vaste",
+     "en": "wide, spacious",
+     "reading": "neolda",
+     "ex": {
+      "ko": "공원이 넓어요.",
+      "fr": "Le parc est vaste.",
+      "en": "The park is spacious."
+     }
+    }
+   ],
+   "mnemonic": {
+    "fr": "Retiens-les par paires : on apprend 2 mots en 1 (높다/낮다, 크다/작다, 길다/짧다…).",
+    "en": "Learn them in pairs: 2 words for the price of 1 (높다/낮다, 크다/작다, 길다/짧다…)."
+   },
+   "theme": {
+    "fr": "Adjectifs",
+    "en": "Adjectives"
+   }
+  },
+  {
+   "name": {
+    "fr": "État & santé",
+    "en": "Feelings & health"
+   },
+   "cards": [
+    {
+     "term": "아프다",
+     "fr": "avoir mal, être malade",
+     "en": "to be sick, hurt",
+     "reading": "apeuda",
+     "ex": {
+      "ko": "배가 아파요.",
+      "fr": "J'ai mal au ventre.",
+      "en": "My stomach hurts."
+     }
+    },
+    {
+     "term": "바쁘다",
+     "fr": "occupé",
+     "en": "busy",
+     "reading": "bappeuda",
+     "ex": {
+      "ko": "오늘 바빠요.",
+      "fr": "Je suis occupé(e) aujourd'hui.",
+      "en": "I am busy today."
+     }
+    },
+    {
+     "term": "배고프다",
+     "fr": "avoir faim",
+     "en": "hungry",
+     "reading": "baegopeuda",
+     "ex": {
+      "ko": "오늘 배고파요.",
+      "fr": "J'ai faim aujourd'hui.",
+      "en": "I am hungry today."
+     }
+    },
+    {
+     "term": "예쁘다",
+     "fr": "joli",
+     "en": "pretty",
+     "reading": "yeppeuda",
+     "ex": {
+      "ko": "꽃이 예뻐요.",
+      "fr": "La fleur est jolie.",
+      "en": "The flower is pretty."
+     }
+    },
+    {
+     "term": "슬프다",
+     "fr": "triste",
+     "en": "sad",
+     "reading": "seulpeuda",
+     "ex": {
+      "ko": "영화가 슬퍼요.",
+      "fr": "Le film est triste.",
+      "en": "The movie is sad."
+     }
+    },
+    {
+     "term": "괜찮다",
+     "fr": "ça va, correct",
+     "en": "fine, okay",
+     "reading": "gwaenchanta",
+     "ex": {
+      "ko": "괜찮아요?",
+      "fr": "Ça va ?",
+      "en": "Are you okay?"
+     }
+    },
+    {
+     "term": "목",
+     "fr": "gorge, cou",
+     "en": "throat, neck",
+     "reading": "mok",
+     "ex": {
+      "ko": "목이 아파요.",
+      "fr": "J'ai mal à la gorge.",
+      "en": "My throat hurts."
+     }
+    },
+    {
+     "term": "배",
+     "fr": "ventre",
+     "en": "stomach",
+     "reading": "bae",
+     "ex": {
+      "ko": "배가 고파요.",
+      "fr": "J'ai faim.",
+      "en": "I am hungry."
+     }
+    },
+    {
+     "term": "머리",
+     "fr": "tête, cheveux",
+     "en": "head, hair",
+     "reading": "meori",
+     "ex": {
+      "ko": "머리가 아파요.",
+      "fr": "J'ai mal à la tête.",
+      "en": "My head hurts."
+     }
+    },
+    {
+     "term": "병원",
+     "fr": "hôpital",
+     "en": "hospital",
+     "reading": "byeongwon",
+     "ex": {
+      "ko": "병원에 가요.",
+      "fr": "Je vais à l'hôpital.",
+      "en": "I go to the hospital."
+     }
+    },
+    {
+     "term": "약",
+     "fr": "médicament",
+     "en": "medicine",
+     "reading": "yak",
+     "ex": {
+      "ko": "약을 먹어요.",
+      "fr": "Je prends un médicament.",
+      "en": "I take medicine."
+     }
+    },
+    {
+     "term": "잠",
+     "fr": "sommeil",
+     "en": "sleep",
+     "reading": "jam",
+     "ex": {
+      "ko": "잠을 자요.",
+      "fr": "Je dors.",
+      "en": "I sleep."
+     }
+    }
+   ],
+   "theme": {
+    "fr": "Santé & état",
+    "en": "Health & feelings"
+   }
+  },
+  {
+   "name": {
+    "fr": "Mots & verbes utiles",
+    "en": "Useful words & verbs"
+   },
+   "cards": [
+    {
+     "term": "담배를 피우다",
+     "fr": "fumer",
+     "en": "to smoke",
+     "reading": "dambaereul piuda",
+     "ex": {
+      "ko": "여기에서 담배를 피우지 마세요.",
+      "fr": "Ne fumez pas ici.",
+      "en": "Please do not smoke here."
+     }
+    },
+    {
+     "term": "청소하다",
+     "fr": "nettoyer",
+     "en": "to clean",
+     "reading": "cheongsohada",
+     "ex": {
+      "ko": "방을 청소해요.",
+      "fr": "Je nettoie la chambre.",
+      "en": "I clean the room."
+     }
+    },
+    {
+     "term": "걱정하다",
+     "fr": "s'inquiéter",
+     "en": "to worry",
+     "reading": "geokjeonghada",
+     "ex": {
+      "ko": "걱정하지 마세요.",
+      "fr": "Ne vous inquiétez pas.",
+      "en": "Do not worry."
+     }
+    },
+    {
+     "term": "힘내세요",
+     "fr": "courage !",
+     "en": "cheer up!",
+     "reading": "himnaeseyo"
+    },
+    {
+     "term": "죄송합니다",
+     "fr": "je suis désolé(e) (formel)",
+     "en": "I am sorry (formal)",
+     "reading": "joesonghamnida"
+    },
+    {
+     "term": "말하다",
+     "fr": "parler, dire",
+     "en": "to speak, say",
+     "reading": "malhada",
+     "ex": {
+      "ko": "한국어로 말해요.",
+      "fr": "Je parle en coréen.",
+      "en": "I speak in Korean."
+     }
+    },
+    {
+     "term": "앉다",
+     "fr": "s'asseoir",
+     "en": "to sit",
+     "reading": "anda",
+     "ex": {
+      "ko": "여기에 앉으세요.",
+      "fr": "Asseyez-vous ici.",
+      "en": "Please sit here."
+     }
+    },
+    {
+     "term": "주다",
+     "fr": "donner",
+     "en": "to give",
+     "reading": "juda",
+     "ex": {
+      "ko": "하나 주세요.",
+      "fr": "Donnez-m'en un.",
+      "en": "Please give me one."
+     }
+    },
+    {
+     "term": "기다리다",
+     "fr": "attendre",
+     "en": "to wait",
+     "reading": "gidarida",
+     "ex": {
+      "ko": "버스를 기다려요.",
+      "fr": "J'attends le bus.",
+      "en": "I wait for the bus."
+     }
+    },
+    {
+     "term": "시험",
+     "fr": "examen",
+     "en": "exam",
+     "reading": "siheom",
+     "ex": {
+      "ko": "내일 시험이 있어요.",
+      "fr": "J'ai un examen demain.",
+      "en": "I have an exam tomorrow."
+     }
+    },
+    {
+     "term": "숙제",
+     "fr": "devoirs",
+     "en": "homework",
+     "reading": "sukje",
+     "ex": {
+      "ko": "숙제가 많아요.",
+      "fr": "J'ai beaucoup de devoirs.",
+      "en": "I have a lot of homework."
+     }
+    },
+    {
+     "term": "지하철역",
+     "fr": "station de métro",
+     "en": "subway station",
+     "reading": "jihacheolyeok",
+     "ex": {
+      "ko": "지하철역에 가요.",
+      "fr": "Je vais à la station de métro.",
+      "en": "I go to the subway station."
+     }
+    },
+    {
+     "term": "공원",
+     "fr": "parc",
+     "en": "park",
+     "reading": "gongwon",
+     "ex": {
+      "ko": "한강 공원에 가요.",
+      "fr": "Je vais au parc de la Han.",
+      "en": "I go to Han River Park."
+     }
+    },
+    {
+     "term": "자전거",
+     "fr": "vélo",
+     "en": "bicycle",
+     "reading": "jajeongeo",
+     "ex": {
+      "ko": "자전거가 있어요.",
+      "fr": "J'ai un vélo.",
+      "en": "I have a bicycle."
+     }
+    },
+    {
+     "term": "자전거를 타다",
+     "fr": "faire du vélo",
+     "en": "to ride a bicycle",
+     "reading": "jajeongeoreul tada",
+     "ex": {
+      "ko": "공원에서 자전거를 타요.",
+      "fr": "Je fais du vélo au parc.",
+      "en": "I ride a bike in the park."
+     }
+    },
+    {
+     "term": "조금",
+     "fr": "un peu",
+     "en": "a little",
+     "reading": "jogeum",
+     "ex": {
+      "ko": "조금 피곤해요.",
+      "fr": "Je suis un peu fatigué(e).",
+      "en": "I am a little tired."
+     }
+    },
+    {
+     "term": "아주",
+     "fr": "très",
+     "en": "very",
+     "reading": "aju",
+     "ex": {
+      "ko": "아주 맛있어요.",
+      "fr": "C'est très bon.",
+      "en": "It is very tasty."
+     }
+    },
+    {
+     "term": "많이",
+     "fr": "beaucoup",
+     "en": "a lot",
+     "reading": "mani",
+     "ex": {
+      "ko": "많이 먹어요.",
+      "fr": "Je mange beaucoup.",
+      "en": "I eat a lot."
+     }
+    }
+   ],
+   "theme": {
+    "fr": "Mots utiles",
+    "en": "Useful words"
+   }
+  }
+ ]
+}

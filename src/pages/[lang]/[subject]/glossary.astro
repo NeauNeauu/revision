@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { t, subjectName, langs, type Lang } from '../../../i18n';
+import { unitsOf, parts } from '../../../lib/content';
+export async function getStaticPaths() {
+  return (await getCollection('glossary')).flatMap((g) => langs.map((lang) => ({ params: { lang, subject: g.id }, props: { g } })));
+}
+const { g } = Astro.props;
+const lang = Astro.params.lang as Lang;
+const subject = Astro.params.subject!;
+const units = await unitsOf(lang, subject);
+const title = (s: string) => units.find((u) => parts(u.id).slug === s)?.data.title ?? s;
+const terms = [...g.data.terms].sort((a, b) => a[lang].term.localeCompare(b[lang].term, lang));
+---
+<Base lang={lang} title={`${t(lang, 'glossary.title')} · ${subjectName(lang, subject)}`}>
+  <p class="eyebrow"><a href={`/${lang}/${subject}/`}>← {subjectName(lang, subject)}</a></p>
+  <h1>{t(lang, 'glossary.title')}</h1>
+  <input id="gl-q" class="gl-q glass" type="search" placeholder={t(lang, 'glossary.filter')} autocomplete="off" />
+  <dl class="gl-list">
+    {terms.map((x) => (
+      <div class="gl-item glass" id={x.id} data-q={`${x[lang].term} ${x[lang].def}`.toLowerCase()}>
+        <dt>{x[lang].term}</dt>
+        <dd>
+          <p>{x[lang].def}</p>
+          <a class="small" href={`/${lang}/${subject}/${x.topic}/${x.anchor ? '#' + x.anchor : ''}`}>{title(x.topic)} →</a>
+        </dd>
+      </div>
+    ))}
+  </dl>
+</Base>
+
+<script>
+  const q = document.getElementById('gl-q') as HTMLInputElement;
+  q.addEventListener('input', () => {
+    const v = q.value.trim().toLowerCase();
+    document.querySelectorAll<HTMLElement>('.gl-item').forEach((el) => { el.hidden = !!v && !el.dataset.q!.includes(v); });
+  });
+</script>

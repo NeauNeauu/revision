@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import { t, subjectName, langs, type Lang } from '../../../i18n';
-import { subjectsList, unitsOf, inLang, parts, allCards } from '../../../lib/content';
+import { subjectsList, unitsOf, inLang, parts, allCards, mathText } from '../../../lib/content';
 import { subjectConf, unitLabel } from '../../../lib/subjects';
 export async function getStaticPaths() {
   return (await Promise.all(langs.map(async (lang) => (await subjectsList(lang)).map((subject) => ({ params: { lang, subject } }))))).flat();
@@ -19,8 +19,15 @@ for (const type of ['lessons', 'formulas', 'quiz'] as const)
     if (p.subject === subject && !(e.data.unit && unitSlugs.has(e.data.unit)))
       other.push({ type, href: `/${lang}/${type}/${subject}/${p.slug}/`, title: e.data.title });
   }
-const cards = (await allCards(lang)).filter((c) => c.subject === subject).map(({ id, unit }) => ({ id, unit }));
+const subjCards = (await allCards(lang)).filter((c) => c.subject === subject);
+const cards = subjCards.map(({ id, unit }) => ({ id, unit }));
+const topics = new Map<string, { href: string; name: string; label: string }[]>();
+for (const u of units) u.data.notions.forEach((n, i) => { if (n.topic) topics.set(n.topic, [...(topics.get(n.topic) ?? []), { href: `/${lang}/${subject}/${parts(u.id).slug}/#n${i}`, name: n.name, label: `${label} ${u.data.order}` }]); });
+const themes = [...new Set(subjCards.map((c) => c.theme).filter(Boolean) as string[])].map((th) => ({ th, n: subjCards.filter((c) => c.theme === th).length }));
 const rev = `/${lang}/review/?subject=${subject}`;
+const hasGlossary = (await getCollection('glossary')).some((g) => g.id === subject);
+const lectures = (await getCollection('lectures')).filter((e) => e.id.startsWith(`${lang}/${subject}/`)).sort((a, b) => a.data.order - b.data.order);
+const hasMap = units.some((u) => u.data.prereq.length > 0);
 ---
 <Base lang={lang} title={subjectName(lang, subject)}>
   <p class="eyebrow"><a href={`/${lang}/`}>← {t(lang, 'nav.home')}</a></p>
@@ -36,6 +43,15 @@ const rev = `/${lang}/review/?subject=${subject}`;
   </div>
   <a class="btn primary lg" style="margin-top:1rem;width:100%" href={rev}>{t(lang, 'subject.review')} →</a>
 
+  {(hasMap || hasGlossary) && (
+    <div class="row" style="gap:.6rem;margin-top:.6rem">
+      {hasMap && <a class="btn" style="flex:1" href={`/${lang}/${subject}/map/`}>🗺️ {t(lang, 'subject.map')}</a>}
+      {hasGlossary && <a class="btn" style="flex:1" href={`/${lang}/${subject}/glossary/`}>📖 {t(lang, 'subject.glossary')}</a>}
+    </div>
+  )}
+
+  {subject === 'coreen' && <a class="btn lg" style="margin-top:.6rem;width:100%" href={`/${lang}/conjugation/`}>✍️ {t(lang, 'subject.conj')} →</a>}
+
   <h2>{t(lang, 'subject.units')}</h2>
   {units.length === 0 && other.length === 0 && <p class="glass empty muted">{t(lang, 'subject.empty')}</p>}
   <div class="units">
@@ -45,7 +61,7 @@ const rev = `/${lang}/review/?subject=${subject}`;
         <a class="unit-row glass" href={`/${lang}/${subject}/${slug}/`} data-unit={slug}>
           <span class="unit-num">{u.data.order}</span>
           <span class="subject-body">
-            <span class="eyebrow">{label} {u.data.order}</span>
+            <span class="eyebrow">{label} {u.data.order}{u.data.weeks.length > 0 && ` · ${u.data.weeks.map((w) => 'W' + w).join(', ')}`}</span>
             <strong>{u.data.title}</strong>
             {u.data.summary && <span class="muted small">{u.data.summary}</span>}
             <span class="progress" style="margin-top:.5rem"><i class="m" data-m></i><i class="l" data-l></i></span>
@@ -56,6 +72,43 @@ const rev = `/${lang}/review/?subject=${subject}`;
       );
     })}
   </div>
+
+  {lectures.length > 0 && (
+    <>
+      <h2>{t(lang, 'subject.lectures')}</h2>
+      <div class="units">
+        {lectures.map((e) => (
+          <a class="unit-row glass" href={`/${lang}/${subject}/lecture/${e.data.deck}/`}>
+            <span class="subject-body"><strong>{e.data.title}</strong><span class="muted small">{e.data.pages} p.</span></span>
+            <span class="arrow">›</span>
+          </a>
+        ))}
+      </div>
+    </>
+  )}
+
+  {topics.size > 0 && (
+    <>
+      <h2 id="topics">{t(lang, 'subject.topics')}</h2>
+      <div class="units">
+        {[...topics].map(([tp, list]) => (
+          <div class="glass topic">
+            <div class="row between"><strong>{tp}</strong><a class="btn" href={`${rev}&kind=notion,drill&topic=${encodeURIComponent(tp)}`}>{t(lang, 'unit.review_short')} →</a></div>
+            <ul class="toplist">{list.map((x) => <li><a href={x.href}><span class="muted small">{x.label}</span> <span set:html={mathText(x.name)} /></a></li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </>
+  )}
+
+  {themes.length > 0 && (
+    <>
+      <div class="row between"><h2>{t(lang, 'subject.themes')}</h2><a class="btn" href={`/${lang}/${subject}/vocab/`}>{t(lang, 'subject.vocab_all')} →</a></div>
+      <div class="row chips" style="flex-wrap:wrap">
+        {themes.map((x) => <a class="btn" href={`${rev}&kind=vocab&theme=${encodeURIComponent(x.th)}`}>{x.th} · {x.n}</a>)}
+      </div>
+    </>
+  )}
 
   {other.length > 0 && (
     <>

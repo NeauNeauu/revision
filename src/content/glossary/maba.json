@@ -1,0 +1,601 @@
+{
+ "terms": [
+  {
+   "id": "turing",
+   "topic": "histoire-ia",
+   "fr": {
+    "term": "Test de Turing",
+    "def": "Test où un évaluateur discute à l'aveugle avec un humain et une machine : la machine réussit si elle semble humaine."
+   },
+   "en": {
+    "term": "Turing Test",
+    "def": "A test where an evaluator chats blindly with a human and a machine: the machine passes if it seems human."
+   },
+   "anchor": "n0"
+  },
+  {
+   "id": "symbolisme",
+   "topic": "histoire-ia",
+   "fr": {
+    "term": "Symbolisme",
+    "def": "IA à base de règles écrites par des humains (ex. systèmes experts)."
+   },
+   "en": {
+    "term": "Symbolism",
+    "def": "AI based on rules written by humans (e.g. expert systems)."
+   },
+   "anchor": "n1"
+  },
+  {
+   "id": "connexionnisme",
+   "topic": "histoire-ia",
+   "fr": {
+    "term": "Connexionnisme",
+    "def": "IA qui apprend à partir des données, avec des neurones connectés (ex. perceptron, deep learning)."
+   },
+   "en": {
+    "term": "Connectionism",
+    "def": "AI that learns from data with connected neurons (e.g. perceptron, deep learning)."
+   },
+   "anchor": "n1"
+  },
+  {
+   "id": "hiver-ia",
+   "topic": "histoire-ia",
+   "fr": {
+    "term": "Hiver de l'IA",
+    "def": "Période où la recherche en IA ralentit parce que les résultats déçoivent les attentes."
+   },
+   "en": {
+    "term": "AI winter",
+    "def": "A period when AI research slows down because results fall short of expectations."
+   },
+   "anchor": "n3"
+  },
+  {
+   "id": "systeme-expert",
+   "topic": "histoire-ia",
+   "fr": {
+    "term": "Système expert",
+    "def": "IA à règles qui imite un expert humain : base de connaissances + moteur d'inférence."
+   },
+   "en": {
+    "term": "Expert system",
+    "def": "Rule-based AI mimicking a human expert: knowledge base + inference engine."
+   },
+   "anchor": "n4"
+  },
+  {
+   "id": "machine-learning",
+   "topic": "histoire-ia",
+   "fr": {
+    "term": "Machine learning",
+    "def": "La machine apprend à partir des données au lieu de suivre des règles écrites."
+   },
+   "en": {
+    "term": "Machine learning",
+    "def": "The machine learns from data instead of following written rules."
+   },
+   "anchor": "n5"
+  },
+  {
+   "id": "deep-learning",
+   "topic": "histoire-ia",
+   "fr": {
+    "term": "Deep learning",
+    "def": "Machine learning avec des réseaux de neurones profonds (plusieurs couches cachées)."
+   },
+   "en": {
+    "term": "Deep learning",
+    "def": "Machine learning with deep neural networks (several hidden layers)."
+   },
+   "anchor": "n6"
+  },
+  {
+   "id": "imagenet",
+   "topic": "histoire-ia",
+   "fr": {
+    "term": "ImageNet",
+    "def": "Grande compétition de classification d'images ; la victoire du deep learning en 2012 lance sa révolution."
+   },
+   "en": {
+    "term": "ImageNet",
+    "def": "A large image classification challenge; deep learning's 2012 win started its revolution."
+   },
+   "anchor": "n8"
+  },
+  {
+   "id": "transformer",
+   "topic": "histoire-ia",
+   "fr": {
+    "term": "Transformer",
+    "def": "Architecture basée sur l'attention, à la base des modèles modernes comme GPT."
+   },
+   "en": {
+    "term": "Transformer",
+    "def": "Attention-based architecture behind modern models like GPT."
+   },
+   "anchor": "n9"
+  },
+  {
+   "id": "synapse",
+   "topic": "neurone",
+   "fr": {
+    "term": "Synapse",
+    "def": "Jonction par laquelle deux neurones communiquent."
+   },
+   "en": {
+    "term": "Synapse",
+    "def": "The junction through which two neurons communicate."
+   },
+   "anchor": "n1"
+  },
+  {
+   "id": "hebb",
+   "topic": "neurone",
+   "fr": {
+    "term": "Apprentissage de Hebb",
+    "def": "Apprendre = renforcer les connexions entre neurones activés ensemble."
+   },
+   "en": {
+    "term": "Hebbian learning",
+    "def": "Learning = strengthening connections between neurons that fire together."
+   },
+   "anchor": "n2"
+  },
+  {
+   "id": "neurone-mp",
+   "topic": "neurone",
+   "fr": {
+    "term": "Neurone M-P",
+    "def": "Premier neurone artificiel : entrées binaires, poids fixes, sortie 1 si la somme atteint le seuil. N'apprend pas."
+   },
+   "en": {
+    "term": "M-P neuron",
+    "def": "First artificial neuron: binary inputs, fixed weights, output 1 if the sum reaches the threshold. Doesn't learn."
+   },
+   "anchor": "n3"
+  },
+  {
+   "id": "perceptron",
+   "topic": "neurone",
+   "fr": {
+    "term": "Perceptron",
+    "def": "Neurone dont les poids sont ajustés selon ses erreurs : la première machine qui apprend."
+   },
+   "en": {
+    "term": "Perceptron",
+    "def": "A neuron whose weights are adjusted from its errors: the first machine that learns."
+   },
+   "anchor": "n4"
+  },
+  {
+   "id": "lineairement-separable",
+   "topic": "neurone",
+   "fr": {
+    "term": "Linéairement séparable",
+    "def": "Problème dont les classes peuvent être séparées par une seule droite (AND, OR oui ; XOR non)."
+   },
+   "en": {
+    "term": "Linearly separable",
+    "def": "A problem whose classes can be split by one straight line (AND, OR yes; XOR no)."
+   },
+   "anchor": "n5"
+  },
+  {
+   "id": "poids",
+   "topic": "neurone",
+   "fr": {
+    "term": "Poids",
+    "def": "Nombre qui dit combien compte une entrée ; il règle la direction de la droite du neurone. C'est ce que le réseau apprend."
+   },
+   "en": {
+    "term": "Weight",
+    "def": "A number saying how much an input counts; it sets the direction of the neuron's line. It's what the network learns."
+   },
+   "anchor": "n7"
+  },
+  {
+   "id": "seuil",
+   "topic": "neurone",
+   "fr": {
+    "term": "Seuil (θ)",
+    "def": "Niveau que la somme pondérée doit atteindre pour que le neurone sorte 1."
+   },
+   "en": {
+    "term": "Threshold (θ)",
+    "def": "The level the weighted sum must reach for the neuron to output 1."
+   },
+   "anchor": "n7"
+  },
+  {
+   "id": "biais",
+   "topic": "neurone",
+   "fr": {
+    "term": "Biais (b)",
+    "def": "Nombre ajouté à la somme pondérée (b = −θ). Il déplace la droite du neurone."
+   },
+   "en": {
+    "term": "Bias (b)",
+    "def": "A number added to the weighted sum (b = −θ). It shifts the neuron's line."
+   },
+   "anchor": "n8"
+  },
+  {
+   "id": "xor",
+   "topic": "architecture",
+   "fr": {
+    "term": "XOR",
+    "def": "« L'un ou l'autre mais pas les deux ». Non séparable par une droite : il faut une couche cachée."
+   },
+   "en": {
+    "term": "XOR",
+    "def": "\"One or the other but not both\". Not separable by one line: it needs a hidden layer."
+   },
+   "anchor": "n4"
+  },
+  {
+   "id": "couche-cachee",
+   "topic": "architecture",
+   "fr": {
+    "term": "Couche cachée",
+    "def": "Couche entre l'entrée et la sortie. Elle redessine le problème pour le rendre plus simple."
+   },
+   "en": {
+    "term": "Hidden layer",
+    "def": "A layer between input and output. It redraws the problem to make it easier."
+   },
+   "anchor": "n0"
+  },
+  {
+   "id": "largeur-profondeur",
+   "topic": "architecture",
+   "fr": {
+    "term": "Largeur / profondeur",
+    "def": "Largeur = neurones par couche ; profondeur = nombre de couches."
+   },
+   "en": {
+    "term": "Width / depth",
+    "def": "Width = neurons per layer; depth = number of layers."
+   },
+   "anchor": "n1"
+  },
+  {
+   "id": "parametres",
+   "topic": "architecture",
+   "fr": {
+    "term": "Paramètres",
+    "def": "Tous les poids et biais du réseau. Une couche de m neurones à n entrées en a m × n + m."
+   },
+   "en": {
+    "term": "Parameters",
+    "def": "All weights and biases of the network. A layer of m neurons with n inputs has m × n + m."
+   },
+   "anchor": "n2"
+  },
+  {
+   "id": "non-linearite",
+   "topic": "architecture",
+   "fr": {
+    "term": "Non-linéarité",
+    "def": "Ce qu'apporte la fonction d'activation. Sans elle, empiler des couches revient à une seule couche linéaire."
+   },
+   "en": {
+    "term": "Non-linearity",
+    "def": "What the activation function brings. Without it, stacked layers collapse into one linear layer."
+   },
+   "anchor": "n6"
+  },
+  {
+   "id": "propagation-avant",
+   "topic": "architecture",
+   "fr": {
+    "term": "Propagation avant",
+    "def": "Calcul du réseau de l'entrée vers la sortie : somme pondérée puis activation, couche après couche."
+   },
+   "en": {
+    "term": "Forward propagation",
+    "def": "Computing the network from input to output: weighted sum then activation, layer after layer."
+   },
+   "anchor": "n7"
+  },
+  {
+   "id": "uat",
+   "topic": "architecture",
+   "fr": {
+    "term": "Théorème d'approximation universelle",
+    "def": "Une couche cachée avec assez de neurones peut approcher toute fonction continue — sans dire comment trouver les poids."
+   },
+   "en": {
+    "term": "Universal Approximation Theorem",
+    "def": "One hidden layer with enough neurons can approximate any continuous function — without saying how to find the weights."
+   },
+   "anchor": "n9"
+  },
+  {
+   "id": "fonction-activation",
+   "topic": "activations",
+   "fr": {
+    "term": "Fonction d'activation",
+    "def": "Fonction appliquée après la somme pondérée (échelon, sigmoïde, tanh, ReLU). Elle apporte la non-linéarité."
+   },
+   "en": {
+    "term": "Activation function",
+    "def": "Function applied after the weighted sum (step, sigmoid, tanh, ReLU). It brings non-linearity."
+   }
+  },
+  {
+   "id": "echelon",
+   "topic": "activations",
+   "fr": {
+    "term": "Fonction échelon",
+    "def": "Sort 1 si z ≥ 0, sinon 0. Plate partout : pente nulle, donc impossible d'apprendre avec."
+   },
+   "en": {
+    "term": "Step function",
+    "def": "Outputs 1 if z ≥ 0, else 0. Flat everywhere: zero slope, so it can't be used to learn."
+   },
+   "anchor": "n0"
+  },
+  {
+   "id": "sigmoide",
+   "topic": "activations",
+   "fr": {
+    "term": "Sigmoïde",
+    "def": "σ(z) = 1 / (1 + e^−z). Sortie entre 0 et 1, lisse, mais sature aux extrémités."
+   },
+   "en": {
+    "term": "Sigmoid",
+    "def": "σ(z) = 1 / (1 + e^−z). Output between 0 and 1, smooth, but saturates at both ends."
+   },
+   "anchor": "n1"
+  },
+  {
+   "id": "tanh",
+   "topic": "activations",
+   "fr": {
+    "term": "Tanh",
+    "def": "Comme la sigmoïde mais sortie entre −1 et 1, centrée sur 0. Sature aussi."
+   },
+   "en": {
+    "term": "Tanh",
+    "def": "Like sigmoid but output between −1 and 1, centred on 0. Also saturates."
+   },
+   "anchor": "n2"
+  },
+  {
+   "id": "relu",
+   "topic": "activations",
+   "fr": {
+    "term": "ReLU",
+    "def": "max(0, z) : négatif → 0, positif inchangé. Pente 1, pas de saturation."
+   },
+   "en": {
+    "term": "ReLU",
+    "def": "max(0, z): negative → 0, positive unchanged. Slope 1, no saturation."
+   },
+   "anchor": "n3"
+  },
+  {
+   "id": "saturation",
+   "topic": "activations",
+   "fr": {
+    "term": "Saturation",
+    "def": "Zone où la courbe d'activation est plate : la pente ≈ 0 et les poids n'apprennent presque plus."
+   },
+   "en": {
+    "term": "Saturation",
+    "def": "Region where the activation curve is flat: slope ≈ 0 and the weights barely learn."
+   },
+   "anchor": "n4"
+  },
+  {
+   "id": "dying-relu",
+   "topic": "activations",
+   "fr": {
+    "term": "Dying ReLU",
+    "def": "Neurone ReLU bloqué en négatif : sortie 0, pente 0, il ne répond plus jamais."
+   },
+   "en": {
+    "term": "Dying ReLU",
+    "def": "A ReLU neuron stuck in the negatives: output 0, slope 0, it never responds again."
+   },
+   "anchor": "n3"
+  },
+  {
+   "id": "gradient-disparait",
+   "topic": "activations",
+   "fr": {
+    "term": "Gradient qui disparaît",
+    "def": "En remontant beaucoup de couches, le signal d'apprentissage devient minuscule : les premières couches n'apprennent plus."
+   },
+   "en": {
+    "term": "Vanishing gradient",
+    "def": "Travelling back through many layers, the learning signal becomes tiny: early layers stop learning."
+   },
+   "anchor": "n6"
+  },
+  {
+   "id": "perte",
+   "topic": "perte",
+   "fr": {
+    "term": "Perte (loss)",
+    "def": "Un nombre qui mesure à quel point le réseau se trompe. On cherche à le minimiser."
+   },
+   "en": {
+    "term": "Loss",
+    "def": "A number measuring how wrong the network is. We try to minimise it."
+   },
+   "anchor": "n4"
+  },
+  {
+   "id": "mse",
+   "topic": "perte",
+   "fr": {
+    "term": "MSE",
+    "def": "Erreur quadratique moyenne : moyenne des (y − ŷ)² sur tous les exemples."
+   },
+   "en": {
+    "term": "MSE",
+    "def": "Mean Squared Error: the average of (y − ŷ)² over all examples."
+   },
+   "anchor": "n4"
+  },
+  {
+   "id": "etiquette",
+   "topic": "perte",
+   "fr": {
+    "term": "Étiquette (label)",
+    "def": "La bonne réponse y d'un exemple d'entraînement."
+   },
+   "en": {
+    "term": "Label",
+    "def": "The correct answer y of a training example."
+   },
+   "anchor": "n1"
+  },
+  {
+   "id": "donnees-entrainement",
+   "topic": "perte",
+   "fr": {
+    "term": "Données d'entraînement",
+    "def": "Exemples dont on connaît la bonne réponse, utilisés pour ajuster les poids."
+   },
+   "en": {
+    "term": "Training data",
+    "def": "Examples with a known correct answer, used to adjust the weights."
+   },
+   "anchor": "n1"
+  },
+  {
+   "id": "pente",
+   "topic": "descente-gradient",
+   "fr": {
+    "term": "Pente",
+    "def": "De combien la perte change quand on change un poids d'une unité. Son signe dit dans quel sens aller."
+   },
+   "en": {
+    "term": "Slope",
+    "def": "How much the loss changes when a weight changes by one unit. Its sign says which way to move."
+   },
+   "anchor": "n0"
+  },
+  {
+   "id": "descente-gradient",
+   "topic": "descente-gradient",
+   "fr": {
+    "term": "Descente de gradient",
+    "def": "Répéter : calculer les pentes, puis w ← w − η × pente pour tous les poids."
+   },
+   "en": {
+    "term": "Gradient descent",
+    "def": "Repeat: compute the slopes, then w ← w − η × slope for every weight."
+   },
+   "anchor": "n6"
+  },
+  {
+   "id": "taux-apprentissage",
+   "topic": "descente-gradient",
+   "fr": {
+    "term": "Taux d'apprentissage (η)",
+    "def": "Taille du pas de la descente de gradient. Trop petit = lent, trop grand = diverge."
+   },
+   "en": {
+    "term": "Learning rate (η)",
+    "def": "Step size of gradient descent. Too small = slow, too large = diverges."
+   },
+   "anchor": "n4"
+  },
+  {
+   "id": "gradient",
+   "topic": "descente-gradient",
+   "fr": {
+    "term": "Gradient",
+    "def": "La liste de toutes les pentes, une par poids et biais."
+   },
+   "en": {
+    "term": "Gradient",
+    "def": "The list of all slopes, one per weight and bias."
+   },
+   "anchor": "n5"
+  },
+  {
+   "id": "iteration",
+   "topic": "descente-gradient",
+   "fr": {
+    "term": "Itération",
+    "def": "Un tour complet : propagation avant, perte, pentes, mise à jour de tous les poids."
+   },
+   "en": {
+    "term": "Iteration",
+    "def": "One full round: forward pass, loss, slopes, update of every weight."
+   },
+   "anchor": "n6"
+  },
+  {
+   "id": "minimum-local",
+   "topic": "descente-gradient",
+   "fr": {
+    "term": "Minimum local",
+    "def": "Endroit plat plus bas que ses voisins mais pas le plus bas de tous. La descente peut s'y arrêter."
+   },
+   "en": {
+    "term": "Local minimum",
+    "def": "A flat spot lower than its neighbours but not the lowest overall. Descent can stop there."
+   },
+   "anchor": "n8"
+  },
+  {
+   "id": "derivee",
+   "topic": "derivees-chaine",
+   "fr": {
+    "term": "Dérivée",
+    "def": "La pente exacte d'une fonction en un point (la poussée devenue infiniment petite)."
+   },
+   "en": {
+    "term": "Derivative",
+    "def": "The exact slope of a function at a point (the nudge made infinitely small)."
+   },
+   "anchor": "n3"
+  },
+  {
+   "id": "derivee-partielle",
+   "topic": "derivees-chaine",
+   "fr": {
+    "term": "Dérivée partielle (∂)",
+    "def": "Dérivée par rapport à une seule variable, les autres restant fixes."
+   },
+   "en": {
+    "term": "Partial derivative (∂)",
+    "def": "Derivative with respect to one variable, the others held fixed."
+   },
+   "anchor": "n5"
+  },
+  {
+   "id": "regle-chaine",
+   "topic": "derivees-chaine",
+   "fr": {
+    "term": "Règle de la chaîne",
+    "def": "Le long d'une chaîne d'étapes, les dérivées se multiplient : ∂c/∂a = ∂c/∂b × ∂b/∂a."
+   },
+   "en": {
+    "term": "Chain rule",
+    "def": "Along a chain of steps, derivatives multiply: ∂c/∂a = ∂c/∂b × ∂b/∂a."
+   },
+   "anchor": "n8"
+  },
+  {
+   "id": "retropropagation",
+   "topic": "derivees-chaine",
+   "fr": {
+    "term": "Rétropropagation",
+    "def": "Calcul de toutes les pentes en une passe arrière, de la perte vers l'entrée, avec la règle de la chaîne."
+   },
+   "en": {
+    "term": "Backpropagation",
+    "def": "Computing all slopes in one backward pass, from the loss to the input, using the chain rule."
+   },
+   "anchor": "n12"
+  }
+ ]
+}

@@ -1,0 +1,826 @@
+{
+ "lang": "ko",
+ "groups": [
+  {
+   "name": {
+    "fr": "Jours de la semaine (les 7 éléments)",
+    "en": "Days of the week (the 7 elements)"
+   },
+   "cards": [
+    {
+     "term": "월요일",
+     "fr": "lundi",
+     "en": "Monday",
+     "reading": "woryoil",
+     "mnemonic": {
+      "fr": "月 = Lune 🌙 — lundi, « Moon-day ».",
+      "en": "月 = Moon 🌙 — Monday, “Moon-day”."
+     },
+     "ex": {
+      "ko": "월요일에 학교에 가요.",
+      "fr": "Le lundi, je vais à l'école.",
+      "en": "On Monday, I go to school."
+     }
+    },
+    {
+     "term": "화요일",
+     "fr": "mardi",
+     "en": "Tuesday",
+     "reading": "hwayoil",
+     "mnemonic": {
+      "fr": "火 = Feu 🔥 — 화 comme « hot » ; mardi = Mars, planète rouge.",
+      "en": "火 = Fire 🔥 — Tuesday = Mars, the red planet."
+     },
+     "ex": {
+      "ko": "화요일에 친구를 만나요.",
+      "fr": "Le mardi, je vois un ami.",
+      "en": "On Tuesday, I meet a friend."
+     }
+    },
+    {
+     "term": "수요일",
+     "fr": "mercredi",
+     "en": "Wednesday",
+     "reading": "suyoil",
+     "mnemonic": {
+      "fr": "水 = Eau 💧 — 수 comme « soupe / source » ; mercredi = Mercure.",
+      "en": "水 = Water 💧 — Wednesday = Mercury."
+     },
+     "ex": {
+      "ko": "수요일에 한국어를 배워요.",
+      "fr": "Le mercredi, j'apprends le coréen.",
+      "en": "On Wednesday, I learn Korean."
+     }
+    },
+    {
+     "term": "목요일",
+     "fr": "jeudi",
+     "en": "Thursday",
+     "reading": "mogyoil",
+     "mnemonic": {
+      "fr": "木 = Bois 🌳 — 목 (mok) : le bois, l'arbre ; jeudi = Jupiter.",
+      "en": "木 = Wood 🌳 — Thursday = Jupiter."
+     },
+     "ex": {
+      "ko": "목요일에 운동해요.",
+      "fr": "Le jeudi, je fais du sport.",
+      "en": "On Thursday, I exercise."
+     }
+    },
+    {
+     "term": "금요일",
+     "fr": "vendredi",
+     "en": "Friday",
+     "reading": "geumyoil",
+     "mnemonic": {
+      "fr": "金 = Or / Métal 🪙 — 금 = l'or ; vendredi = Vénus.",
+      "en": "金 = Gold / Metal 🪙 — 금 = gold; Friday = Venus."
+     },
+     "ex": {
+      "ko": "금요일에 영화를 봐요.",
+      "fr": "Le vendredi, je regarde un film.",
+      "en": "On Friday, I watch a movie."
+     }
+    },
+    {
+     "term": "토요일",
+     "fr": "samedi",
+     "en": "Saturday",
+     "reading": "toyoil",
+     "mnemonic": {
+      "fr": "土 = Terre 🟤 — 토 (to) : le sol ; samedi = Saturne.",
+      "en": "土 = Earth 🟤 — 토 = soil; Saturday = Saturn."
+     },
+     "ex": {
+      "ko": "토요일에 산에 가요.",
+      "fr": "Le samedi, je vais à la montagne.",
+      "en": "On Saturday, I go to the mountains."
+     }
+    },
+    {
+     "term": "일요일",
+     "fr": "dimanche",
+     "en": "Sunday",
+     "reading": "iryoil",
+     "mnemonic": {
+      "fr": "日 = Soleil ☀️ — 일 = jour/soleil ; dimanche = « Sun-day ».",
+      "en": "日 = Sun ☀️ — 일 = day/sun; Sunday = “Sun-day”."
+     },
+     "ex": {
+      "ko": "일요일에 집에서 쉬어요.",
+      "fr": "Le dimanche, je me repose à la maison.",
+      "en": "On Sunday, I rest at home."
+     }
+    }
+   ],
+   "mnemonic": {
+    "fr": "Ordre : Lune · Feu · Eau · Bois · Or · Terre · Soleil (月火水木金土日) + 요일 (jour de la semaine). Retiens juste l'élément : 월화수목금토일.",
+    "en": "Order: Moon · Fire · Water · Wood · Gold · Earth · Sun (月火水木金土日) + 요일 (day of week). Just remember the elements: 월화수목금토일."
+   },
+   "theme": {
+    "fr": "Temps & calendrier",
+    "en": "Time & calendar"
+   }
+  },
+  {
+   "name": {
+    "fr": "Le temps",
+    "en": "Time words"
+   },
+   "cards": [
+    {
+     "term": "어제",
+     "fr": "hier",
+     "en": "yesterday",
+     "reading": "eoje",
+     "ex": {
+      "ko": "어제 친구를 만났어요.",
+      "fr": "Hier, j'ai vu un ami.",
+      "en": "Yesterday I met a friend."
+     }
+    },
+    {
+     "term": "오늘",
+     "fr": "aujourd'hui",
+     "en": "today",
+     "reading": "oneul",
+     "ex": {
+      "ko": "오늘 날씨가 좋아요.",
+      "fr": "Aujourd'hui, il fait beau.",
+      "en": "Today the weather is nice."
+     }
+    },
+    {
+     "term": "내일",
+     "fr": "demain",
+     "en": "tomorrow",
+     "reading": "naeil",
+     "ex": {
+      "ko": "내일 학교에 가요.",
+      "fr": "Demain, je vais à l'école.",
+      "en": "Tomorrow I go to school."
+     }
+    },
+    {
+     "term": "지난주",
+     "fr": "la semaine dernière",
+     "en": "last week",
+     "reading": "jinanju",
+     "ex": {
+      "ko": "지난주에 여행했어요.",
+      "fr": "La semaine dernière, j'ai voyagé.",
+      "en": "Last week I traveled."
+     }
+    },
+    {
+     "term": "이번 주",
+     "fr": "cette semaine",
+     "en": "this week",
+     "reading": "ibeon ju",
+     "ex": {
+      "ko": "이번 주에 바빠요.",
+      "fr": "Cette semaine, je suis occupé(e).",
+      "en": "This week I am busy."
+     }
+    },
+    {
+     "term": "다음 주",
+     "fr": "la semaine prochaine",
+     "en": "next week",
+     "reading": "daeum ju",
+     "ex": {
+      "ko": "다음 주에 제주도에 갈 거예요.",
+      "fr": "La semaine prochaine, j'irai à Jeju.",
+      "en": "Next week I will go to Jeju."
+     }
+    },
+    {
+     "term": "지난달",
+     "fr": "le mois dernier",
+     "en": "last month",
+     "reading": "jinandal",
+     "ex": {
+      "ko": "지난달에 한국에 왔어요.",
+      "fr": "Le mois dernier, je suis venu(e) en Corée.",
+      "en": "Last month I came to Korea."
+     }
+    },
+    {
+     "term": "이번 달",
+     "fr": "ce mois-ci",
+     "en": "this month",
+     "reading": "ibeon dal",
+     "ex": {
+      "ko": "이번 달에 시험이 있어요.",
+      "fr": "Ce mois-ci, j'ai un examen.",
+      "en": "This month I have an exam."
+     }
+    },
+    {
+     "term": "다음 달",
+     "fr": "le mois prochain",
+     "en": "next month",
+     "reading": "daeum dal",
+     "ex": {
+      "ko": "다음 달에 부산에 갈 거예요.",
+      "fr": "Le mois prochain, j'irai à Busan.",
+      "en": "Next month I will go to Busan."
+     }
+    },
+    {
+     "term": "작년",
+     "fr": "l'année dernière",
+     "en": "last year",
+     "reading": "jangnyeon",
+     "ex": {
+      "ko": "작년에 프랑스에 있었어요.",
+      "fr": "L'année dernière, j'étais en France.",
+      "en": "Last year I was in France."
+     }
+    },
+    {
+     "term": "올해",
+     "fr": "cette année",
+     "en": "this year",
+     "reading": "olhae",
+     "ex": {
+      "ko": "올해 한국어를 배워요.",
+      "fr": "Cette année, j'apprends le coréen.",
+      "en": "This year I learn Korean."
+     }
+    },
+    {
+     "term": "내년",
+     "fr": "l'année prochaine",
+     "en": "next year",
+     "reading": "naenyeon",
+     "ex": {
+      "ko": "내년에 여행할 거예요.",
+      "fr": "L'année prochaine, je voyagerai.",
+      "en": "Next year I will travel."
+     }
+    },
+    {
+     "term": "주말",
+     "fr": "week-end",
+     "en": "weekend",
+     "reading": "jumal",
+     "ex": {
+      "ko": "주말에 친구를 만날 거예요.",
+      "fr": "Ce week-end, je verrai un ami.",
+      "en": "This weekend I will meet a friend."
+     }
+    },
+    {
+     "term": "주중",
+     "fr": "en semaine",
+     "en": "weekdays",
+     "reading": "jujung",
+     "ex": {
+      "ko": "주중에 학교에 가요.",
+      "fr": "En semaine, je vais à l'école.",
+      "en": "On weekdays I go to school."
+     }
+    },
+    {
+     "term": "휴일",
+     "fr": "jour férié",
+     "en": "holiday",
+     "reading": "hyuil",
+     "ex": {
+      "ko": "휴일에 집에서 쉬어요.",
+      "fr": "Les jours fériés, je me repose à la maison.",
+      "en": "On holidays I rest at home."
+     }
+    },
+    {
+     "term": "휴가",
+     "fr": "congé, vacances (travail)",
+     "en": "vacation, leave",
+     "reading": "hyuga",
+     "ex": {
+      "ko": "휴가에 여행 갈 거예요.",
+      "fr": "Pendant mes congés, j'irai voyager.",
+      "en": "On my vacation I will travel."
+     }
+    },
+    {
+     "term": "방학",
+     "fr": "vacances scolaires",
+     "en": "school vacation",
+     "reading": "banghak",
+     "ex": {
+      "ko": "방학에 제주도에 갈 거예요.",
+      "fr": "Pendant les vacances, j'irai à Jeju.",
+      "en": "During the break I will go to Jeju."
+     }
+    },
+    {
+     "term": "언제",
+     "fr": "quand",
+     "en": "when",
+     "reading": "eonje",
+     "ex": {
+      "ko": "언제 한국에 갈 거예요?",
+      "fr": "Quand irez-vous en Corée ?",
+      "en": "When will you go to Korea?"
+     }
+    }
+   ],
+   "mnemonic": {
+    "fr": "내 (來) = « qui vient » : 내일 (demain), 내년 (l'an prochain). 작 (昨) = « passé » : 작년 (l'an dernier).",
+    "en": "내 (來) = “coming”: 내일 (tomorrow), 내년 (next year). 작 (昨) = “past”: 작년 (last year)."
+   },
+   "theme": {
+    "fr": "Temps & calendrier",
+    "en": "Time & calendar"
+   }
+  },
+  {
+   "name": {
+    "fr": "Activités & voyage",
+    "en": "Activities & travel"
+   },
+   "cards": [
+    {
+     "term": "사진을 찍다",
+     "fr": "prendre des photos",
+     "en": "to take photos",
+     "reading": "sajineul jjikda",
+     "ex": {
+      "ko": "공원에서 사진을 찍어요.",
+      "fr": "Je prends des photos au parc.",
+      "en": "I take photos in the park."
+     }
+    },
+    {
+     "term": "수영하다",
+     "fr": "nager",
+     "en": "to swim",
+     "reading": "suyeonghada",
+     "ex": {
+      "ko": "바다에서 수영해요.",
+      "fr": "Je nage dans la mer.",
+      "en": "I swim in the sea."
+     }
+    },
+    {
+     "term": "드라이브를 하다",
+     "fr": "faire un tour en voiture",
+     "en": "to go for a drive",
+     "reading": "deuraibeureul hada",
+     "ex": {
+      "ko": "주말에 드라이브를 해요.",
+      "fr": "Le week-end, je fais un tour en voiture.",
+      "en": "On weekends I go for a drive."
+     }
+    },
+    {
+     "term": "등산하다",
+     "fr": "faire de la randonnée",
+     "en": "to hike",
+     "reading": "deungsanhada",
+     "ex": {
+      "ko": "토요일에 등산해요.",
+      "fr": "Le samedi, je fais de la randonnée.",
+      "en": "On Saturday I go hiking."
+     }
+    },
+    {
+     "term": "박물관에 가다",
+     "fr": "aller au musée",
+     "en": "to go to a museum",
+     "reading": "bangmulgwane gada",
+     "ex": {
+      "ko": "내일 박물관에 가요.",
+      "fr": "Demain, je vais au musée.",
+      "en": "Tomorrow I go to the museum."
+     }
+    },
+    {
+     "term": "산책하다",
+     "fr": "se promener",
+     "en": "to take a walk",
+     "reading": "sanchaekhada",
+     "ex": {
+      "ko": "공원에서 산책해요.",
+      "fr": "Je me promène au parc.",
+      "en": "I take a walk in the park."
+     }
+    },
+    {
+     "term": "낚시하다",
+     "fr": "pêcher",
+     "en": "to fish",
+     "reading": "nakksihada",
+     "ex": {
+      "ko": "바다에서 낚시해요.",
+      "fr": "Je pêche en mer.",
+      "en": "I fish at sea."
+     }
+    },
+    {
+     "term": "스쿠버 다이빙을 하다",
+     "fr": "faire de la plongée",
+     "en": "to scuba dive",
+     "reading": "seukubeo daibingeul hada",
+     "ex": {
+      "ko": "제주도에서 스쿠버 다이빙을 할 거예요.",
+      "fr": "Je ferai de la plongée à Jeju.",
+      "en": "I will scuba dive in Jeju."
+     }
+    },
+    {
+     "term": "영화를 보다",
+     "fr": "regarder un film",
+     "en": "to watch a movie",
+     "reading": "yeonghwareul boda",
+     "ex": {
+      "ko": "친구하고 영화를 봐요.",
+      "fr": "Je regarde un film avec un ami.",
+      "en": "I watch a movie with a friend."
+     }
+    },
+    {
+     "term": "바다를 구경하다",
+     "fr": "contempler la mer",
+     "en": "to sightsee the sea",
+     "reading": "badareul gugyeonghada",
+     "ex": {
+      "ko": "제주도에서 바다를 구경해요.",
+      "fr": "Je contemple la mer à Jeju.",
+      "en": "I look at the sea in Jeju."
+     }
+    },
+    {
+     "term": "산에 가다",
+     "fr": "aller à la montagne",
+     "en": "to go to the mountains",
+     "reading": "sane gada",
+     "ex": {
+      "ko": "주말에 산에 가요.",
+      "fr": "Le week-end, je vais à la montagne.",
+      "en": "On weekends I go to the mountains."
+     }
+    },
+    {
+     "term": "출장을 가다",
+     "fr": "partir en déplacement pro",
+     "en": "to go on a business trip",
+     "reading": "chuljangeul gada",
+     "ex": {
+      "ko": "다음 주에 출장을 가요.",
+      "fr": "La semaine prochaine, je pars en déplacement.",
+      "en": "Next week I go on a business trip."
+     }
+    },
+    {
+     "term": "아르바이트하다",
+     "fr": "faire un job étudiant",
+     "en": "to work part-time",
+     "reading": "areubaiteuhada",
+     "ex": {
+      "ko": "식당에서 아르바이트해요.",
+      "fr": "Je fais un job étudiant au restaurant.",
+      "en": "I work part-time at a restaurant."
+     }
+    },
+    {
+     "term": "약속",
+     "fr": "rendez-vous, engagement",
+     "en": "appointment, plans",
+     "reading": "yaksok",
+     "ex": {
+      "ko": "오늘 약속이 있어요.",
+      "fr": "J'ai un rendez-vous aujourd'hui.",
+      "en": "I have plans today."
+     }
+    },
+    {
+     "term": "산",
+     "fr": "montagne",
+     "en": "mountain",
+     "reading": "san",
+     "ex": {
+      "ko": "한국에 산이 많아요.",
+      "fr": "En Corée, il y a beaucoup de montagnes.",
+      "en": "Korea has many mountains."
+     }
+    },
+    {
+     "term": "바다",
+     "fr": "mer",
+     "en": "sea",
+     "reading": "bada",
+     "ex": {
+      "ko": "바다가 깨끗해요.",
+      "fr": "La mer est propre.",
+      "en": "The sea is clean."
+     }
+    },
+    {
+     "term": "경치",
+     "fr": "paysage",
+     "en": "scenery",
+     "reading": "gyeongchi",
+     "ex": {
+      "ko": "제주도 경치가 좋아요.",
+      "fr": "Le paysage de Jeju est beau.",
+      "en": "Jeju's scenery is nice."
+     }
+    },
+    {
+     "term": "날씨",
+     "fr": "météo, temps",
+     "en": "weather",
+     "reading": "nalssi",
+     "ex": {
+      "ko": "제주도 날씨가 어때요?",
+      "fr": "Quel temps fait-il à Jeju ?",
+      "en": "How is the weather in Jeju?"
+     }
+    },
+    {
+     "term": "음식",
+     "fr": "nourriture",
+     "en": "food",
+     "reading": "eumsik",
+     "ex": {
+      "ko": "한국 음식이 맛있어요.",
+      "fr": "La cuisine coréenne est bonne.",
+      "en": "Korean food is tasty."
+     }
+    },
+    {
+     "term": "제주도",
+     "fr": "île de Jeju",
+     "en": "Jeju Island",
+     "reading": "jejudo",
+     "ex": {
+      "ko": "제주도에 여행 갈 거예요.",
+      "fr": "J'irai voyager à Jeju.",
+      "en": "I will travel to Jeju."
+     }
+    },
+    {
+     "term": "부산",
+     "fr": "Busan",
+     "en": "Busan",
+     "reading": "busan",
+     "ex": {
+      "ko": "부산에서 사진을 찍을 거예요.",
+      "fr": "À Busan, je prendrai des photos.",
+      "en": "In Busan I will take photos."
+     }
+    },
+    {
+     "term": "아름답다",
+     "fr": "beau, magnifique",
+     "en": "beautiful",
+     "reading": "areumdapda",
+     "ex": {
+      "ko": "바다가 아름다워요.",
+      "fr": "La mer est belle.",
+      "en": "The sea is beautiful."
+     }
+    },
+    {
+     "term": "깨끗하다",
+     "fr": "propre",
+     "en": "clean",
+     "reading": "kkaekkeuthada",
+     "ex": {
+      "ko": "방이 깨끗해요.",
+      "fr": "La chambre est propre.",
+      "en": "The room is clean."
+     }
+    }
+   ],
+   "theme": {
+    "fr": "Loisirs & voyage",
+    "en": "Leisure & travel"
+   }
+  },
+  {
+   "name": {
+    "fr": "Verbes & mots utiles",
+    "en": "Useful verbs & words"
+   },
+   "cards": [
+    {
+     "term": "듣다",
+     "fr": "écouter",
+     "en": "to listen",
+     "reading": "deutda",
+     "ex": {
+      "ko": "음악을 들어요.",
+      "fr": "J'écoute de la musique.",
+      "en": "I listen to music."
+     }
+    },
+    {
+     "term": "걷다",
+     "fr": "marcher",
+     "en": "to walk",
+     "reading": "geotda",
+     "ex": {
+      "ko": "학교까지 걸어요.",
+      "fr": "Je vais à l'école à pied.",
+      "en": "I walk to school."
+     }
+    },
+    {
+     "term": "묻다",
+     "fr": "demander",
+     "en": "to ask",
+     "reading": "mutda",
+     "ex": {
+      "ko": "선생님께 물어요.",
+      "fr": "Je demande au professeur.",
+      "en": "I ask the teacher."
+     }
+    },
+    {
+     "term": "닫다",
+     "fr": "fermer",
+     "en": "to close",
+     "reading": "datda",
+     "ex": {
+      "ko": "문을 닫아요.",
+      "fr": "Je ferme la porte.",
+      "en": "I close the door."
+     }
+    },
+    {
+     "term": "열다",
+     "fr": "ouvrir",
+     "en": "to open",
+     "reading": "yeolda",
+     "ex": {
+      "ko": "문을 열어요.",
+      "fr": "J'ouvre la porte.",
+      "en": "I open the door."
+     }
+    },
+    {
+     "term": "만들다",
+     "fr": "faire, fabriquer",
+     "en": "to make",
+     "reading": "mandeulda",
+     "ex": {
+      "ko": "음식을 만들어요.",
+      "fr": "Je prépare un plat.",
+      "en": "I make a dish."
+     }
+    },
+    {
+     "term": "놀다",
+     "fr": "s'amuser, traîner",
+     "en": "to play, hang out",
+     "reading": "nolda",
+     "ex": {
+      "ko": "친구하고 놀아요.",
+      "fr": "Je m'amuse avec un ami.",
+      "en": "I hang out with a friend."
+     }
+    },
+    {
+     "term": "쓰다",
+     "fr": "écrire",
+     "en": "to write",
+     "reading": "sseuda",
+     "ex": {
+      "ko": "한글을 써요.",
+      "fr": "J'écris en hangeul.",
+      "en": "I write in Hangeul."
+     }
+    },
+    {
+     "term": "부르다",
+     "fr": "chanter (노래를 부르다)",
+     "en": "to sing (노래를 부르다)",
+     "reading": "bureuda",
+     "ex": {
+      "ko": "노래를 불러요.",
+      "fr": "Je chante une chanson.",
+      "en": "I sing a song."
+     }
+    },
+    {
+     "term": "일어나다",
+     "fr": "se lever",
+     "en": "to get up",
+     "reading": "ireonada",
+     "ex": {
+      "ko": "아침에 일찍 일어나요.",
+      "fr": "Je me lève tôt le matin.",
+      "en": "I get up early in the morning."
+     }
+    },
+    {
+     "term": "구경하다",
+     "fr": "visiter, contempler",
+     "en": "to sightsee",
+     "reading": "gugyeonghada",
+     "ex": {
+      "ko": "박물관을 구경해요.",
+      "fr": "Je visite le musée.",
+      "en": "I look around the museum."
+     }
+    },
+    {
+     "term": "타다",
+     "fr": "monter, faire (스키를 타다)",
+     "en": "to ride, ski (스키를 타다)",
+     "reading": "tada",
+     "ex": {
+      "ko": "자전거를 타요.",
+      "fr": "Je fais du vélo.",
+      "en": "I ride a bike."
+     }
+    },
+    {
+     "term": "치다",
+     "fr": "jouer (테니스를 치다)",
+     "en": "to play (테니스를 치다)",
+     "reading": "chida",
+     "ex": {
+      "ko": "테니스를 쳐요.",
+      "fr": "Je joue au tennis.",
+      "en": "I play tennis."
+     }
+    },
+    {
+     "term": "운전하다",
+     "fr": "conduire",
+     "en": "to drive",
+     "reading": "unjeonhada",
+     "ex": {
+      "ko": "운전할 수 있어요.",
+      "fr": "Je sais conduire.",
+      "en": "I can drive."
+     }
+    },
+    {
+     "term": "미안해요",
+     "fr": "désolé(e)",
+     "en": "sorry",
+     "reading": "mianhaeyo",
+     "ex": {
+      "ko": "미안해요. 약속이 있어요.",
+      "fr": "Désolé(e). J'ai un rendez-vous.",
+      "en": "Sorry. I have plans."
+     }
+    },
+    {
+     "term": "괜찮아요",
+     "fr": "ça va, pas de souci",
+     "en": "it is fine",
+     "reading": "gwaenchanayo",
+     "ex": {
+      "ko": "아니에요. 괜찮아요.",
+      "fr": "Non, pas de souci.",
+      "en": "No, it's fine."
+     }
+    },
+    {
+     "term": "알겠어요",
+     "fr": "compris, d'accord",
+     "en": "understood, OK",
+     "reading": "algesseoyo",
+     "ex": {
+      "ko": "네, 알겠어요.",
+      "fr": "Oui, compris.",
+      "en": "Yes, understood."
+     }
+    },
+    {
+     "term": "정말",
+     "fr": "vraiment",
+     "en": "really",
+     "reading": "jeongmal",
+     "ex": {
+      "ko": "정말 맛있어요.",
+      "fr": "C'est vraiment bon.",
+      "en": "It is really tasty."
+     }
+    },
+    {
+     "term": "참",
+     "fr": "vraiment, très",
+     "en": "really, very",
+     "reading": "cham",
+     "ex": {
+      "ko": "날씨가 참 좋아요.",
+      "fr": "Il fait vraiment beau.",
+      "en": "The weather is really nice."
+     }
+    }
+   ],
+   "theme": {
+    "fr": "Mots utiles",
+    "en": "Useful words"
+   }
+  }
+ ]
+}

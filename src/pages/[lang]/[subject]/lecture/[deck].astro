@@ -1,0 +1,51 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../../../layouts/Base.astro';
+import { t, subjectName, langs, type Lang } from '../../../../i18n';
+export async function getStaticPaths() {
+  const all = await getCollection('lectures');
+  return langs.flatMap((lang) => {
+    const list = all.filter((e) => e.id.startsWith(`${lang}/`)).sort((a, b) => a.data.order - b.data.order);
+    return list.map((e, i) => {
+      const [, subject, deck] = e.id.split('/');
+      return { params: { lang, subject, deck }, props: { e, prev: list[i - 1], next: list[i + 1] } };
+    });
+  });
+}
+const { e, prev, next } = Astro.props;
+const lang = Astro.params.lang as Lang;
+const { subject, deck } = Astro.params;
+const { Content, headings } = await render(e);
+const secs = headings.filter((h) => h.depth === 2);
+const href = (x: typeof e) => `/${lang}/${subject}/lecture/${x.data.deck}/`;
+---
+<Base lang={lang} title={`${e.data.title} · ${subjectName(lang, subject!)}`}>
+  <p class="eyebrow"><a href={`/${lang}/${subject}/`}>← {subjectName(lang, subject!)}</a></p>
+  <h1>{e.data.title}</h1>
+  <p><a class="small" href={`/courses/${subject}/${deck}.pdf`} target="_blank" rel="noopener">{t(lang, 'unit.full_pdf')} ↗</a></p>
+  <div class="lbar glass" data-total={secs.length}>
+    <span class="progress"><i class="m" id="lbar-fill"></i></span>
+    <span class="small" id="lbar-txt" data-tpl={t(lang, 'lecture.progress')}></span>
+  </div>
+  <nav class="ltoc">{secs.map((h, i) => <a href={`#s${i + 1}`} data-s={i + 1}>{i + 1}</a>)}</nav>
+  <div data-pagefind-body><Content /></div>
+  <dialog id="lb" class="lb">
+    <img alt="" />
+    <button type="button" class="lb-x" aria-label={t(lang, 'unit.close')}>✕</button>
+    <button type="button" class="lb-p" aria-label={t(lang, 'unit.prev')}>‹</button>
+    <button type="button" class="lb-n" aria-label={t(lang, 'unit.next')}>›</button>
+  </dialog>
+  <div class="row" style="justify-content:space-between;margin-top:1.5rem;gap:.6rem">
+    {prev ? <a class="btn" href={href(prev)}>← {prev.data.title}</a> : <span />}
+    {next && <a class="btn primary" href={href(next)}>{next.data.title} →</a>}
+  </div>
+</Base>
+
+<script>
+  import { bindGlossary } from '../../../../scripts/glossary';
+  import { bindSlides } from '../../../../scripts/slides';
+  import { bindLecture } from '../../../../scripts/lecture';
+  bindGlossary();
+  bindSlides();
+  bindLecture(location.pathname.split('/').filter(Boolean).pop()!);
+</script>

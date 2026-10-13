@@ -20,8 +20,8 @@ const speech = subjectConf(subject).speech;
 const vocab = await getEntry('vocab', `${subject}/${unit}`);
 const vlang = vocab?.data.lang ?? speech ?? '';
 
-const byCat = new Map<string, typeof d.notions>();
-for (const n of d.notions) byCat.set(n.category, [...(byCat.get(n.category) ?? []), n]);
+const byCat = new Map<string, { n: (typeof d.notions)[number]; i: number }[]>();
+d.notions.forEach((n, i) => byCat.set(n.category, [...(byCat.get(n.category) ?? []), { n, i }]));
 
 const related = [] as { type: string; href: string; title: string }[];
 for (const type of ['lessons', 'formulas', 'quiz'] as const)
@@ -33,16 +33,28 @@ const all = await unitsOf(lang, subject);
 const idx = all.findIndex((u) => u.id === entry.id);
 const prev = all[idx - 1], next = all[idx + 1];
 const href = (u: (typeof all)[number]) => `/${lang}/${subject}/${parts(u.id).slug}/`;
+const bySlug = (s: string) => all.find((u) => parts(u.id).slug === s);
+const prereq = d.prereq.map(bySlug).filter((u) => !!u);
+const cont = [
+  ...all.filter((u) => u.data.prereq.includes(unit)).map((u) => ({ u, rel: t(lang, 'unit.next_topic') })),
+  ...d.related.map(bySlug).filter((u) => !!u).map((u) => ({ u: u!, rel: t(lang, 'unit.see_also') })),
+];
 const rev = `/${lang}/review/?subject=${subject}&unit=${unit}`;
 ---
 <Base lang={lang} title={`${label} ${d.order} · ${d.title}`}>
   <p class="eyebrow"><a href={`/${lang}/${subject}/`}>← {subjectName(lang, subject)}</a></p>
   <article data-pagefind-body>
     <p class="muted" data-pagefind-filter="subject" hidden>{subjectName(lang, subject)}</p>
-    <p class="eyebrow" style="margin-top:1rem">{label} {d.order}</p>
+    <p class="eyebrow" style="margin-top:1rem">{label} {d.order}{d.weeks.length > 0 && <span class="muted"> · {t(lang, 'unit.weeks')} : {d.weeks.map((w) => 'W' + w).join(', ')}</span>}</p>
     <h1 style="margin-top:.2rem">{d.title}</h1>
     {d.summary && <p class="box">{d.summary}</p>}
-    <a class="btn primary" href={rev}>{t(lang, 'subject.review_unit')} · {label} {d.order} →</a>
+    {prereq.length > 0 && <p class="small muted">{t(lang, 'unit.prereq')} : {prereq.map((u, i) => <>{i > 0 && ' · '}<a href={href(u!)}>{u!.data.title}</a></>)}</p>}
+    <div class="row" style="gap:.6rem;flex-wrap:wrap">
+      {(d.notions.length > 0 || d.drills.length > 0) && <a class="btn primary" href={`${rev}&kind=notion,drill`}>{t(lang, 'unit.review_lessons')} →</a>}
+      {vocab && <a class="btn primary" href={`${rev}&kind=vocab`}>{t(lang, 'unit.review_vocab')} →</a>}
+    </div>
+
+    {speech && <label class="switch" style="margin-top:1rem"><input type="checkbox" id="slow" /> 🐢 {t(lang, 'review.slow')}</label>}
 
     {byCat.size > 0 && (
       <section>
@@ -50,10 +62,16 @@ const rev = `/${lang}/review/?subject=${subject}&unit=${unit}`;
         {[...byCat].map(([cat, notions]) => (
           <div class="cat">
             <h3 class="cat-title">{cat}</h3>
-            {notions.map((n) => (
-              <div class="notion glass">
-                <strong class="notion-name" set:html={mathText(n.name)} />
+            {notions.map(({ n, i }) => (
+              <div class="notion glass" id={`n${i}`}>
+                <strong class="notion-name" set:html={mathText(n.name)} />{n.topic && <a class="tag" href={`/${lang}/${subject}/#topics`}>{n.topic}</a>}
                 <p set:html={mathText(n.explanation)} />
+                {n.visual.map((v) => (
+                  <div class="vis">
+                    {v.eq && <div class="eq">{v.eq.map((x) => (/^[+=→×≈]$/.test(x) ? <span class="op">{x}</span> : <span class="pill" lang={vlang}>{x}</span>))}</div>}
+                    {v.rows && <div class="vrows">{v.rows.map((r) => <div class="vrow"><span class="pill cond">{r.if}</span><span class="op">→</span><span class="pill" lang={vlang}>{r.then}</span>{r.ex && <span class="muted small" lang={vlang}>{r.ex}</span>}</div>)}</div>}
+                  </div>
+                ))}
                 {n.examples.length > 0 && (
                   <ul class="examples">
                     {n.examples.map((x) => (
@@ -75,8 +93,8 @@ const rev = `/${lang}/review/?subject=${subject}&unit=${unit}`;
     {vocab && (
       <section>
         <h2>{t(lang, 'unit.vocab')}</h2>
-        {vocab.data.groups.map((g) => (
-          <div class="cat">
+        {vocab.data.groups.map((g, gi) => (
+          <div class="cat" id={`g${gi}`}>
             <h3 class="cat-title">{g.name[lang]}</h3>
             {g.mnemonic && <div class="mnemo">💡 {g.mnemonic[lang]}</div>}
             <div class="table-wrap glass" style="margin-top:.6rem">
@@ -88,9 +106,9 @@ const rev = `/${lang}/review/?subject=${subject}&unit=${unit}`;
                       <td lang="fr">{c.fr}</td>
                       <td lang="en">{c.en}</td>
                       <td class="speak-cell">{speech && <button type="button" class="speak" data-speak={c.term} data-lang={speech} aria-label={t(lang, 'review.listen')}>🔊</button>}</td>
-                      {(c.mnemonic || c.example) && (
+                      {(c.mnemonic || c.ex) && (
                         <td class="note">
-                          {c.example && <div class="muted small" lang={vocab.data.lang}>{c.example}</div>}
+                          {c.ex && <div class="small"><span lang={vocab.data.lang}>{c.ex.ko}</span> <span class="muted">— {c.ex[lang]}</span></div>}
                           {c.mnemonic && <div class="mnemo sm">💡 {c.mnemonic[lang]}</div>}
                         </td>
                       )}
@@ -105,6 +123,58 @@ const rev = `/${lang}/review/?subject=${subject}&unit=${unit}`;
     )}
 
     <Content />
+
+    {d.slides.length > 0 && (
+      <section id="slides">
+        <h2>{t(lang, 'unit.slides')}</h2>
+        {d.slides.map((s) => (
+          <div class="deck">
+            <div class="row deck-head">
+              <a href={`/${lang}/${s.deck.split('/')[0]}/lecture/${s.deck.split('/')[1]}/`}><strong>{s.label}</strong></a>
+              <a class="small" href={`/courses/${s.deck}.pdf`} target="_blank" rel="noopener">{t(lang, 'unit.full_pdf')} ↗</a>
+            </div>
+            <div class="slides-row">
+              {s.pages.map((p) => {
+                const src = `/courses/${s.deck}/p${String(p).padStart(2, '0')}.webp`;
+                return <button type="button" class="slide" data-src={src} aria-label={`${s.label} · ${p}`}><img src={src} loading="lazy" width="1200" height="675" alt="" /><span>{p}</span></button>;
+              })}
+            </div>
+          </div>
+        ))}
+        <dialog id="lb" class="lb">
+          <img alt="" />
+          <button type="button" class="lb-x" aria-label={t(lang, 'unit.close')}>✕</button>
+          <button type="button" class="lb-p" aria-label={t(lang, 'unit.prev')}>‹</button>
+          <button type="button" class="lb-n" aria-label={t(lang, 'unit.next')}>›</button>
+        </dialog>
+      </section>
+    )}
+
+    {d.drills.length > 0 && (
+      <section id="drills">
+        <h2>{t(lang, 'unit.drill')}</h2>
+        <div class="table-wrap glass">
+          <table class="vocab"><tbody>
+            {d.drills.map((x) => (
+              <tr>
+                <td>{x.q}</td>
+                <td><strong lang={vlang}>{x.a}</strong></td>
+                <td class="speak-cell">{speech && <button type="button" class="speak" data-speak={x.a} data-lang={speech} aria-label={t(lang, 'review.listen')}>🔊</button>}</td>
+              </tr>
+            ))}
+          </tbody></table>
+        </div>
+      </section>
+    )}
+
+    {cont.length > 0 && (
+      <section>
+        <h2>{t(lang, 'unit.continue')}</h2>
+        <ul class="items">
+          {cont.map(({ u, rel }) => <li><a class="item glass" href={href(u)}><span class="type">{rel}</span><span class="title">{u.data.title}</span><span class="arrow">›</span></a></li>)}
+        </ul>
+      </section>
+    )}
 
     {related.length > 0 && (
       <section>
@@ -123,6 +193,12 @@ const rev = `/${lang}/review/?subject=${subject}&unit=${unit}`;
 </Base>
 
 <script>
-  import { bindSpeak } from '../../../scripts/speak';
+  import { bindSpeak, mountSlow } from '../../../scripts/speak';
+  import { bindGlossary } from '../../../scripts/glossary';
+  import { bindSlides } from '../../../scripts/slides';
   bindSpeak();
+  bindGlossary();
+  bindSlides();
+  const slow = document.getElementById('slow') as HTMLInputElement | null;
+  if (slow) mountSlow(slow);
 </script>

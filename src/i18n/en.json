@@ -16,6 +16,7 @@
     "bi": "Business Intelligence",
     "android": "Android",
     "coreen": "Korean",
+    "maba": "Multimodal AI (Biomedical)",
     "demo": "Demo"
   },
   "home": {
@@ -50,7 +51,27 @@
     "pick": "Pick a subject to review.",
     "reverse": "Reverse (translation → term)",
     "unit_all": "All",
-    "listen": "Listen"
+    "listen": "Listen",
+    "write": "Writing mode (type in Hangul)",
+    "check": "Check",
+    "dunno": "I don't know",
+    "correct": "Correct ✓",
+    "wrong": "Expected answer:",
+    "next": "Continue",
+    "kb": "Korean keyboard",
+    "ph": "Type in Hangul…",
+    "filters": "Choose what to review",
+    "f_type": "Type",
+    "f_week": "Week",
+    "f_theme": "Category",
+    "k_vocab": "Vocabulary",
+    "k_notion": "Lessons",
+    "k_drill": "Drills",
+    "k_formula": "Formulas",
+    "slow": "Slow audio",
+    "layout": "Keyboard layout",
+    "see_lesson": "See in the lesson",
+    "f_topic": "Topic"
   },
   "quiz": {
     "check": "Check",
@@ -106,19 +127,69 @@
     "quiz": "Quiz"
   },
   "subject": {
+    "lectures": "Lectures (PDF)",
     "units": "Syllabus",
     "other": "Other content",
     "review": "Review this subject",
     "review_unit": "Review",
     "cards": "cards",
-    "empty": "No content yet."
+    "empty": "No content yet.",
+    "themes": "Vocabulary by category",
+    "conj": "Conjugation drills",
+    "vocab_all": "All vocabulary",
+    "listen": "Listen",
+    "map": "Concept map",
+    "glossary": "Glossary",
+    "topics": "Grammar by topic"
   },
+  "lecture": { "progress": "{n}/{t} sections seen" },
   "unit": {
     "notions": "Concepts",
     "vocab": "Vocabulary",
     "examples": "Examples",
     "related": "Lessons, formulas and quizzes",
     "prev": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "drill": "Drills: translate into Korean",
+    "review_lessons": "Review lessons",
+    "review_vocab": "Review vocabulary",
+    "weeks": "Covered in class",
+    "prereq": "Prerequisites",
+    "continue": "Keep going",
+    "next_topic": "Next",
+    "see_also": "See also",
+    "slides": "Course slides",
+    "full_pdf": "Full PDF",
+    "close": "Close",
+    "review_short": "Review"
+  },
+  "conj": {
+    "title": "Conjugation drills",
+    "intro": "Pick forms and words, then type each answer in Hangul.",
+    "forms": "Forms",
+    "count": "Number of questions",
+    "start": "Start",
+    "again": "Restart",
+    "verbs": "Verbs",
+    "adjs": "Adjectives",
+    "present": "Present (-아요/어요)",
+    "past": "Past (-았/었어요)",
+    "future": "Future (-(으)ㄹ 거예요)",
+    "can": "Can (-(으)ㄹ 수 있어요)",
+    "seyo": "Request (-(으)세요)",
+    "jimaseyo": "Don’t (-지 마세요)",
+    "gosipeo": "Want (-고 싶어요)",
+    "reo": "Go to do (-(으)러 가요)",
+    "boseyo": "Try (-아/어 보세요)",
+    "jianayo": "Negation (-지 않아요)",
+    "mod": "Before a noun (-(으)ㄴ)"
+  },
+  "glossary": {
+    "title": "Glossary",
+    "filter": "Filter terms…"
+  },
+  "map": {
+    "title": "Concept map",
+    "hint": "An arrow = prerequisite. Tap a topic to open it."
   }
 }

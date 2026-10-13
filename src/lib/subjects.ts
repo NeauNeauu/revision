@@ -5,7 +5,7 @@ export const SUBJECTS: Record<string, { unit: { fr: string; en: string }; speech
   coreen: { unit: { fr: 'Week', en: 'Week' }, speech: 'ko-KR', icon: '한' },
   bi: { unit: { fr: 'Chapitre', en: 'Chapter' }, icon: 'BI' },
   android: { unit: { fr: 'Chapitre', en: 'Chapter' }, icon: 'A' },
-  demo: { unit: { fr: 'Week', en: 'Week' }, speech: 'ko-KR', icon: 'D' },
+  maba: { unit: { fr: 'Thème', en: 'Topic' }, icon: 'AI' },
 };
 const fallback = { unit: { fr: 'Chapitre', en: 'Chapter' }, icon: '•' };
 export const subjectConf = (s: string) => SUBJECTS[s] ?? fallback;

@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { t, subjectName, langs, type Lang } from '../../../i18n';
+import { parts } from '../../../lib/content';
+import { subjectConf } from '../../../lib/subjects';
+export async function getStaticPaths() {
+  const subs = [...new Set((await getCollection('vocab')).map((v) => parts(v.id, false).subject))];
+  return langs.flatMap((lang) => subs.map((subject) => ({ params: { lang, subject } })));
+}
+const lang = Astro.params.lang as Lang;
+const subject = Astro.params.subject!;
+const speech = subjectConf(subject).speech;
+const decks = (await getCollection('vocab')).filter((v) => parts(v.id, false).subject === subject).sort((a, b) => a.id.localeCompare(b.id));
+type Row = { term: string; reading?: string; tr: string; alt: string; ex?: { ko: string; tr: string }; group: string; unit: string };
+const by = new Map<string, Row[]>();
+for (const d of decks) {
+  const unit = parts(d.id, false).slug;
+  for (const g of d.data.groups) {
+    const th = g.theme?.[lang] ?? g.name[lang];
+    for (const c of g.cards)
+      by.set(th, [...(by.get(th) ?? []), { term: c.term, reading: c.reading, tr: c[lang], alt: c[lang === 'fr' ? 'en' : 'fr'], ex: c.ex && { ko: c.ex.ko, tr: c.ex[lang] }, group: g.name[lang], unit }]);
+  }
+}
+const cats = [...by].sort((a, b) => b[1].length - a[1].length);
+const rev = (th: string) => `/${lang}/review/?subject=${subject}&kind=vocab&theme=${encodeURIComponent(th)}`;
+---
+<Base lang={lang} title={`${subjectName(lang, subject)} — ${t(lang, 'subject.themes')}`}>
+  <p class="eyebrow"><a href={`/${lang}/${subject}/`}>← {subjectName(lang, subject)}</a></p>
+  <h1>{t(lang, 'subject.themes')}</h1>
+  <div class="row chips" style="flex-wrap:wrap;margin-bottom:1rem">
+    {cats.map(([th, rows], i) => <a class="btn" href={`#c${i}`}>{th} · {rows.length}</a>)}
+  </div>
+  <a class="btn primary lg" style="width:100%" href={`/${lang}/review/?subject=${subject}&kind=vocab`}>{t(lang, 'subject.vocab_all')} · {cats.reduce((n, [, r]) => n + r.length, 0)} →</a>
+  {cats.map(([th, rows], i) => (
+    <section id={`c${i}`}>
+      <div class="row between" style="margin-top:1.6rem">
+        <h2 style="margin:0">{th} <span class="muted small">{rows.length}</span></h2>
+        <a class="btn" href={rev(th)}>{t(lang, 'unit.review_short')} →</a>
+      </div>
+      <div class="glass" style="padding:.4rem 1rem;margin-top:.6rem">
+        {rows.map((r) => (
+          <div class="row between" style="gap:.8rem;padding:.55rem 0;border-bottom:1px solid var(--line, rgba(128,128,128,.2))">
+            <div>
+              <b lang="ko" style="font-size:1.15rem">{r.term}</b> {r.reading && <span class="muted small">{r.reading}</span>}
+              <div>{r.tr} <span class="muted small">· {r.alt}</span></div>
+              {r.ex && <div class="muted small"><span lang="ko">{r.ex.ko}</span> — {r.ex.tr}</div>}
+            </div>
+            {speech && <button class="icon" type="button" data-speak={r.term} data-lang={speech} aria-label={t(lang, 'subject.listen')}>🔊</button>}
+          </div>
+        ))}
+      </div>
+    </section>
+  ))}
+</Base>
+<script>
+  import { bindSpeak } from '../../../scripts/speak';
+  bindSpeak();
+</script>

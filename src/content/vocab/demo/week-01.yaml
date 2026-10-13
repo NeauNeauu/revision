@@ -1,6 +1,0 @@
-lang: ko
-groups:
-  - name: { fr: "Salutations", en: "Greetings" }
-    cards:
-      - { term: "안녕하세요", reading: "annyeonghaseyo", fr: "Bonjour", en: "Hello" }
-      - { term: "감사합니다", reading: "gamsahamnida", fr: "Merci", en: "Thank you", mnemonic: { fr: "« Gam-sa » ≈ « Qu'on sache » que je te remercie", en: "« Come, SAHM » — thank the mom" } }

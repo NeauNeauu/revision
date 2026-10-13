@@ -1,0 +1,60 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { t, subjectName, langs, type Lang } from '../../../i18n';
+import { subjectsList, unitsOf, parts } from '../../../lib/content';
+export async function getStaticPaths() {
+  const out = [];
+  for (const lang of langs)
+    for (const subject of await subjectsList(lang))
+      if ((await unitsOf(lang, subject)).some((u) => u.data.prereq.length)) out.push({ params: { lang, subject } });
+  return out;
+}
+const lang = Astro.params.lang as Lang;
+const subject = Astro.params.subject!;
+const units = await unitsOf(lang, subject);
+const slug = (u: (typeof units)[number]) => parts(u.id).slug;
+const bySlug = new Map(units.map((u) => [slug(u), u]));
+// niveau = longueur de la plus longue chaîne de prérequis
+const depth = new Map<string, number>();
+const level = (s: string): number => {
+  if (!depth.has(s)) {
+    depth.set(s, 0);
+    depth.set(s, Math.max(0, ...(bySlug.get(s)?.data.prereq ?? []).filter((p) => bySlug.has(p)).map((p) => level(p) + 1)));
+  }
+  return depth.get(s)!;
+};
+const rows: string[][] = [];
+units.forEach((u) => (rows[level(slug(u))] ??= []).push(slug(u)));
+const W = 480, NW = 224, NH = 66, RH = 100, TOP = 34;
+const pos = new Map<string, { x: number; y: number }>();
+rows.forEach((row, i) => row.forEach((s, j) => pos.set(s, { x: (W / row.length) * (j + 0.5), y: TOP + i * RH })));
+const H = TOP + (rows.length - 1) * RH + NH;
+// titre sur 2 lignes s'il est trop long pour la case
+const wrap = (s: string) => {
+  if (s.length <= 28) return [s];
+  const i = s.lastIndexOf(' ', Math.ceil(s.length / 2) + 4);
+  return [s.slice(0, i), s.slice(i + 1)];
+};
+const edges = units.flatMap((u) => u.data.prereq.filter((p) => pos.has(p)).map((p) => [pos.get(p)!, pos.get(slug(u))!]));
+---
+<Base lang={lang} title={`${t(lang, 'map.title')} · ${subjectName(lang, subject)}`}>
+  <p class="eyebrow"><a href={`/${lang}/${subject}/`}>← {subjectName(lang, subject)}</a></p>
+  <h1>{t(lang, 'map.title')}</h1>
+  <p class="muted">{t(lang, 'map.hint')}</p>
+  <figure class="fig map">
+    <svg viewBox={`0 0 ${W} ${H}`} role="img">
+      <defs><marker id="mk" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0L10,5L0,10z" class="f-mu" /></marker></defs>
+      {edges.map(([a, b]) => <line x1={a.x} y1={a.y + NH / 2} x2={b.x} y2={b.y - NH / 2 - 2} class="ax" marker-end="url(#mk)" />)}
+      {units.map((u) => {
+        const p = pos.get(slug(u))!;
+        return (
+          <a href={`/${lang}/${subject}/${slug(u)}/`}>
+            <rect x={p.x - NW / 2} y={p.y - NH / 2} width={NW} height={NH} rx="14" class="soft-a s-a" />
+            {wrap(`${u.data.order}. ${u.data.title}`).map((l, i, a) => <text x={p.x} y={p.y - 4 + (i - (a.length - 1)) * 15} text-anchor="middle" class="b">{l}</text>)}
+            {u.data.weeks.length > 0 && <text x={p.x} y={p.y + 18} text-anchor="middle" class="mu">{u.data.weeks.map((w) => 'W' + w).join(' · ')}</text>}
+          </a>
+        );
+      })}
+    </svg>
+  </figure>
+</Base>

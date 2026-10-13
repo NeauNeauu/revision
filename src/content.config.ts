@@ -18,13 +18,24 @@ const units = defineCollection({
     title: z.string(),
     order: z.number(),
     summary: z.string().optional(),
+    weeks: z.array(z.number()).default([]), // semaines de cours couvertes (badge)
+    prereq: z.array(z.string()).default([]), // slugs d'unités prérequises
+    related: z.array(z.string()).default([]), // slugs « voir aussi »
+    // diapos du cours : public/courses/<deck>.pdf et public/courses/<deck>/pNN.webp
+    slides: z.array(z.object({ deck: z.string(), label: z.string(), pages: z.array(z.number()) })).default([]),
     notions: z.array(z.object({
       category: z.string(),
       name: z.string(),
       explanation: z.string(),
       examples: z.array(z.object({ text: z.string(), reading: z.string().optional(), tr: z.string() })).default([]),
       mnemonic: z.string().optional(),
+      topic: z.string().optional(),
+      visual: z.array(z.object({
+        eq: z.array(z.string()).optional(),
+        rows: z.array(z.object({ if: z.string(), then: z.string(), ex: z.string().optional() })).optional(),
+      })).default([]),
     })).default([]),
+    drills: z.array(z.object({ q: z.string(), a: z.string(), topic: z.string().optional() })).default([]),
   }),
 });
 
@@ -69,17 +80,31 @@ const vocab = defineCollection({
     lang: z.string(),
     groups: z.array(z.object({
       name: bi,
+      theme: bi.optional(),
       mnemonic: bi.optional(),
       cards: z.array(z.object({
         term: z.string(),
         reading: z.string().optional(),
         fr: z.string(),
         en: z.string(),
-        example: z.string().optional(),
+        ex: z.object({ ko: z.string(), fr: z.string(), en: z.string() }).optional(),
         mnemonic: bi.optional(),
       })).min(1),
     })).min(1),
   }),
 });
 
-export const collections = { units, lessons, formulas, quiz, vocab };
+// Glossaire (survol façon Wikipédia) : src/content/glossary/<matiere>.json, utilisé par [[id]] dans le Markdown
+const term = z.object({ term: z.string(), def: z.string() });
+const glossary = defineCollection({
+  loader: glob({ pattern: '*.json', base: './src/content/glossary' }),
+  schema: z.object({
+    terms: z.array(z.object({ id: z.string(), topic: z.string(), anchor: z.string().optional(), fr: term, en: term })),
+  }),
+});
+
+const lectures = defineCollection({
+  loader: glob({ pattern: '{fr,en}/**/*.md', base: './src/content/lectures' }),
+  schema: z.object({ title: z.string(), order: z.number(), deck: z.string(), pages: z.number(), summary: z.string().optional() }),
+});
+export const collections = { lectures, units, lessons, formulas, quiz, vocab, glossary };

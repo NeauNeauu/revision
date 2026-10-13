@@ -17,3 +17,9 @@
   to = "/en/"
   status = 302
   force = true
+
+# Diapos du cours : non indexées
+[[headers]]
+  for = "/courses/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

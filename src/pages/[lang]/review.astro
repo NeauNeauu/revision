@@ -28,12 +28,21 @@ const meta = Object.fromEntries(subjects.map((s) => [s, { name: subjectName(lang
 
   <div id="main" hidden>
   <div class="row between">
-    <select id="unit" aria-label="unit"><option value="">{t(lang, 'review.unit_all')}</option></select>
-    <div class="row" style="gap:1rem">
+    <div class="row" style="gap:1rem;flex-wrap:wrap">
+      <label class="switch"><input type="checkbox" id="slow" /> 🐢 {t(lang, 'review.slow')}</label>
       <label class="switch" id="rev-wrap"><input type="checkbox" id="reverse" /> {t(lang, 'review.reverse')}</label>
+      <label class="switch" id="write-wrap" hidden><input type="checkbox" id="write" /> {t(lang, 'review.write')}</label>
       <label class="switch"><input type="checkbox" id="all" /> {t(lang, 'review.all_cards')}</label>
     </div>
   </div>
+
+  <details class="glass filters" id="filters">
+    <summary>{t(lang, 'review.filters')} <span class="muted small" id="f-count"></span></summary>
+    <div class="frow" id="fr-kind"><span class="eyebrow">{t(lang, 'review.f_type')}</span><div class="row chips" id="f-kind"></div></div>
+    <div class="frow" id="fr-unit"><span class="eyebrow">{t(lang, 'review.f_week')}</span><div class="row chips" id="f-unit"></div></div>
+    <div class="frow" id="fr-topic"><span class="eyebrow">{t(lang, 'review.f_topic')}</span><div class="row chips" id="f-topic"></div></div>
+    <div class="frow" id="fr-theme"><span class="eyebrow">{t(lang, 'review.f_theme')}</span><div class="row chips" id="f-theme"></div></div>
+  </details>
 
   <div id="session">
     <div class="row between" style="margin-top:1.2rem">
@@ -47,6 +56,15 @@ const meta = Object.fromEntries(subjects.map((s) => [s, { name: subjectName(lang
         <div class="face back glass"><div id="backc"></div><button type="button" class="speak corner" id="speak-b" aria-label={t(lang, 'review.listen')} hidden>🔊</button></div>
       </div>
     </div>
+    <div id="typed" hidden>
+      <form id="typed-form" autocomplete="off">
+        <div class="row" style="gap:.5rem"><input id="typed-in" lang="ko" style="flex:1;font-size:1.3rem" placeholder={t(lang, 'review.ph')} autocapitalize="off" autocorrect="off" spellcheck="false" /><button class="btn primary" id="typed-ok">{t(lang, 'review.check')}</button></div>
+        <div class="row between" style="margin-top:.5rem"><button type="button" class="btn" id="dunno">{t(lang, 'review.dunno')}</button><span class="row" style="gap:.8rem"><select id="kb-layout" aria-label={t(lang, 'review.layout')}><option value="qwerty">QWERTY</option><option value="azerty">AZERTY</option></select><label class="switch"><input type="checkbox" id="kb-toggle" /> {t(lang, 'review.kb')}</label></span></div>
+        <div class="kbd" id="kbd"></div>
+      </form>
+      <div class="box" id="typed-result" hidden><p id="tr-msg" style="margin:0 0 .6rem"></p><button type="button" class="btn primary" id="tr-next">{t(lang, 'review.next')} →</button></div>
+    </div>
+    <p style="text-align:center;margin:.8rem 0 0"><a class="small" id="lesson-link" target="_blank" rel="noopener" hidden>↗ {t(lang, 'review.see_lesson')}</a></p>
     <div class="answers" id="answers">
       <button type="button" id="again" class="btn-bad" disabled>✕ {t(lang, 'review.again')}</button>
       <button type="button" id="know" class="btn-ok" disabled>✓ {t(lang, 'review.know')}</button>
@@ -63,13 +81,14 @@ const meta = Object.fromEntries(subjects.map((s) => [s, { name: subjectName(lang
   </div>
 
   <script type="application/json" id="cards" set:html={JSON.stringify({ cards, meta })} />
-  <template id="i18n" data-empty={t(lang, 'review.empty')} data-done={t(lang, 'review.done')} data-reviewed={t(lang, 'review.reviewed')}></template>
+  <template id="i18n" data-empty={t(lang, 'review.empty')} data-done={t(lang, 'review.done')} data-reviewed={t(lang, 'review.reviewed')} data-k-vocab={t(lang, 'review.k_vocab')} data-k-notion={t(lang, 'review.k_notion')} data-k-drill={t(lang, 'review.k_drill')} data-k-formula={t(lang, 'review.k_formula')} data-ok={t(lang, 'review.correct')} data-ko={t(lang, 'review.wrong')}></template>
 </Base>
 
 <script>
   import { load, grade, isDue } from '../../scripts/progress';
-  import { speak } from '../../scripts/speak';
-  type Card = { id: string; subject: string; unit: string; deck: string; front: string; back: string; speak?: string; rfront?: string; rback?: string };
+  import { speak, mountSlow } from '../../scripts/speak';
+  import { mountHangul, normAnswer } from '../../scripts/hangul';
+  type Card = { id: string; subject: string; unit: string; deck: string; front: string; back: string; speak?: string; rfront?: string; rback?: string; ans?: string; w?: 1; kind: string; theme?: string; topic?: string; href?: string };
   type Meta = Record<string, { name: string; speech: string; units: { slug: string; label: string }[] }>;
   const { cards: all, meta } = JSON.parse(document.getElementById('cards')!.textContent!) as { cards: Card[]; meta: Meta };
   const i18n = document.getElementById('i18n')!.dataset;
@@ -78,10 +97,13 @@ const meta = Object.fromEntries(subjects.map((s) => [s, { name: subjectName(lang
   const params = new URLSearchParams(location.search);
   const subject = params.get('subject') ?? '';
   const deck = params.get('deck');
-  const unitSel = $('unit') as HTMLSelectElement, allBox = $('all') as HTMLInputElement, revBox = $('reverse') as HTMLInputElement;
-  type Q = Card & { key: string; f: string; b: string };
+  const allBox = $('all') as HTMLInputElement, revBox = $('reverse') as HTMLInputElement, writeBox = $('write') as HTMLInputElement;
+  const tin = $('typed-in') as HTMLInputElement;
+  mountHangul(tin, $('kbd'), $('kb-toggle') as HTMLInputElement, $('kb-layout') as HTMLSelectElement);
+  type Q = Card & { key: string; f: string; b: string; typed?: boolean };
   let queue: Q[] = [], total = 0, seen = 0, busy = false;
   const m = meta[subject];
+  const sel = { kind: new Set<string>(), unit: new Set<string>(), theme: new Set<string>(), topic: new Set<string>() };
 
   if (!m && !deck) $('picker').hidden = false;
   else {
@@ -90,25 +112,55 @@ const meta = Object.fromEntries(subjects.map((s) => [s, { name: subjectName(lang
       $('title').textContent = m.name;
       ($('back-subject') as HTMLAnchorElement).href = `../${subject}/`;
       $('back-subject').textContent = '← ' + m.name;
-      for (const u of m.units) unitSel.add(new Option(u.label, u.slug));
-      unitSel.value = params.get('unit') ?? '';
     }
-    unitSel.hidden = !m || m.units.length < 2;
+    mountSlow($('slow') as HTMLInputElement);
+    buildFilters();
     $('rev-wrap').hidden = !all.some((c) => c.subject === subject && c.rfront);
-    unitSel.onchange = allBox.onchange = revBox.onchange = start;
+    $('write-wrap').hidden = !all.some((c) => c.subject === subject && c.w);
+    allBox.onchange = revBox.onchange = writeBox.onchange = start;
     start();
     document.addEventListener('progress:ready', () => { if (!seen) start(); });
   }
 
+  function chips(row: string, key: keyof typeof sel, items: { v: string; l: string }[], pre: string[] | null) {
+    $('fr-' + row).hidden = items.length < 2;
+    const box = $('f-' + row);
+    for (const it of items) {
+      const b = document.createElement('button');
+      b.type = 'button'; b.textContent = it.l;
+      const on = !pre || pre.includes(it.v);
+      if (on || items.length < 2) sel[key].add(it.v);
+      b.setAttribute('aria-pressed', String(on || items.length < 2));
+      b.onclick = () => {
+        const was = b.getAttribute('aria-pressed') === 'true';
+        b.setAttribute('aria-pressed', String(!was));
+        was ? sel[key].delete(it.v) : sel[key].add(it.v);
+        start();
+      };
+      box.append(b);
+    }
+  }
+  function buildFilters() {
+    const mine = all.filter((c) => deck ? c.deck === deck : c.subject === subject);
+    const csv = (k: string) => params.get(k)?.split(',').filter(Boolean) ?? null;
+    const kinds = [...new Set(mine.map((c) => c.kind))];
+    chips('kind', 'kind', kinds.map((v) => ({ v, l: i18n['k' + v[0].toUpperCase() + v.slice(1)]! })), csv('kind'));
+    chips('unit', 'unit', (m?.units ?? []).filter((u) => mine.some((c) => c.unit === u.slug)).map((u) => ({ v: u.slug, l: u.label.split(' · ')[0] })), csv('unit'));
+    chips('topic', 'topic', [...new Set(mine.map((c) => c.topic).filter(Boolean) as string[])].map((v) => ({ v, l: v })), csv('topic'));
+    chips('theme', 'theme', [...new Set(mine.map((c) => c.theme).filter(Boolean) as string[])].map((v) => ({ v, l: v })), csv('theme'));
+    if (params.has('kind') || params.has('unit') || params.has('theme') || params.has('topic')) ($('filters') as HTMLDetailsElement).open = true;
+  }
   function start() {
     const p = load();
     const rev = revBox.checked;
     queue = all
-      .filter((c) => (deck ? c.deck === deck : c.subject === subject) && (!unitSel.value || c.unit === unitSel.value))
-      .map((c) => (rev && c.rfront ? { ...c, key: c.id + '~r', f: c.rfront, b: c.rback! } : { ...c, key: c.id, f: c.front, b: c.back }))
+      .filter((c) => (deck ? c.deck === deck : c.subject === subject) && (!c.unit || sel.unit.has(c.unit)) && sel.kind.has(c.kind) && (!c.theme || sel.theme.has(c.theme)) && (!c.topic || sel.topic.has(c.topic)))
+      .map((c): Q => writeBox.checked && c.w && c.ans ? { ...c, typed: true, key: c.id + '~w', f: c.rfront ?? c.front, b: c.rback ?? c.back }
+        : rev && c.rfront ? { ...c, key: c.id + '~r', f: c.rfront, b: c.rback! } : { ...c, key: c.id, f: c.front, b: c.back })
       .filter((c) => allBox.checked || isDue(p, c.key));
     for (let i = queue.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [queue[i], queue[j]] = [queue[j], queue[i]]; }
     total = queue.length; seen = 0;
+    $('f-count').textContent = `· ${total}`;
     show();
   }
   function show() {
@@ -123,16 +175,20 @@ const meta = Object.fromEntries(subjects.map((s) => [s, { name: subjectName(lang
       $('end').querySelector('.check')!.toggleAttribute('hidden', !seen);
       return;
     }
+    const ll = $('lesson-link') as HTMLAnchorElement; ll.hidden = !c.href; if (c.href) ll.href = c.href;
     flip.className = 'flip';
     $('front').innerHTML = c.f; $('backc').innerHTML = c.b;
-    const rev = c.key.endsWith('~r');
+    const rev = c.key.endsWith('~r') || !!c.typed;
+    $('typed').hidden = !c.typed; $('answers').hidden = !!c.typed;
+    $('typed-form').hidden = false; $('typed-result').hidden = true; tin.value = '';
+    if (c.typed) { tin.disabled = false; if (matchMedia('(pointer: fine)').matches) tin.focus(); }
     $('speak-f').hidden = !c.speak || rev; $('speak-b').hidden = !c.speak;
     void flip.offsetWidth; flip.classList.add('in');
     again.disabled = know.disabled = true;
   }
   const say = () => { const c = queue[0]; if (c?.speak) speak(c.speak, meta[c.subject]?.speech || 'ko-KR'); };
   function reveal() {
-    if (!queue[0] || busy) return;
+    if (!queue[0] || busy || queue[0].typed) return;
     flip.classList.remove('in');
     flip.classList.toggle('flipped');
     again.disabled = know.disabled = false;
@@ -146,12 +202,25 @@ const meta = Object.fromEntries(subjects.map((s) => [s, { name: subjectName(lang
     flip.classList.add(ok ? 'out-ok' : 'out-bad');
     setTimeout(() => { busy = false; show(); }, 320);
   }
+  let typedOk = false;
+  function check(ok: boolean) {
+    const c = queue[0]; if (!c || busy) return;
+    typedOk = ok;
+    flip.classList.remove('in'); flip.classList.add('flipped');
+    $('typed-form').hidden = true; $('typed-result').hidden = false;
+    $('tr-msg').innerHTML = ok ? `<b>${i18n.ok}</b>` : `${i18n.ko} <b lang="ko">${c.ans}</b>`;
+    ($('tr-next') as HTMLElement).focus();
+  }
+  $('typed-form').onsubmit = (e) => { e.preventDefault(); const c = queue[0]; if (c?.ans) check(normAnswer(tin.value) === normAnswer(c.ans)); };
+  $('dunno').onclick = () => check(false);
+  $('tr-next').onclick = () => answer(typedOk);
   flip.onclick = reveal;
   $('speak-f').onclick = $('speak-b').onclick = (e) => { e.stopPropagation(); say(); };
   again.onclick = () => answer(false);
   know.onclick = () => answer(true);
   document.addEventListener('keydown', (e) => {
     if (['SELECT', 'INPUT'].includes((e.target as HTMLElement).tagName)) return;
+    if (queue[0]?.typed) return;
     if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); reveal(); }
     else if (e.key === '1') answer(false);
     else if (e.key === '2') answer(true);

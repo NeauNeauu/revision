@@ -16,6 +16,7 @@
     "bi": "Business Intelligence",
     "android": "Android",
     "coreen": "Coréen",
+    "maba": "IA multimodale (biomédical)",
     "demo": "Démo"
   },
   "home": {
@@ -50,7 +51,27 @@
     "pick": "Choisis une matière à réviser.",
     "reverse": "Sens inverse (traduction → terme)",
     "unit_all": "Toutes",
-    "listen": "Écouter"
+    "listen": "Écouter",
+    "write": "Mode écriture (taper en hangul)",
+    "check": "Valider",
+    "dunno": "Je ne sais pas",
+    "correct": "Correct ✓",
+    "wrong": "Réponse attendue :",
+    "next": "Continuer",
+    "kb": "Clavier coréen",
+    "ph": "Écris en hangul…",
+    "filters": "Choisir quoi réviser",
+    "f_type": "Type",
+    "f_week": "Semaine",
+    "f_theme": "Catégorie",
+    "k_vocab": "Vocabulaire",
+    "k_notion": "Leçons",
+    "k_drill": "Exercices",
+    "k_formula": "Formules",
+    "slow": "Audio lent",
+    "layout": "Disposition du clavier",
+    "see_lesson": "Voir dans la leçon",
+    "f_topic": "Notion"
   },
   "quiz": {
     "check": "Valider",
@@ -106,19 +127,69 @@
     "quiz": "Quiz"
   },
   "subject": {
+    "lectures": "Cours (PDF)",
     "units": "Programme",
     "other": "Autres contenus",
     "review": "Réviser la matière",
     "review_unit": "Réviser",
     "cards": "cartes",
-    "empty": "Pas encore de contenu."
+    "empty": "Pas encore de contenu.",
+    "themes": "Vocabulaire par catégorie",
+    "conj": "Conjugaison en série",
+    "vocab_all": "Tout le vocabulaire",
+    "listen": "Écouter",
+    "map": "Carte des notions",
+    "glossary": "Glossaire",
+    "topics": "Grammaire par notion"
   },
+  "lecture": { "progress": "{n}/{t} sections vues" },
   "unit": {
     "notions": "Notions",
     "vocab": "Vocabulaire",
     "examples": "Exemples",
     "related": "Leçons, formules et quiz",
     "prev": "Précédent",
-    "next": "Suivant"
+    "next": "Suivant",
+    "drill": "Exercices : traduire en coréen",
+    "review_lessons": "Réviser les leçons",
+    "review_vocab": "Réviser le vocabulaire",
+    "weeks": "Vu en cours",
+    "prereq": "Prérequis",
+    "continue": "Pour continuer",
+    "next_topic": "Suite",
+    "see_also": "Voir aussi",
+    "slides": "Diapos du cours",
+    "full_pdf": "PDF complet",
+    "close": "Fermer",
+    "review_short": "Réviser"
+  },
+  "conj": {
+    "title": "Conjugaison en série",
+    "intro": "Choisis les formes et les mots, puis tape la réponse en hangul pour chaque mot.",
+    "forms": "Formes",
+    "count": "Nombre de questions",
+    "start": "Commencer",
+    "again": "Recommencer",
+    "verbs": "Verbes",
+    "adjs": "Adjectifs",
+    "present": "Présent (-아요/어요)",
+    "past": "Passé (-았/었어요)",
+    "future": "Futur (-(으)ㄹ 거예요)",
+    "can": "Pouvoir (-(으)ㄹ 수 있어요)",
+    "seyo": "Requête (-(으)세요)",
+    "jimaseyo": "Ne pas (-지 마세요)",
+    "gosipeo": "Vouloir (-고 싶어요)",
+    "reo": "Aller faire (-(으)러 가요)",
+    "boseyo": "Essayer (-아/어 보세요)",
+    "jianayo": "Négation (-지 않아요)",
+    "mod": "Devant un nom (-(으)ㄴ)"
+  },
+  "glossary": {
+    "title": "Glossaire",
+    "filter": "Filtrer les termes…"
+  },
+  "map": {
+    "title": "Carte des notions",
+    "hint": "Une flèche = prérequis. Touche un thème pour l'ouvrir."
   }
 }
