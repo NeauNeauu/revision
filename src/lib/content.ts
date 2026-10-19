@@ -8,6 +8,7 @@ export type Card = {
   href?: string; speak?: string; rfront?: string; rback?: string; // vocab : audio + sens inverse
   kind: 'vocab' | 'notion' | 'drill' | 'formula'; theme?: string; topic?: string;
   ans?: string; w?: 1; // réponse à écrire (mode écriture)
+  mean?: string; // vocab : sens (langue courante) pour QCM
 };
 
 /** "fr/bi/intro" -> { lang, subject, slug } ; vocab ids have no lang: "coreen/week-01" */
@@ -42,11 +43,11 @@ export const tex = (s: string, displayMode = false) => katex.renderToString(s, {
 
 /** Texte avec maths inline $...$ et **gras** */
 export const mathText = (s = '') =>
-  s.split(/\$([^$]+)\$/g).map((part, i) => (i % 2 ? tex(part) : esc(part).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>'))).join('');
+  s.replace(/\*\*(.+?)\*\*/g, '\u0001$1\u0002').split(/\$([^$]+)\$/g).map((part, i) => (i % 2 ? tex(part) : esc(part))).join('').replace(/\u0001/g, '<b>').replace(/\u0002/g, '</b>');
 
 const mnemo = (m?: string) => (m ? `<div class="mnemo">💡 ${mathText(m)}</div>` : '');
 type Vis = { eq?: string[]; rows?: { if: string; then: string; ex?: string }[] };
-const visual = (v: Vis[] = []) => v.map((x) => `<div class="vis">${x.eq ? `<div class="eq">${x.eq.map((t) => (/^[+=→×≈]$/.test(t) ? `<span class="op">${esc(t)}</span>` : `<span class="pill">${esc(t)}</span>`)).join('')}</div>` : ''}${x.rows ? `<div class="vrows">${x.rows.map((r) => `<div class="vrow"><span class="pill cond">${esc(r.if)}</span><span class="op">→</span><span class="pill">${esc(r.then)}</span>${r.ex ? `<span class="muted small">${esc(r.ex)}</span>` : ''}</div>`).join('')}</div>` : ''}</div>`).join('');
+const visual = (v: Vis[] = []) => v.map((x) => `<div class="vis">${x.eq ? `<div class="eq">${x.eq.map((t) => (/^[+=→×≈]$/.test(t) ? `<span class="op">${esc(t)}</span>` : `<span class="pill">${mathText(t)}</span>`)).join('')}</div>` : ''}${x.rows ? `<div class="vrows">${x.rows.map((r) => `<div class="vrow"><span class="pill cond">${mathText(r.if)}</span><span class="op">→</span><span class="pill">${mathText(r.then)}</span>${r.ex ? `<span class="muted small">${esc(r.ex)}</span>` : ''}</div>`).join('')}</div>` : ''}</div>`).join('');
 
 export async function allCards(lang: Lang): Promise<Card[]> {
   const other: Lang = lang === 'fr' ? 'en' : 'fr';
@@ -67,7 +68,7 @@ export async function allCards(lang: Lang): Promise<Card[]> {
           rfront: `<div class="eyebrow">${esc(g.name[lang])}</div>${known}`,
           rback: target + extra,
           speak: speech ? c.term : undefined,
-          ans: c.term, w: c.term.length <= 7 && !/\s/.test(c.term) ? 1 : undefined,
+          ans: c.term, w: 1, mean: c[lang],
         });
       }));
   }
@@ -76,15 +77,15 @@ export async function allCards(lang: Lang): Promise<Card[]> {
     const deck = `units/${subject}/${unit}`;
     u.data.notions.forEach((n, i) =>
       cards.push({
-        id: `${deck}#${i}`, subject, unit, deck, kind: 'notion', topic: n.topic, href: `/${lang}/${subject}/${unit}/#n${i}`,
+        id: `${deck}#${i}`, subject, unit, deck, kind: 'notion', topic: n.topic, href: `/${lang}/${subject}/${unit}/n${i}/`,
         front: `<div class="eyebrow">${esc(n.category)}</div><div class="term">${mathText(n.name)}</div>`,
-        back: `<div>${mathText(n.explanation)}</div>${visual(n.visual)}${n.examples[0] ? `<div class="muted small">${esc(n.examples[0].text)} — ${esc(n.examples[0].tr)}</div>` : ''}${mnemo(n.mnemonic)}`,
+        back: `<div>${mathText(n.explanation)}</div>${visual(n.visual)}${n.examples[0] ? `<div class="muted small">${mathText(n.examples[0].text)} — ${mathText(n.examples[0].tr)}</div>` : ''}${mnemo(n.mnemonic)}`,
       }));
     u.data.drills.forEach((d, i) =>
       cards.push({
         id: `${deck}#d${i}`, subject, unit, deck, kind: 'drill', topic: d.topic, href: `/${lang}/${subject}/${unit}/#drills`,
-        front: `<div class="eyebrow">${esc(t(lang, 'unit.drill'))}</div><div class="term">${esc(d.q)}</div>`,
-        back: `<div class="term" lang="${subjectConf(subject).speech?.slice(0, 2) ?? ''}">${esc(d.a)}</div>`,
+        front: `<div class="eyebrow">${esc(t(lang, 'unit.drill'))}</div><div class="term">${mathText(d.q)}</div>`,
+        back: `<div class="term" lang="${subjectConf(subject).speech?.slice(0, 2) ?? ''}">${mathText(d.a)}</div>`,
         speak: subjectConf(subject).speech ? d.a : undefined, ans: d.a, w: 1,
       }));
   }

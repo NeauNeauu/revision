@@ -30,6 +30,9 @@ const units = defineCollection({
       examples: z.array(z.object({ text: z.string(), reading: z.string().optional(), tr: z.string() })).default([]),
       mnemonic: z.string().optional(),
       topic: z.string().optional(),
+      steps: z.array(z.string()).default([]), // règle pas à pas
+      pitfalls: z.array(z.string()).default([]),
+      exercises: z.array(z.object({ q: z.string(), a: z.string() })).default([]), // a = réponse ; variantes séparées par |
       visual: z.array(z.object({
         eq: z.array(z.string()).optional(),
         rows: z.array(z.object({ if: z.string(), then: z.string(), ex: z.string().optional() })).optional(),

@@ -12,10 +12,23 @@
     "formulas": "Formulas",
     "quiz": "Quizzes"
   },
+  "exo": {
+    "title": "Practice exercises",
+    "intro": "Do them on paper, then open the solution: the related part of the lesson shows up with it.",
+    "btn": "Practice exercises",
+    "show": "Solution + lesson",
+    "answer": "Solution",
+    "lesson": "Related lesson",
+    "open": "Open the notion",
+    "example": "Example",
+    "done": "Done",
+    "progress": "done"
+  },
   "subjects": {
     "bi": "Business Intelligence",
     "android": "Android",
     "coreen": "Korean",
+    "algebre": "Linear Algebra",
     "maba": "Multimodal AI (Biomedical)",
     "demo": "Demo"
   },

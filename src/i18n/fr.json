@@ -12,10 +12,23 @@
     "formulas": "Formules",
     "quiz": "Quiz"
   },
+  "exo": {
+    "title": "Exercices types",
+    "intro": "Fais-les sur cahier, puis ouvre la correction : la partie de la leçon liée s’affiche avec.",
+    "btn": "Exercices types",
+    "show": "Correction + leçon",
+    "answer": "Correction",
+    "lesson": "Leçon liée",
+    "open": "Ouvrir la notion",
+    "example": "Exemple",
+    "done": "Fait",
+    "progress": "faits"
+  },
   "subjects": {
     "bi": "Business Intelligence",
     "android": "Android",
     "coreen": "Coréen",
+    "algebre": "Algèbre linéaire",
     "maba": "IA multimodale (biomédical)",
     "demo": "Démo"
   },

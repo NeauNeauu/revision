@@ -50,6 +50,7 @@ const hasMap = units.some((u) => u.data.prereq.length > 0);
     </div>
   )}
 
+  {subjectConf(subject).reveal && <a class="btn lg" style="margin-top:.6rem;width:100%" href={`/${lang}/${subject}/exercices/`}>✍️ {t(lang, 'exo.btn')} →</a>}
   {subject === 'coreen' && <a class="btn lg" style="margin-top:.6rem;width:100%" href={`/${lang}/conjugation/`}>✍️ {t(lang, 'subject.conj')} →</a>}
 
   <h2>{t(lang, 'subject.units')}</h2>

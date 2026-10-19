@@ -62,29 +62,13 @@ const rev = `/${lang}/review/?subject=${subject}&unit=${unit}`;
         {[...byCat].map(([cat, notions]) => (
           <div class="cat">
             <h3 class="cat-title">{cat}</h3>
-            {notions.map(({ n, i }) => (
-              <div class="notion glass" id={`n${i}`}>
-                <strong class="notion-name" set:html={mathText(n.name)} />{n.topic && <a class="tag" href={`/${lang}/${subject}/#topics`}>{n.topic}</a>}
-                <p set:html={mathText(n.explanation)} />
-                {n.visual.map((v) => (
-                  <div class="vis">
-                    {v.eq && <div class="eq">{v.eq.map((x) => (/^[+=→×≈]$/.test(x) ? <span class="op">{x}</span> : <span class="pill" lang={vlang}>{x}</span>))}</div>}
-                    {v.rows && <div class="vrows">{v.rows.map((r) => <div class="vrow"><span class="pill cond">{r.if}</span><span class="op">→</span><span class="pill" lang={vlang}>{r.then}</span>{r.ex && <span class="muted small" lang={vlang}>{r.ex}</span>}</div>)}</div>}
-                  </div>
-                ))}
-                {n.examples.length > 0 && (
-                  <ul class="examples">
-                    {n.examples.map((x) => (
-                      <li>
-                        {speech && <button type="button" class="speak" data-speak={x.text} data-lang={speech} aria-label={t(lang, 'review.listen')}>🔊</button>}
-                        <span><span lang={vlang}>{x.text}</span>{x.reading && <span class="muted small"> · {x.reading}</span>}<br /><span class="muted">{x.tr}</span></span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                {n.mnemonic && <div class="mnemo">💡 <Fragment set:html={mathText(n.mnemonic)} /></div>}
-              </div>
-            ))}
+            <ul class="items">
+              {notions.map(({ n, i }) => (
+                <li><a class="item glass" href={`/${lang}/${subject}/${unit}/n${i}/`} data-np={`notion/${subject}/${unit}/n${i}`}>
+                  <span class="type">{i + 1}</span><span class="title" set:html={mathText(n.name)} /><span class="np-ok" hidden>✓</span><span class="arrow">›</span>
+                </a></li>
+              ))}
+            </ul>
           </div>
         ))}
       </section>
@@ -153,17 +137,21 @@ const rev = `/${lang}/review/?subject=${subject}&unit=${unit}`;
     {d.drills.length > 0 && (
       <section id="drills">
         <h2>{t(lang, 'unit.drill')}</h2>
+        {subjectConf(subject).reveal ? (
+          <div class="xos">{d.drills.map((x) => <details class="xo"><summary set:html={mathText(x.q)} /><div class="sol" set:html={mathText(x.a)} /></details>)}</div>
+        ) : (
         <div class="table-wrap glass">
           <table class="vocab"><tbody>
             {d.drills.map((x) => (
               <tr>
-                <td>{x.q}</td>
-                <td><strong lang={vlang}>{x.a}</strong></td>
+                <td set:html={mathText(x.q)} />
+                <td><strong lang={vlang} set:html={mathText(x.a)} /></td>
                 <td class="speak-cell">{speech && <button type="button" class="speak" data-speak={x.a} data-lang={speech} aria-label={t(lang, 'review.listen')}>🔊</button>}</td>
               </tr>
             ))}
           </tbody></table>
         </div>
+        )}
       </section>
     )}
 
@@ -196,6 +184,9 @@ const rev = `/${lang}/review/?subject=${subject}&unit=${unit}`;
   import { bindSpeak, mountSlow } from '../../../scripts/speak';
   import { bindGlossary } from '../../../scripts/glossary';
   import { bindSlides } from '../../../scripts/slides';
+  import { load } from '../../../scripts/progress';
+  const _q = load().quiz;
+  document.querySelectorAll<HTMLElement>('[data-np]').forEach((a) => { if ((_q[a.dataset.np!]?.best ?? 0) >= 100) a.querySelector<HTMLElement>('.np-ok')!.hidden = false; });
   bindSpeak();
   bindGlossary();
   bindSlides();

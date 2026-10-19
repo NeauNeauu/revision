@@ -1,0 +1,75 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { t, subjectName, langs, type Lang } from '../../../i18n';
+import { subjectsList, unitsOf, parts, mathText } from '../../../lib/content';
+import { subjectConf, unitLabel } from '../../../lib/subjects';
+export async function getStaticPaths() {
+  return (await Promise.all(langs.map(async (lang) => (await subjectsList(lang)).filter((s) => subjectConf(s).reveal).map((subject) => ({ params: { lang, subject } }))))).flat();
+}
+const lang = Astro.params.lang as Lang;
+const subject = Astro.params.subject!;
+const units = await unitsOf(lang, subject);
+const PER = 3; // exercices types par notion (les annales HW d'abord)
+const isHW = (q: string) => /^\[HW/.test(q);
+let num = 0;
+const groups = units.map((u) => {
+  const slug = parts(u.id).slug;
+  const notions = u.data.notions.map((n, i) => {
+    const ds = u.data.drills.filter((x) => x.topic === `n${i}`);
+    const pick = [...ds.filter((x) => isHW(x.q)), ...ds.filter((x) => !isHW(x.q))].slice(0, PER);
+    return { n, i, items: pick.map((x, k) => ({ ...x, id: `${subject}/${slug}#n${i}/${k}`, num: ++num })) };
+  }).filter((g) => g.items.length > 0);
+  return { u, slug, notions };
+}).filter((g) => g.notions.length > 0);
+const total = num;
+---
+<Base lang={lang} title={`${t(lang, 'exo.title')} · ${subjectName(lang, subject)}`}>
+  <p class="eyebrow"><a href={`/${lang}/${subject}/`}>← {subjectName(lang, subject)}</a></p>
+  <h1 style="margin-top:.2rem">{t(lang, 'exo.title')}</h1>
+  <p class="box">{t(lang, 'exo.intro')}</p>
+  <p class="muted small"><span id="exdone">0</span> / {total} {t(lang, 'exo.progress')}</p>
+  {groups.map(({ u, slug, notions }) => (
+    <section>
+      <h2>{unitLabel(lang, subject)} {u.data.order} · {u.data.title}</h2>
+      {notions.map(({ n, i, items }) => (
+        <>
+          <p class="eyebrow" style="margin-top:1.4rem"><span set:html={mathText(n.name)} /></p>
+          <div class="xos">
+            {items.map((x) => (
+              <div class="xo exo" data-id={x.id}>
+                <div class="exh"><span class="exn">{x.num}</span><div class="exq" set:html={mathText(x.q.replace(/^\[[^\]]*\]\s*/, ''))} /><label class="exd"><input type="checkbox" /> {t(lang, 'exo.done')}</label></div>
+                <details>
+                  <summary>{t(lang, 'exo.show')}</summary>
+                  <div class="sol"><strong>{t(lang, 'exo.answer')}</strong><div set:html={mathText(x.a)} /></div>
+                  <div class="lesson">
+                    <strong>{t(lang, 'exo.lesson')} · <span set:html={mathText(n.name)} /></strong>
+                    <div set:html={mathText(n.explanation)} />
+                    {n.examples[0] && <div class="muted small"><span set:html={mathText(n.examples[0].text)} /> — <span set:html={mathText(n.examples[0].tr)} /></div>}
+                    <a class="btn" href={`/${lang}/${subject}/${slug}/n${i}/`}>{t(lang, 'exo.open')} →</a>
+                  </div>
+                </details>
+              </div>
+            ))}
+          </div>
+        </>
+      ))}
+    </section>
+  ))}
+</Base>
+<script>
+  const KEY = 'exo-done';
+  let done: Record<string, boolean> = {};
+  try { done = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch {}
+  const boxes = [...document.querySelectorAll<HTMLElement>('.exo')];
+  const count = () => { const el = document.getElementById('exdone'); if (el) el.textContent = String(boxes.filter((b) => (b.querySelector('input') as HTMLInputElement).checked).length); };
+  boxes.forEach((b) => {
+    const cb = b.querySelector('input') as HTMLInputElement;
+    cb.checked = !!done[b.dataset.id!];
+    b.classList.toggle('isdone', cb.checked);
+    cb.addEventListener('change', () => {
+      done[b.dataset.id!] = cb.checked; b.classList.toggle('isdone', cb.checked); count();
+      try { localStorage.setItem(KEY, JSON.stringify(done)); } catch {}
+    });
+  });
+  count();
+</script>

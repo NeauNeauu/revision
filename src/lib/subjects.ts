@@ -1,10 +1,11 @@
 import type { Lang } from '../i18n';
 
 /** Config par matière. unit = libellé des unités ; speech = langue de synthèse vocale (BCP-47). */
-export const SUBJECTS: Record<string, { unit: { fr: string; en: string }; speech?: string; icon: string }> = {
+export const SUBJECTS: Record<string, { unit: { fr: string; en: string }; speech?: string; icon: string; reveal?: boolean }> = {
   coreen: { unit: { fr: 'Week', en: 'Week' }, speech: 'ko-KR', icon: '한' },
   bi: { unit: { fr: 'Chapitre', en: 'Chapter' }, icon: 'BI' },
   android: { unit: { fr: 'Chapitre', en: 'Chapter' }, icon: 'A' },
+  algebre: { unit: { fr: 'Chapitre', en: 'Chapter' }, icon: 'Σ', reveal: true },
   maba: { unit: { fr: 'Thème', en: 'Topic' }, icon: 'AI' },
 };
 const fallback = { unit: { fr: 'Chapitre', en: 'Chapter' }, icon: '•' };

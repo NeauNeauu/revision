@@ -383,3 +383,25 @@ a.gl:hover,a.gl:focus-visible{color:var(--accent)}
 .ltoc a{min-width:2rem;text-align:center;padding:.15rem .5rem;border:1px solid var(--stroke);border-radius:999px;font-size:.8rem;text-decoration:none}
 .ltoc a.done{background:var(--accent,#7c6cf0);color:#fff;border-color:transparent}
 .ltoc a.cur{outline:2px solid var(--accent,#7c6cf0)}
+
+.opts{display:grid;gap:.6rem;margin-top:.4rem}.opts button{padding:.9rem 1rem;text-align:left;font-size:1.02rem}.opts button:disabled{opacity:1}
+.steps{padding-left:1.3rem;display:grid;gap:.5rem}.steps li::marker{font-weight:700;color:var(--muted)}.pits{padding-left:1.2rem;display:grid;gap:.4rem}.np-ok{color:var(--ok);font-weight:700}
+
+.xos{display:grid;gap:.6rem}
+.xo{border-radius:var(--r);background:var(--glass);border:1px solid var(--stroke);padding:.2rem .9rem}
+.xo summary{cursor:pointer;padding:.7rem 0;font-weight:500;list-style:none}
+.xo summary::-webkit-details-marker{display:none}
+.xo summary::after{content:'▸ solution';float:right;color:var(--accent);font-size:.8rem;margin-left:.6rem}
+.xo[open] summary::after{content:'▾'}
+.xo .sol{padding:.2rem 0 .8rem;border-top:1px dashed var(--stroke);overflow-x:auto}
+.xo .katex-display,.xo summary .katex{max-width:100%}
+
+.exh{display:flex;gap:.7rem;align-items:flex-start;padding:.7rem 0}
+.exn{flex:none;min-width:1.7rem;height:1.7rem;border-radius:50%;display:grid;place-items:center;background:var(--glass-strong);font-size:.8rem;font-weight:600;color:var(--accent)}
+.exq{flex:1;overflow-x:auto}
+.exd{flex:none;font-size:.8rem;color:var(--muted);display:flex;gap:.3rem;align-items:center;cursor:pointer}
+.exo.isdone{opacity:.55}
+.exo details summary{cursor:pointer;color:var(--accent);padding:.3rem 0 .6rem;font-size:.9rem}
+.exo .lesson{margin:.4rem 0 .8rem;padding:.8rem;border-radius:var(--r);background:var(--glass-strong);display:grid;gap:.5rem;overflow-x:auto}
+.exo .sol{border-top:1px dashed var(--stroke);padding:.6rem 0}
+.exo details summary::after{content:none}
