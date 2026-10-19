@@ -405,3 +405,11 @@ a.gl:hover,a.gl:focus-visible{color:var(--accent)}
 .exo .lesson{margin:.4rem 0 .8rem;padding:.8rem;border-radius:var(--r);background:var(--glass-strong);display:grid;gap:.5rem;overflow-x:auto}
 .exo .sol{border-top:1px dashed var(--stroke);padding:.6rem 0}
 .exo details summary::after{content:none}
+
+.xos{grid-template-columns:minmax(0,1fr)}
+.xo{min-width:0}
+.xo summary::after{float:none;display:block;margin:.4rem 0 0}
+.exh{flex-wrap:wrap;align-items:center;padding:.6rem 0 .2rem}
+.exn{order:1}.exd{order:2;margin-left:auto}
+.exq{order:3;flex:1 1 100%;min-width:0;padding:.2rem 0}
+.exo details summary::after{content:none}

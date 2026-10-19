@@ -136,7 +136,7 @@ const rev = `/${lang}/review/?subject=${subject}&unit=${unit}`;
 
     {d.drills.length > 0 && (
       <section id="drills">
-        <h2>{t(lang, 'unit.drill')}</h2>
+        <h2>{subjectConf(subject).reveal ? t(lang, 'exo.title') : t(lang, 'unit.drill')}</h2>
         {subjectConf(subject).reveal ? (
           <div class="xos">{d.drills.map((x) => <details class="xo"><summary set:html={mathText(x.q)} /><div class="sol" set:html={mathText(x.a)} /></details>)}</div>
         ) : (
